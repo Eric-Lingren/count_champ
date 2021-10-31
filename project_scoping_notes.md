@@ -1,12 +1,13 @@
 # Project Scoping   
 
-### Data:   
-    Card Data   
-    Correct BS Plays   
-    Correct Deviation Plays   
+## Data:   
+>    Card Data   
+>    Correct BS Plays   
+>    Correct Deviation Plays   
 
-### Class + Page   
-># Settings: (all Phase 1 release unless otherwise noted)   
+---
+>## Settings: (all Phase 1 release unless otherwise noted)   
+>### Class + Page   
 >Split into User settings and Trainer settings   
 >    Choose Rules:    
 >        DAS Allowed?   
@@ -26,8 +27,9 @@
 >        Show true count   
 >        Show House Edge at any give time - Premium Feature   
 
+---   
+>## Deck: (Phase 1)   
 >### Class - Global   
-># Deck: (Phase 1)   
 >    1-8 decks of cards (or csm)   
 >    Remaining   
 >    Discards   
