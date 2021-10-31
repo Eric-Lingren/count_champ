@@ -6,36 +6,34 @@
     Correct Deviation Plays   
 
 ### Class + Page   
-Split into User settings and Trainer settings   
-Settings: (all Phase 1 release unless otherwise noted)   
-    -Choose Rules:    
-        ⋅⋅⋅ DAS Allowed?   
-        ⋅⋅⋅Double after 2 cards   
-        ⋅⋅⋅Resplitting Allowed   
-            Aces?   
-        - Dealer hits soft 17?   
-        -Surender Allowed?   
-            --Early vs late   
-        -Dealer Peek   
-        -Deck Quantity - 1, 2, 4, 6, 8, csm   
-        -Deck Pennetration (later phase)   
-    Player Settings:   
-        Bankroll Amt - Premium Feature (later phase)   
-        Table Maximum - Set chip ranges - Premium Feature (later phase)   
-    Game/Player Settings:   
-        Show hand totals   
-        Show Running count   
-        Show true count   
-        Show House Edge at any give time - Premium Feature   
+># Settings: (all Phase 1 release unless otherwise noted)   
+>Split into User settings and Trainer settings   
+>    Choose Rules:    
+>        DAS Allowed?   
+>        Double after 2 cards   
+>        Resplitting Allowed Aces?   
+>        Dealer hits soft 17?   
+>        Surender Allowed? Early vs late   
+>        Dealer Peek   
+>        Deck Quantity - 1, 2, 4, 6, 8, csm   
+>        Deck Pennetration (later phase)   
+>    Player Settings:   
+>        Bankroll Amt - Premium Feature (later phase)   
+>        Table Maximum - Set chip ranges - Premium Feature (later phase)   
+>    Game/Player Settings:   
+>        Show hand totals   
+>        Show Running count   
+>        Show true count   
+>        Show House Edge at any give time - Premium Feature   
 
-### Class - Global   
-Deck: (Phase 1)   
-    1-8 decks of cards (or csm)   
-    Remaining   
-    Discards   
-    Cut Card   
-    Shuffle   
-    Count   
+>### Class - Global   
+># Deck: (Phase 1)   
+>    1-8 decks of cards (or csm)   
+>    Remaining   
+>    Discards   
+>    Cut Card   
+>    Shuffle   
+   
 
 ### Class - Global   
 Dealer: Extends Player (Phase 1)   
