@@ -1,0 +1,2 @@
+// API tokens, keys, or user credentials should be stored on the Android and Apple keychains using flutter_secure_storage.
+// This is where we have getters and setters for access to platform secure storage

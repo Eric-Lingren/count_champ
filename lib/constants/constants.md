@@ -1,0 +1,1 @@
+for things that remain static thought the entire project

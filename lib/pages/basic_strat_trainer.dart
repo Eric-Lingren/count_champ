@@ -1,4 +1,6 @@
-import 'package:count_champ/common/playing_card.dart';
+import 'dart:ffi';
+
+import 'package:count_champ/widgets/card_widget.dart';
 import 'package:flutter/material.dart';
 
 class BasicStratTrainer extends StatefulWidget {
@@ -9,37 +11,61 @@ class BasicStratTrainer extends StatefulWidget {
 }
 
 class _BasicStratTrainerState extends State<BasicStratTrainer> {
-  int counter = 0;
+  List<String> dealtCards = [];
 
   @override
   void initState() {
     super.initState();
+    dealCards();
+  }
+
+  void dealCards() {
+    int counter = 0;
+    List<String> availableValues = ['2', '3', '4', '5', '6'];
+    List<String> availableSuits = ['c', 'd', 'h', 's'];
+    List<String> tempCards = [];
+
+    while (counter < 4) {
+      String randomValue = (availableValues..shuffle()).first;
+      String randomSuit = (availableSuits..shuffle()).first;
+      String newCardCode = randomValue + randomSuit;
+      tempCards.add(newCardCode);
+      counter++;
+    }
+
+    setState(() {
+      dealtCards = tempCards;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green[300],
-      appBar: AppBar(
-        backgroundColor: Colors.grey[850],
-        title: Text('Basic Stragey'),
-        centerTitle: true,
-        elevation: 0,
-        actions: [],
-      ),
-      // body: ElevatedButton(
-      //   onPressed: () {
-      //     setState(() {
-      //       counter += 1;
-      //     });
-      //   },
-      //   child: Text('counter is $counter'),
-      body: Row(
-        children: <Widget>[
-          PlayingCard(),
-          PlayingCard(),
-        ] 
-      )
-    );
+        backgroundColor: Colors.green[300],
+        appBar: AppBar(
+          backgroundColor: Colors.grey[850],
+          title: Text('Basic Strategy'),
+          centerTitle: true,
+          elevation: 0,
+          actions: [],
+        ),
+        body: Column(children: <Widget>[
+          Row(children: <Widget>[
+            CardWidget(cardCode: dealtCards[0]),
+            CardWidget(cardCode: dealtCards[1]),
+          ]),
+          Row(children: <Widget>[
+            CardWidget(cardCode: dealtCards[2]),
+            CardWidget(cardCode: dealtCards[3]),
+          ]),
+          Row(children: <Widget>[
+            ElevatedButton(
+              onPressed: () {
+                dealCards();
+              },
+              child: Text('Deal Cards'),
+            ),
+          ]),
+        ]));
   }
 }

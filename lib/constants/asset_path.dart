@@ -1,0 +1,1 @@
+// add relative asset paths here for widget use
