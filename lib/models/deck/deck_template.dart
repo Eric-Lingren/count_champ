@@ -1,12 +1,13 @@
 class Deck {
   final List deckData;
-  int deckQuantity = 8;
   List shuffledDeck = [];
   List remainingCards = [];
   List cutCards = [];
   List dealtCards = [];
-  double deckPenetration = .70; // range from .1-.95
-  int cutCardIndex = 0;
+  // TODO - Extend from GameRules class
+  int deckQuantity = 8;
+  double deckPenetration = 1.00; // range from .1-.95
+
 
   Deck(this.deckData);
 
@@ -26,7 +27,7 @@ class Deck {
 
   initDealableCards() {
     double availableCardsQuantity = shuffledDeck.length * deckPenetration;
-    cutCardIndex = availableCardsQuantity.floor();
+    int cutCardIndex = availableCardsQuantity.floor();
     remainingCards = shuffledDeck.sublist(0, cutCardIndex);
     cutCards = shuffledDeck.sublist(cutCardIndex);
   }
