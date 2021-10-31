@@ -1,5 +1,6 @@
 import 'dart:ffi';
 
+import 'package:count_champ/models/card_template.dart';
 import 'package:count_champ/widgets/card_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -36,6 +37,7 @@ class _BasicStratTrainerState extends State<BasicStratTrainer> {
     setState(() {
       dealtCards = tempCards;
     });
+    // CardTemplate(cardCode: dealtCards[0]).getWidget();
   }
 
   @override
@@ -51,12 +53,13 @@ class _BasicStratTrainerState extends State<BasicStratTrainer> {
         ),
         body: Column(children: <Widget>[
           Row(children: <Widget>[
-            CardWidget(cardCode: dealtCards[0]),
-            CardWidget(cardCode: dealtCards[1]),
+            CardTemplate(cardCode: dealtCards[0]).getWidget(),
+            CardTemplate(cardCode: dealtCards[1]).getWidget(),
           ]),
           Row(children: <Widget>[
-            CardWidget(cardCode: dealtCards[2]),
-            CardWidget(cardCode: dealtCards[3]),
+            CardTemplate(cardCode: dealtCards[2]).getWidget(),
+            CardTemplate(cardCode: dealtCards[3]).getWidget(),
+            
           ]),
           Row(children: <Widget>[
             ElevatedButton(
