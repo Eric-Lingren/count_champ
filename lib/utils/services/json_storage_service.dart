@@ -21,21 +21,26 @@ class CardDataTemplate {
   final int value;
   final String name;
   final String suit;
+  final String image;
 
   CardDataTemplate({
     required this.code,
     required this.value,
     required this.name,
-    required this.suit
+    required this.suit,
+    required this.image
   });
 
   // Creates a facory to remap a json data object to a new class object
   factory CardDataTemplate.fromJson(Map<String, dynamic> parsedJson) {
+    String code = parsedJson["code"].toString();
+    String imagePath = 'assets/images/cards/card_faces/' + code + '.png';
+
     return CardDataTemplate(
-      code: parsedJson["code"].toString(),
-      value: parsedJson["value"],
-      name: parsedJson["name"].toString(),
-      suit: parsedJson["suit"].toString(),
-    );
+        code: code,
+        value: parsedJson["value"],
+        name: parsedJson["name"].toString(),
+        suit: parsedJson["suit"].toString(),
+        image: imagePath);
   }
 }

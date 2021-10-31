@@ -9,7 +9,7 @@ class Home extends StatefulWidget {
 
   void initDataFetch() async {
     var cardsData = await readJson();
-    print(cardsData[0].value);
+    print(cardsData[0].image);
   }
 }
 
