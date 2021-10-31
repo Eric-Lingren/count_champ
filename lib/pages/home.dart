@@ -1,3 +1,4 @@
+import 'package:count_champ/models/deck/deck_template.dart';
 import 'package:flutter/material.dart';
 import 'package:count_champ/utils/services/json_storage_service.dart';
 
@@ -9,7 +10,10 @@ class Home extends StatefulWidget {
 
   void initDataFetch() async {
     var cardsData = await readJson();
-    print(cardsData[0].image);
+    var deck = Deck(cardsData);
+    deck.shuffleDeck();
+    // Deck.generateDeck();
+    // print(cardsData[5].image);
   }
 }
 
