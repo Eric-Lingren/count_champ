@@ -8,17 +8,17 @@
 ### Class + Page   
 Split into User settings and Trainer settings   
 Settings: (all Phase 1 release unless otherwise noted)   
-    Choose Rules:    
-        DAS Allowed?   
-        Double after 2 cards   
-        Resplitting Allowed   
+    -Choose Rules:    
+        ⋅⋅⋅ DAS Allowed?   
+        ⋅⋅⋅Double after 2 cards   
+        ⋅⋅⋅Resplitting Allowed   
             Aces?   
-        Dealer hits soft 17?   
-        Surender Allowed?   
-            Early vs late   
-        Dealer Peek   
-        Deck Quantity - 1, 2, 4, 6, 8, csm   
-        Deck Pennetration (later phase)   
+        - Dealer hits soft 17?   
+        -Surender Allowed?   
+            --Early vs late   
+        -Dealer Peek   
+        -Deck Quantity - 1, 2, 4, 6, 8, csm   
+        -Deck Pennetration (later phase)   
     Player Settings:   
         Bankroll Amt - Premium Feature (later phase)   
         Table Maximum - Set chip ranges - Premium Feature (later phase)   
