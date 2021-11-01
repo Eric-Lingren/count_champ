@@ -152,18 +152,18 @@
 >    Extends Deck Class and Counting Class   
 >    Premium Feature   
    
+>## Game Manager: (Phase 2)   
+>### Class - Global      
+>    Deal Function (2 cards to each player)   
+>    Peek for blackjack   
+>        Early vs late surrender   
+>    Offer Insurance   
 
 >## Game Play Extends Game Manager: (Phase 2)   
 >### Page    
 >    Extends Deck Class, Counting Class, Game Manager Class, and Correct Plays Class   
 >    Simulated blackjack game where you bring all your skills to the table   
 
->## Game Manager: Extends Player (Phase 2)   
->### Class - Global      
->    Deal Function (2 cards to each player)   
->    Peek for blackjack   
->        Early vs late surrender   
->    Offer Insurance   
    
 > ## Stats: (phased rollouts depending on stats)   
 >### Page    
