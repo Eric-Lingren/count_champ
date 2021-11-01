@@ -67,19 +67,6 @@
 >### Class   
 >    Subclasses are:   
 >        Basic Stratgey   
->        Game Play   
-
->## Counting - Parent class for some other trainers (phase 1)   
->### Class   
->    Subclasses are:   
->        Counting Systems   
->        Running Count Trainer   
->        True Count Calculation Trainer   
->        Bet Sizing Trainer   
->        Bet Camouflage   
->        Shuffle Tracking Trainer   
->        Game Play   
-
 
 >## Basic Stratgey extends Trainer: (all Phase 1 release unless otherwise noted)   
 >### Page + Class - Subclasses for deviations and other house rules will apply   
@@ -104,6 +91,17 @@
 >        Show for all game and rule types.   
 >        Allow to flip and inverse - Premium Features (later phase)   
     
+>## Counting - Parent class for some other trainers (phase 1)   
+>### Class   
+>    Subclasses are:   
+>        Counting Systems   
+>        Running Count Trainer   
+>        True Count Calculation Trainer   
+>        Bet Sizing Trainer   
+>        Bet Camouflage   
+>        Shuffle Tracking Trainer   
+>        Game Play   
+
 >## Counting Systems: (all are later phase release unless otherwise noted)   
 >### Class    
 >    Extends Counting Class and Deck Class   
