@@ -1,4 +1,4 @@
-import 'package:count_champ/models/person/person_template.dart';
+import 'package:count_champ/models/person/person.dart';
 
 class Player extends Person {
 

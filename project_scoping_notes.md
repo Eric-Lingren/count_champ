@@ -107,7 +107,7 @@
 >    Extends Counting Class and Deck Class   
 >    Display tutorial on each one -   
 >    Hi-Lo (running count and conversion to true count) - Free Version (Phase 1)   
->   Hi-Opt I (running count and conversion to true count) - Premium Feature   
+>    Hi-Opt I (running count and conversion to true count) - Premium Feature   
 >    Hi-Opt II (running count and conversion to true count) - Premium Feature   
 >    Halves (running count and conversion to true count) - Premium Feature   
 >    Knockout aka K-O (running count only with deck adjustments) - Premium Feature   

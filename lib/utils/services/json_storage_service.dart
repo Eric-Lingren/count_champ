@@ -8,7 +8,7 @@ readJson() async {
       await rootBundle.loadString('assets/data/cards_data.json');
 
   // Loops over the json string to create new instaces of card data objects in a new list using the class factory
-  var cards = await jsonDecode(response)['cards']
+  List cards = jsonDecode(response)['cards']
       .map((data) => CardDataTemplate.fromJson(data))
       .toList();
 
@@ -23,13 +23,12 @@ class CardDataTemplate {
   final String suit;
   final String image;
 
-  CardDataTemplate({
-    required this.code,
-    required this.value,
-    required this.name,
-    required this.suit,
-    required this.image
-  });
+  CardDataTemplate(
+      {required this.code,
+      required this.value,
+      required this.name,
+      required this.suit,
+      required this.image});
 
   // Creates a facory to remap a json data object to a new class object
   factory CardDataTemplate.fromJson(Map<String, dynamic> parsedJson) {

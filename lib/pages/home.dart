@@ -1,8 +1,8 @@
-import 'package:count_champ/models/person/dealer_template.dart';
-import 'package:count_champ/models/person/player_template.dart';
-import 'package:count_champ/models/deck/deck_template.dart';
+import 'package:count_champ/models/deck/deck.dart';
+import 'package:count_champ/models/test_person.dart';
 import 'package:flutter/material.dart';
 import 'package:count_champ/utils/services/json_storage_service.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -11,40 +11,37 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 
   void initDataFetch() async {
-    var cardsData = await readJson();
-    var deck = Deck(cardsData);
-    deck.shuffleDeck();
-    // Deck.generateDeck();
-    // print(cardsData[5].image);
-    var player = Player();
-    var dealer = Dealer();
-    print('dealer :');
-    dealer.hit();
-    dealer.checkHoleCard();
-    print(dealer.bankroll);
-    print('player :');
-    player.hit();
-    player.double();
-    print(player.bankroll);
-    // player.checkHoleCard();
+    // var cardsData = await readJson();
+    // var deck = Deck(cardsData);
+    // deck.shuffleDeck();
   }
 }
 
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    widget.initDataFetch();
+    return Consumer<TestPerson>(builder: (context, testPerson, child) {
+      widget.initDataFetch();
 
-    return (Scaffold(
-        body: SafeArea(
-            child: Column(
-      children: <Widget>[
-        TextButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/basic_strat_trainer');
-            },
-            child: Text('Basic Strategy'))
-      ],
-    ))));
+      return (Scaffold(
+          body: SafeArea(
+              child: Column(
+        children: <Widget>[
+          ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/basic_strat_trainer');
+              },
+              child: Text('Basic Strategy')),
+          Text(
+              // 'TEST TEXT HERE'
+              '''
+          Hi ${testPerson.name}!
+          You are ${testPerson.age} years old'''),
+          ElevatedButton(
+            onPressed: () => testPerson.incrementAge(), 
+            child: Text('Increase Age'))
+        ],
+      ))));
+    });
   }
 }
