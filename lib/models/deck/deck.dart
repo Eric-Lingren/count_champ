@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
 // Class maintains the raw deck data and deck behaviors
+
+//  AKA PERSON
+
 class Deck with ChangeNotifier {
   static List deckData = [];
   static List shuffledDeck = [];
@@ -15,6 +18,7 @@ class Deck with ChangeNotifier {
   // TODO - Extend from GameRules class
   int deckQuantity = 8;
   double deckPenetration = 1.00; // range from .1-.95
+  var canDAS;
 
   Deck();
 
@@ -36,6 +40,10 @@ class Deck with ChangeNotifier {
   _setPlayerHand(hand) {
     currentPlayerHand = hand;
     notifyListeners();
+  }
+
+  showDeckRule() {
+    print('DECK RULE IS ${canDAS}');
   }
 
   // Random func for checking state of the deck.  Modify as you need.
