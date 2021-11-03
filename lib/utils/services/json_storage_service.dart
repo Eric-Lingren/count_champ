@@ -22,24 +22,29 @@ class CardDataTemplate {
   final String name;
   final String suit;
   final String image;
+  bool isHoleCard = false;
 
   CardDataTemplate(
       {required this.code,
       required this.value,
       required this.name,
       required this.suit,
-      required this.image});
+      required this.image, 
+      isHoleCard});
 
   // Creates a facory to remap a json data object to a new class object
   factory CardDataTemplate.fromJson(Map<String, dynamic> parsedJson) {
     String code = parsedJson["code"].toString();
     String imagePath = 'assets/images/cards/card_faces/' + code + '.png';
+    bool isHoleCard = false;
 
     return CardDataTemplate(
         code: code,
         value: parsedJson["value"],
         name: parsedJson["name"].toString(),
         suit: parsedJson["suit"].toString(),
-        image: imagePath);
+        image: imagePath,
+        isHoleCard: isHoleCard
+        );
   }
 }

@@ -22,10 +22,39 @@
 //         Allow to flip and inverse - Premium Features (later phase)
 
 import 'package:count_champ/models/deck/deck.dart';
+import 'package:count_champ/models/trainers/correct_plays/correct_plays.dart';
 import 'package:flutter/foundation.dart';
 
-class BasicStrategey extends Deck{
-
+class BasicStrategey extends CorrectPlays {
   BasicStrategey();
 
+  // Init Hands
+  initNewHand() {
+    print('Player init starting hand ran');
+    dealStartingHand();
+  }
+
+  hit() {
+    print('Ran BS Hit');
+    checkPlay('hit');
+    dealStartingHand();
+  }
+
+  stand() {
+    print('Ran BS Stand');
+    checkPlay('stand');
+    dealStartingHand();
+  }
+
+  double() {
+    print('Ran BS Double');
+    checkPlay('double');
+    dealStartingHand();
+  }
+
+  split() {
+    print('Ran BS Split');
+    checkPlay('split');
+    dealStartingHand();
+  }
 }
