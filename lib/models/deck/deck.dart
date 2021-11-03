@@ -1,12 +1,15 @@
+import 'package:count_champ/models/person/player.dart';
+import 'package:count_champ/models/settings/game_settings.dart';
 import 'package:count_champ/utils/services/json_storage_service.dart';
+import 'package:count_champ/utils/services/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
 // Class maintains the raw deck data and deck behaviors
 
-//  AKA PERSON
-
 class Deck with ChangeNotifier {
+  var gameSettingsModel = getIt.get<GameSettings>();
+
   static List deckData = [];
   static List shuffledDeck = [];
   static List remainingCards = [];
@@ -18,68 +21,33 @@ class Deck with ChangeNotifier {
   // TODO - Extend from GameRules class
   int deckQuantity = 8;
   double deckPenetration = 1.00; // range from .1-.95
-  var canDAS;
-
-  Deck();
 
   // init deck function is to get all deck data from json.
   // Only needs to run once on mount.
   // Once the data is loaded via a trainer we can simply shuffle and init dealable cards over and over.
   initDeckData() async {
     deckData = await readJson();
-    // print(deckData.length);
     await shuffleDeck();
     await initDealableCards();
   }
 
-  _setDealerHand(hand) {
-    currentDealerHand = hand;
-    notifyListeners();
-  }
-
-  _setPlayerHand(hand) {
-    currentPlayerHand = hand;
-    notifyListeners();
-  }
-
   showDeckRule() {
-    print('DECK RULE IS ${canDAS}');
+    gameSettingsModel.showGameSettingsRule();
+  }
+  setDeckRule() {
+    gameSettingsModel.setDas();
   }
 
   // Random func for checking state of the deck.  Modify as you need.
   printDeckData() {
-    // print('remaining Length :');
-    // print(remainingCards.length);
-    // print(remainingCards[0].code);
-    // dealtCards.add(remainingCards[0]);
-    // remainingCards.removeAt(0);
-    // print('Dealt Length :');
-    // print(dealtCards.length);
-    // print(dealtCards[0].code);
-    // print(remainingCards[0].value);
-    // print('dealer hand l;ength is');
-    // print(currentDealerHand.length);
-    // print('dealer first card is');
-    // print(currentDealerHand[0].code);
-    // print('Player hand l;ength is');
-    // print(currentPlayerHand.length);
-    // print('Player first card is');
-    // print(currentPlayerHand[0].code);
-
-    // print('dealer hand l;ength is');
-    // print(currentDealerHand.length);
     print('dealer first card is');
     print(currentDealerHand[0].code);
-    print(currentDealerHand[0].isHoleCard);
     print('dealer second card is');
     print(currentDealerHand[1].code);
-    print(currentDealerHand[1].isHoleCard);
-    // print(currentDealerHand[0].runtimeType);
-    // print('Player hand l;ength is');
-    // print(currentPlayerHand.length);
-    // print('Player first card is');
-    // print(currentPlayerHand[0].code);
-    // notifyListeners();
+    print('Player first card is');
+    print(currentPlayerHand[0].code);
+    print('Player second card is');
+    print(currentPlayerHand[1].code);
   }
 
   // Reorders and resets all the card data
@@ -103,8 +71,6 @@ class Deck with ChangeNotifier {
     double availableCardsQuantity = shuffledDeck.length * deckPenetration;
     cutCardIndex = availableCardsQuantity.floor();
     remainingCards = shuffledDeck.sublist(0, cutCardIndex);
-    // print('remainingCards lenght is');
-    // print(remainingCards.length);
     cutCards = shuffledDeck.sublist(cutCardIndex);
   }
 
@@ -129,6 +95,16 @@ class Deck with ChangeNotifier {
     remainingCards.removeRange(0, 4);
     _setDealerHand(tempDealerHand);
     _setPlayerHand(tempPlayerHand);
+  }
+
+  _setDealerHand(hand) {
+    currentDealerHand = hand;
+    notifyListeners();
+  }
+
+  _setPlayerHand(hand) {
+    currentPlayerHand = hand;
+    notifyListeners();
   }
 
   // Deals one card to the requested person (dealer or player depending on who called it)

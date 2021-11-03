@@ -22,39 +22,60 @@
 //         Allow to flip and inverse - Premium Features (later phase)
 
 import 'package:count_champ/models/deck/deck.dart';
+import 'package:count_champ/models/settings/game_settings.dart';
 import 'package:count_champ/models/trainers/correct_plays/correct_plays.dart';
+import 'package:count_champ/utils/services/service_locator.dart';
 import 'package:flutter/foundation.dart';
 
-class BasicStrategey extends CorrectPlays {
-  BasicStrategey();
+class BasicStrategey with ChangeNotifier {
+  var correctPlaysModel = getIt.get<CorrectPlays>();
+  var deckModel = getIt.get<Deck>();
+  List playerHand = [];
+  List dealerHand = [];
 
   // Init Hands
-  initNewHand() {
-    print('Player init starting hand ran');
-    dealStartingHand();
+  dealNewHand() {
+    deckModel.dealStartingHand();
+    playerHand = [
+      deckModel.currentPlayerHand[0],
+      deckModel.currentPlayerHand[1]
+    ];
+    dealerHand = [
+      deckModel.currentDealerHand[0],
+      deckModel.currentDealerHand[1]
+    ];
+    notifyListeners();
   }
 
   hit() {
     print('Ran BS Hit');
-    checkPlay('hit');
-    dealStartingHand();
+    correctPlaysModel.checkPlay('hit');
+    dealNewHand();
   }
 
   stand() {
     print('Ran BS Stand');
-    checkPlay('stand');
-    dealStartingHand();
+    correctPlaysModel.checkPlay('stand');
+    dealNewHand();
   }
 
   double() {
     print('Ran BS Double');
-    checkPlay('double');
-    dealStartingHand();
+    correctPlaysModel.checkPlay('double');
+    dealNewHand();
   }
 
   split() {
     print('Ran BS Split');
-    checkPlay('split');
-    dealStartingHand();
+    correctPlaysModel.checkPlay('split');
+    dealNewHand();
+  }
+
+  bsSetRule() {
+    deckModel.setDeckRule();
+  }
+
+  bsShowRule() {
+    deckModel.showDeckRule();
   }
 }

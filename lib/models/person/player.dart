@@ -1,10 +1,21 @@
 import 'package:count_champ/models/deck/deck.dart';
 import 'package:count_champ/models/person/person.dart';
+import 'package:count_champ/utils/services/service_locator.dart';
 
 class Player extends Person {
   // List test = currentPlayerHand;
+  // var deckModel = getIt.get<Deck>();
+  // List playerHand = [];
+  // var playerHand = deckModel.currentPlayerHand;
 
-  Player() : super(1000);
+  setPlayerHand() {
+    print('ranSet Player hand');
+  }
+
+  // deckModel.fech
+
+  // Player() ;
+  // Player() : super(1000);
 
 //  showStartingHand() {
 //     print('Ran Showing starting hand');
@@ -16,7 +27,6 @@ class Player extends Person {
 
 //     // List currentPlayerHand = [];
 //   }
-
 
   // Actions
   double() {

@@ -9,30 +9,23 @@ class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
 
-  test(){
-    // var cardsData = await readJson();
-    // var deck = Deck(cardsData);
-    // deck.shuffleDeck();
-    print('Test Ran');
-  }
 }
 
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
 
-
-      return (Scaffold(
-        body: SafeArea(
-          child: Column(
-            children: <Widget>[
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/basic_strat_trainer');
-                },
-                child: Text('Basic Strategy')),
-              
-            ],
-      ))));
-    }
+    return (Scaffold(
+      body: SafeArea(
+        child: Column(
+          children: <Widget>[
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/basic_strat_trainer');
+              },
+              child: Text('Basic Strategy')),
+            
+          ],
+    ))));
+  }
 }

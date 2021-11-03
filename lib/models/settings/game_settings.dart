@@ -1,8 +1,7 @@
 import 'package:flutter/foundation.dart';
 
-// Is the Proxy - AKA JOB
-// WE want to interface with this
-
+// This is the interface for setting game rules.=  
+// They are passed down to the Deck via proxy provider
 class GameSettings with ChangeNotifier {
   bool canDAS = true;
   bool canDoubleAny2 = true; // False = reno rules - double only on 9-11 hard
@@ -17,13 +16,9 @@ class GameSettings with ChangeNotifier {
   double deckPenetration = 1.00;
 
   // GameSettings();
-
-  setDas() {
-    print('ran set das');
+  void setDas() {
     canDAS = !canDAS;
-    print(canDAS);
     notifyListeners();
-    print('done das');
   }
 
   showGameSettingsRule() {
