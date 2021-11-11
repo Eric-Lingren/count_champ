@@ -12,7 +12,7 @@ class GameSettings with ChangeNotifier {
   bool canEarlySurrender = false;
   bool canLateSurrender = true;
   bool isNoPeek = false;
-  int deckQuantity = 8;
+  int deckQuantity = 1;
   double deckPenetration = 1.00;
 
   // GameSettings();

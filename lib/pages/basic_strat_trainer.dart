@@ -1,5 +1,7 @@
 import 'package:count_champ/models/card_template.dart';
 import 'package:count_champ/models/deck/deck.dart';
+import 'package:count_champ/models/person/dealer.dart';
+import 'package:count_champ/models/person/person.dart';
 import 'package:count_champ/models/person/player.dart';
 import 'package:count_champ/models/settings/game_settings.dart';
 import 'package:count_champ/models/trainers/basic_strategey/basic_strategey.dart';
@@ -18,6 +20,7 @@ class BasicStratTrainer extends StatefulWidget {
 class _BasicStratTrainerState extends State<BasicStratTrainer> {
   List<String> dealtCards = [];
   var deck;
+  var person;
   bool isSettingsOpen = false;
 
   @override
@@ -25,6 +28,7 @@ class _BasicStratTrainerState extends State<BasicStratTrainer> {
     super.initState();
     deck = getIt.get<Deck>();
     deck.initDeckData();
+    
 
     // This like a useEffect to import the consumer on mount rather than on render
     // WidgetsBinding.instance!.addPostFrameCallback((timestamp) {
@@ -35,7 +39,8 @@ class _BasicStratTrainerState extends State<BasicStratTrainer> {
 
   @override
   Widget build(BuildContext context) {
-    print(deck);
+    // var dealer = getIt.get<Dealer>();
+    print(deck.currentDealerHand);
     return Consumer<BasicStrategey>(builder: (context, basicStrategey, child) {
       return Scaffold(
           backgroundColor: Colors.green[300],

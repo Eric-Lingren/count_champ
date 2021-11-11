@@ -48,26 +48,26 @@ class BasicStrategey with ChangeNotifier {
   }
 
   hit() {
-    print('Ran BS Hit');
-    correctPlaysModel.checkPlay('hit');
+    // print('Ran BS Hit');
+    correctPlaysModel.checkPlay('hit', playerHand, dealerHand);
     dealNewHand();
   }
 
   stand() {
-    print('Ran BS Stand');
-    correctPlaysModel.checkPlay('stand');
+    // print('Ran BS Stand');
+    correctPlaysModel.checkPlay('stand', playerHand, dealerHand);
     dealNewHand();
   }
 
   double() {
-    print('Ran BS Double');
-    correctPlaysModel.checkPlay('double');
+    // print('Ran BS Double');
+    correctPlaysModel.checkPlay('double', playerHand, dealerHand);
     dealNewHand();
   }
 
   split() {
-    print('Ran BS Split');
-    correctPlaysModel.checkPlay('split');
+    // print('Ran BS Split');
+    correctPlaysModel.checkPlay('split', playerHand, dealerHand);
     dealNewHand();
   }
 

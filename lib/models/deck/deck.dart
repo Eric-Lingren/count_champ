@@ -1,4 +1,4 @@
-import 'package:count_champ/models/person/player.dart';
+import 'package:count_champ/models/person/person.dart';
 import 'package:count_champ/models/settings/game_settings.dart';
 import 'package:count_champ/utils/services/json_storage_service.dart';
 import 'package:count_champ/utils/services/service_locator.dart';
@@ -9,6 +9,7 @@ import 'package:flutter/foundation.dart';
 
 class Deck with ChangeNotifier {
   var gameSettingsModel = getIt.get<GameSettings>();
+  var personModel = getIt.get<Person>();
 
   static List deckData = [];
   static List shuffledDeck = [];
@@ -34,6 +35,7 @@ class Deck with ChangeNotifier {
   showDeckRule() {
     gameSettingsModel.showGameSettingsRule();
   }
+
   setDeckRule() {
     gameSettingsModel.setDas();
   }
@@ -80,7 +82,7 @@ class Deck with ChangeNotifier {
   // Third card face up to player
   // Fourth card face up to dealer
   dealStartingHand() {
-    print('Dealing Starting Cards');
+    // print('Dealing Starting Cards');
     var tempDealerHand = [];
     var tempPlayerHand = [];
     for (int i = 0; i < 4; i++) {
@@ -100,11 +102,13 @@ class Deck with ChangeNotifier {
   _setDealerHand(hand) {
     currentDealerHand = hand;
     notifyListeners();
+    personModel.setHand(hand);
   }
 
   _setPlayerHand(hand) {
     currentPlayerHand = hand;
     notifyListeners();
+    personModel.setHand(hand);
   }
 
   // Deals one card to the requested person (dealer or player depending on who called it)
