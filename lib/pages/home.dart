@@ -26,14 +26,24 @@ class _HomeState extends State<Home> {
             },
             child: Text('Basic Strategy')),
         BlocBuilder<DeckCubit, DeckState>(builder: (context, state) {
-          print(state.deckRepository);
+          // print(state.deckRepository);
+          if(state.remainingCards.length > 0){
+            print('This is Shuffled Card:');
+            print(state.remainingCards[0].code);
+          }
+          // print(state.testData);
           // if (state is DeckLoadedState) {
           //   print('loaded');
           // } else {
           //   print('not noaded');
           // }
           return const Text('HELLO ');
-        })
+        }),
+        ElevatedButton(
+            onPressed: () {
+              context.read<DeckCubit>().testFunc();
+            },
+            child: Text('Test Set State'))
       ],
     ))));
   }

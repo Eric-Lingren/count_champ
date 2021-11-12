@@ -23,6 +23,7 @@ class Deck with ChangeNotifier {
   int deckQuantity = 8;
   double deckPenetration = 1.00; // range from .1-.95
 
+  //! This has been migrated to the deck cubit
   // init deck function is to get all deck data from json.
   // Only needs to run once on mount.
   // Once the data is loaded via a trainer we can simply shuffle and init dealable cards over and over.
@@ -52,6 +53,7 @@ class Deck with ChangeNotifier {
     print(currentPlayerHand[1].code);
   }
 
+  //! This has been migrated to the deck cubit
   // Reorders and resets all the card data
   shuffleDeck() {
     int counter = 0;
@@ -66,6 +68,7 @@ class Deck with ChangeNotifier {
     shuffledDeck = flatTempDeck;
   }
 
+  //! This has been migrated to the deck cubit
   // Sets the max allowable cards that can be dealt out of the deck after shuffle
   // Contingent upon deck quantity and deck penetration (cut card depth).
   initDealableCards() {

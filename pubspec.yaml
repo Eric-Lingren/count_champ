@@ -31,7 +31,7 @@ dependencies:
     sdk: flutter
   # provider: ^5.0.0
   cupertino_icons: ^1.0.4
-  flutter_bloc: ^7.3.2
+  flutter_bloc: ^7.3.3
   bloc_test: ^8.5.0
   test_api: ^0.4.2
   equatable: ^2.0.3

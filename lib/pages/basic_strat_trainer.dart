@@ -1,4 +1,4 @@
-import 'package:count_champ/models/card_template.dart';
+import 'package:count_champ/data/models/card_template.dart';
 import 'package:count_champ/models/deck/deck.dart';
 import 'package:count_champ/models/person/dealer.dart';
 import 'package:count_champ/models/person/person.dart';

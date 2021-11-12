@@ -1,73 +1,101 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:bloc/bloc.dart';
-import 'package:count_champ/data/repositories/deck_repisotory.dart';
+import 'package:count_champ/constants/raw_deck_data.dart';
 import 'package:count_champ/utils/services/json_storage_service.dart';
-import 'package:flutter/services.dart';
-import 'package:meta/meta.dart';
-
+import 'package:equatable/equatable.dart';
 part 'deck_state.dart';
 
 class DeckCubit extends Cubit<DeckState> {
-  // var deckRepository;
 
-  // DeckRepository deckRepository;
-
-  // ArticleBloc({@required this.repository});
-  DeckCubit() : super(DeckState()) {
-    // DeckCubit({required this.deckRepository}) : super(DeckState) {
+  DeckCubit()
+      : super(DeckState(
+          deckRepository: const [],
+          remainingCards: const [],
+        )) {
     fetchCardData();
+    shuffleDeck();
   }
 
-  Future<List> fetchCardData() async {
-    final String response =
-        await rootBundle.loadString('assets/data/cards_data.json');
+  StreamController<double> controller = StreamController<double>();
 
-    // Loops over the json string to create new instaces of card data objects in a new list using the class factory
-    List cards = jsonDecode(response)['cards']
-        .map((data) => CardDataTemplate.fromJson(data))
-        .toList();
-    setCardList(cards);
+  Future<List> fetchCardData() async {
+    List cards =
+        rawDeckData.map((data) => CardDataTemplate.fromJson(data)).toList();
+    _setCardList(cards);
     return cards;
   }
 
-  void setCardList(cards) => emit(DeckState(deckRepository: cards));
-  // CounterCubit(
-  //     {required this.internetCubit, internetStreamSubscription})
-  //     : super(CounterState(counterValue: 0, wasIncremented: false)) {
-  //   monitorInternetCubit();
-  // }
+  void _setCardList(cards) => emit(DeckState(
+        deckRepository: cards,
+        remainingCards: state.remainingCards,
+      ));
 
-  // StreamSubscription<InternetState> monitorInternetCubit() {
-  //   return internetStreamSubscription = internetCubit.stream.listen((internetState) {
-  //     if (internetState is InternetConnected &&
-  //         internetState.connectionType == ConnectionTypes.Wifi) {
-  //       increment();
-  //     } else if (internetState is InternetConnected &&
-  //         internetState.connectionType == ConnectionTypes.Mobile) {
-  //       decrement();
-  //     }
-  //   });
-  // }
+  testFunc() {
+    print('test func ran');
+    dealStartingHand();
+  }
 
-  // @override
-  // DeckState get initialState => ArticleInitialState();
+  void shuffleDeck() {
+    int deckQuantity = 8; // TODO -- Grab this value from settings
+    int counter = 0;
+    List tempDeck = [];
+    while (counter < deckQuantity) {
+      var newDeck = state.deckRepository;
+      tempDeck.add(newDeck);
+      counter++;
+    }
+    var flatTempDeck = tempDeck.expand((i) => i).toList();
+    List shuffledDeck = flatTempDeck;
+    shuffledDeck.shuffle();
+    _initPlayableCards(shuffledDeck);
+  }
 
-  // DeckCubit() : super(DeckState(counter: 0));
+  // Sets the max allowable cards that can be dealt out of the deck after shuffle
+  // Contingent upon deck quantity and deck penetration (cut card depth).
+  _initPlayableCards(shuffledDeck) {
+    double deckPenetration =
+        0.90; // range from .1-.95 // TODO -- Grab this value from settings
+    double availableCardsQuantity = shuffledDeck.length * deckPenetration;
+    int cutCardIndex = availableCardsQuantity.floor();
+    List remainingCards = shuffledDeck.sublist(0, cutCardIndex);
+    List cutCards = shuffledDeck.sublist(cutCardIndex);
+    _setPlayableCards(remainingCards, cutCards, cutCardIndex);
+  }
 
-  // void test() {
-  //   print('test');
-  // }
+  void _setPlayableCards(remainingCards, cutCards, cutCardIndex) =>
+      emit(DeckState(
+          deckRepository: state.deckRepository,
+          remainingCards: remainingCards,
+          cutCards: cutCards,
+          cutCardIndex: cutCardIndex));
 
-  // initDeckData() async {
-  //   deckData = await readJson();
-  // }
-
+  // Deals 2 cards to each person (dealer and player)
+  // First card face up to player
+  // Second card face down to dealer
+  // Third card face up to player
+  // Fourth card face up to dealer
+  dealStartingHand() {
+    var tempRemainingCards = state.remainingCards;
+    print('remaining cards length: ${tempRemainingCards.length}');
+    var dealtCards = [];
+    var tempDealerHand = [];
+    var tempPlayerHand = [];
+    for (int i = 0; i < 4; i++) {
+      dealtCards.add(tempRemainingCards[i]);
+      if (i.isEven) {
+        var dealerHoleCard = tempRemainingCards[i];
+        if (i == 0) dealerHoleCard.isHoleCard = true;
+        tempDealerHand.add(dealerHoleCard);
+      }
+      if (!i.isEven) tempPlayerHand.add(tempRemainingCards[i]);
+    }
+    tempRemainingCards.removeRange(0, 4); 
+    
+    // TODO - Set Dealer Cards in State
+    // TODO - Set Player Cards in State
+    // TODO - Set Dealt Cards in State
+    // TODO - Set Remaining Cards in State
+    // _setDealerHand(tempDealerHand);
+    // _setPlayerHand(tempPlayerHand);
+  }
 }
-
-
-// class FetchDeckData extends DeckCubit {
-//   @override
-//   // TODO: implement props
-//   List<Object> get props => null;
-// }

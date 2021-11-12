@@ -1,25 +1,15 @@
 part of 'deck_cubit.dart';
 
-class DeckState {
-  int counter = 0;
+class DeckState extends Equatable{
   var deckRepository;
+  List remainingCards;
 
-  // DeckState({required this.counter});
-  DeckState({this.deckRepository});
-  // DeckState(deckRepository);
-  // DeckState({required this.deckData});
+  DeckState({
+    required this.deckRepository, 
+    required this.remainingCards, 
+    List? cutCards, 
+    int? cutCardIndex});
 
   @override
-  List<Object?> get props => [counter, deckRepository];
+  List<Object?> get props => [deckRepository, remainingCards];
 }
-
-// class DeckLoadedState extends DeckState {
-//   List deckData;
-
-//   DeckLoadedState({required this.deckData});
-// }
-// class ArticleLoadedState extends ArticleState {
-
-//   List<Articles> articles;
-
-//   ArticleLoadedState({@required this.articles});

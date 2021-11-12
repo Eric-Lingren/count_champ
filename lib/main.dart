@@ -1,6 +1,7 @@
 // import 'dart:js';
 
 import 'package:count_champ/logic/cubits/deck_cubit/deck_cubit.dart';
+import 'package:count_champ/logic/cubits/player_cubit/player_cubit.dart';
 import 'package:count_champ/models/test_proxies/dgreet.dart';
 import 'package:count_champ/models/test_proxies/greet.dart';
 import 'package:count_champ/models/settings/game_settings.dart';
@@ -15,7 +16,6 @@ import 'package:count_champ/pages/loading.dart';
 import 'package:count_champ/pages/basic_strat_trainer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import 'data/repositories/deck_repisotory.dart';
 import 'models/deck/deck.dart';
 import 'models/person/player.dart';
 
@@ -69,6 +69,8 @@ class _MyAppState extends State<MyApp> {
       providers: [
         BlocProvider<DeckCubit>(
             create: (context) => DeckCubit()),
+        BlocProvider<PlayerCubit>(
+            create: (context) => PlayerCubit()),
                 // DeckCubit(deckRepository: DeckRepositoryImpl())),
         // BlocProvider<CounterCubit>(
         //   create: (context) => CounterCubit(internetCubit: context.read<InternetCubit>())
