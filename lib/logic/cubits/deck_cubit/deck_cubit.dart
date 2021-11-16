@@ -6,17 +6,20 @@ import 'package:equatable/equatable.dart';
 part 'deck_state.dart';
 
 class DeckCubit extends Cubit<DeckState> {
-
   DeckCubit()
       : super(DeckState(
           deckRepository: const [],
-          remainingCards: const [],
+          shuffledDeck: const [],
+          cutCardIndex: 0,
+          dealtCards: const [],
+          dealerHand: const [],
+          playerHand: const [],
         )) {
-    fetchCardData();
+    fetchCardData(); 
     shuffleDeck();
   }
 
-  StreamController<double> controller = StreamController<double>();
+  // StreamController<double> controller = StreamController<double>();
 
   Future<List> fetchCardData() async {
     List cards =
@@ -27,75 +30,85 @@ class DeckCubit extends Cubit<DeckState> {
 
   void _setCardList(cards) => emit(DeckState(
         deckRepository: cards,
-        remainingCards: state.remainingCards,
+        shuffledDeck: const [],
+        dealtCards: const [],
+        dealerHand: const [],
+        playerHand: const [],
+        cutCardIndex: 0,
       ));
 
   testFunc() {
-    print('test func ran');
     dealStartingHand();
   }
 
+
   void shuffleDeck() {
-    int deckQuantity = 8; // TODO -- Grab this value from settings
+    int deckQuantity = 1; // TODO -- Grab this value from settings
     int counter = 0;
     List tempDeck = [];
     while (counter < deckQuantity) {
       var newDeck = state.deckRepository;
+      newDeck.shuffle();
       tempDeck.add(newDeck);
       counter++;
     }
-    var flatTempDeck = tempDeck.expand((i) => i).toList();
-    List shuffledDeck = flatTempDeck;
-    shuffledDeck.shuffle();
+    var shuffledDeck = tempDeck.expand((i) => i).toList();
+    for (var i = 0; i < shuffledDeck.length; i++) {
+      // * Resets all cards in deck:
+      shuffledDeck[i].isHoleCard = false;
+    }
     _initPlayableCards(shuffledDeck);
   }
 
-  // Sets the max allowable cards that can be dealt out of the deck after shuffle
-  // Contingent upon deck quantity and deck penetration (cut card depth).
+
   _initPlayableCards(shuffledDeck) {
-    double deckPenetration =
-        0.90; // range from .1-.95 // TODO -- Grab this value from settings
+    // * Sets the max allowable cards that can be dealt out of the deck after shuffle
+    // * Contingent upon deck quantity and deck penetration (cut card depth).
+    // TODO -- Grab this deck pen value from settings:
+    double deckPenetration = 0.80; // * range from .1-.8
     double availableCardsQuantity = shuffledDeck.length * deckPenetration;
     int cutCardIndex = availableCardsQuantity.floor();
-    List remainingCards = shuffledDeck.sublist(0, cutCardIndex);
-    List cutCards = shuffledDeck.sublist(cutCardIndex);
-    _setPlayableCards(remainingCards, cutCards, cutCardIndex);
+    _setPlayableCards(shuffledDeck, cutCardIndex);
   }
 
-  void _setPlayableCards(remainingCards, cutCards, cutCardIndex) =>
-      emit(DeckState(
-          deckRepository: state.deckRepository,
-          remainingCards: remainingCards,
-          cutCards: cutCards,
-          cutCardIndex: cutCardIndex));
+  void _setPlayableCards(shuffledDeck, cutCardIndex) => emit(DeckState(
+        deckRepository: state.deckRepository,
+        shuffledDeck: shuffledDeck,
+        dealtCards: const [],
+        cutCardIndex: cutCardIndex,
+        dealerHand: const [],
+        playerHand: const [],
+      ));
 
-  // Deals 2 cards to each person (dealer and player)
-  // First card face up to player
-  // Second card face down to dealer
-  // Third card face up to player
-  // Fourth card face up to dealer
   dealStartingHand() {
-    var tempRemainingCards = state.remainingCards;
-    print('remaining cards length: ${tempRemainingCards.length}');
+    // * Deals 2 cards to each person (dealer and player)
+    // * First card face up to player, Second card face down to dealer
+    // * Third card face up to player, Fourth card face up to dealer
+
+    if (state.dealtCards.length > state.cutCardIndex) shuffleDeck();
+    var tempRemainingCards = state.shuffledDeck;
     var dealtCards = [];
     var tempDealerHand = [];
     var tempPlayerHand = [];
+
     for (int i = 0; i < 4; i++) {
-      dealtCards.add(tempRemainingCards[i]);
       if (i.isEven) {
-        var dealerHoleCard = tempRemainingCards[i];
-        if (i == 0) dealerHoleCard.isHoleCard = true;
-        tempDealerHand.add(dealerHoleCard);
+        if (i == 0) tempRemainingCards[i].isHoleCard = true;
+        tempDealerHand.add(tempRemainingCards[i]);
+      } else {
+        tempPlayerHand.add(tempRemainingCards[i]);
       }
-      if (!i.isEven) tempPlayerHand.add(tempRemainingCards[i]);
+      dealtCards.add(tempRemainingCards[i]);
     }
-    tempRemainingCards.removeRange(0, 4); 
-    
-    // TODO - Set Dealer Cards in State
-    // TODO - Set Player Cards in State
-    // TODO - Set Dealt Cards in State
-    // TODO - Set Remaining Cards in State
-    // _setDealerHand(tempDealerHand);
-    // _setPlayerHand(tempPlayerHand);
+    tempRemainingCards.removeRange(0, 4);
+
+    emit(DeckState(
+        deckRepository: state.deckRepository,
+        shuffledDeck: state.shuffledDeck,
+        cutCardIndex: state.cutCardIndex,
+        dealerHand: tempDealerHand,
+        playerHand: tempPlayerHand,
+        dealtCards: [...state.dealtCards, ...dealtCards]));
   }
+
 }
