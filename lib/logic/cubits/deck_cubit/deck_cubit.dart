@@ -1,12 +1,17 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:count_champ/constants/raw_deck_data.dart';
+import 'package:count_champ/logic/cubits/basic_strategey_cubit.dart/cubit/basic_strategey_cubit.dart';
 import 'package:count_champ/utils/services/json_storage_service.dart';
 import 'package:equatable/equatable.dart';
 part 'deck_state.dart';
 
 class DeckCubit extends Cubit<DeckState> {
-  DeckCubit()
+  final BasicStrategeyCubit basicStrategeyCubit;
+  late StreamSubscription basicStrategeyStreamSubscription;
+
+  DeckCubit(
+      {required this.basicStrategeyCubit, basicStrategeyStreamSubscription})
       : super(DeckState(
           deckRepository: const [],
           shuffledDeck: const [],
@@ -15,8 +20,17 @@ class DeckCubit extends Cubit<DeckState> {
           dealerHand: const [],
           playerHand: const [],
         )) {
-    fetchCardData(); 
+    fetchCardData();
     shuffleDeck();
+    monitorBasicStrategeyCubit();
+  }
+
+  StreamSubscription<BasicStrategeyState> monitorBasicStrategeyCubit() {
+    dealStartingHand(); //* Deals Cards initially on screen mount
+    return basicStrategeyStreamSubscription =
+        basicStrategeyCubit.stream.listen((chosenPlay) {
+      dealStartingHand(); //* Deals cards again each time a BS button action is chosen.
+    });
   }
 
   // StreamController<double> controller = StreamController<double>();
@@ -41,7 +55,6 @@ class DeckCubit extends Cubit<DeckState> {
     dealStartingHand();
   }
 
-
   void shuffleDeck() {
     int deckQuantity = 1; // TODO -- Grab this value from settings
     int counter = 0;
@@ -59,7 +72,6 @@ class DeckCubit extends Cubit<DeckState> {
     }
     _initPlayableCards(shuffledDeck);
   }
-
 
   _initPlayableCards(shuffledDeck) {
     // * Sets the max allowable cards that can be dealt out of the deck after shuffle
@@ -111,4 +123,9 @@ class DeckCubit extends Cubit<DeckState> {
         dealtCards: [...state.dealtCards, ...dealtCards]));
   }
 
+  @override
+  Future<void> close() {
+    basicStrategeyStreamSubscription.cancel();
+    return super.close();
+  }
 }

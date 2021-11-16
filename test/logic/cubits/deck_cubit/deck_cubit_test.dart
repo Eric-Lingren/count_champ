@@ -9,7 +9,7 @@ void main() {
 
     setUp(() {
       WidgetsFlutterBinding.ensureInitialized();
-      deckCubit = DeckCubit();
+      // deckCubit = DeckCubit();
     });
   // test(
   //       'The initial state for the CounterCubit is DeckState(deckRepository: [], isLoadingInitData: true, shuffledDeck: [])',

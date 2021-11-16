@@ -6,17 +6,17 @@
 
 // ignore_for_file: avoid_print
 
-import 'package:count_champ/models/deck/deck.dart';
-import 'package:count_champ/models/settings/game_settings.dart';
-import 'package:count_champ/models/trainers/correct_plays/rules.dart';
-import 'package:count_champ/utils/services/service_locator.dart';
+
+// import 'package:count_champ/models/settings/game_settings.dart';
+// import 'package:count_champ/models/trainers/correct_plays/rules.dart';
+// import 'package:count_champ/utils/services/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // class CorrectPlays {
 // class CorrectPlays with ChangeNotifier {
 class CorrectPlays {
-  var gameSettingsModel = getIt.get<GameSettings>();
+  // var gameSettingsModel = getIt.get<GameSettings>();
   String play = '';
   int dealerTotal = 0;
   num playerTotal = 0;
@@ -48,7 +48,7 @@ class CorrectPlays {
       playerTotal += playerHand[i].value;
     }
 
-    var rules = Rules('hard', playerTotal);
+    // var rules = Rules('hard', playerTotal);
     // if (isPair) checkPairHands();
     // if (isSoft) checkSoftHands();
     if (isHard) checkHardHands();
@@ -72,21 +72,21 @@ class CorrectPlays {
   checkHard8() {
     var rules = [];
 
-    if (gameSettingsModel.deckQuantity == 1) {
-      if (gameSettingsModel.canDoubleAny2) {
-        rules = rulesFor8HardSingleDeckDoubleAllowed;
-      } else {
-        rules = rulesFor8HardMultiDeck;
-      }
-    } else {
-      rules = rulesFor8HardMultiDeck;
-    }
+    // if (gameSettingsModel.deckQuantity == 1) {
+    //   if (gameSettingsModel.canDoubleAny2) {
+    //     rules = rulesFor8HardSingleDeckDoubleAllowed;
+    //   } else {
+    //     rules = rulesFor8HardMultiDeck;
+    //   }
+    // } else {
+    //   rules = rulesFor8HardMultiDeck;
+    // }
 
-    if (rules[dealerTotal - 2] == play) {
-      print('Nice going!!!');
-    } else {
-      print('FROWNS');
-    }
+    // if (rules[dealerTotal - 2] == play) {
+    //   print('Nice going!!!');
+    // } else {
+    //   print('FROWNS');
+    // }
   }
 
   checkHard9() {}
