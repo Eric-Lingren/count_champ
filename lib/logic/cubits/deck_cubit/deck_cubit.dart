@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:count_champ/constants/raw_deck_data.dart';
-import 'package:count_champ/logic/cubits/basic_strategey_cubit.dart/cubit/basic_strategey_cubit.dart';
+import 'package:count_champ/logic/cubits/basic_strategey_cubit.dart/basic_strategey_cubit.dart';
 import 'package:count_champ/utils/services/json_storage_service.dart';
 import 'package:equatable/equatable.dart';
 part 'deck_state.dart';

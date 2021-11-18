@@ -1,5 +1,5 @@
 import 'package:count_champ/data/models/card_template.dart';
-import 'package:count_champ/logic/cubits/basic_strategey_cubit.dart/cubit/basic_strategey_cubit.dart';
+import 'package:count_champ/logic/cubits/basic_strategey_cubit.dart/basic_strategey_cubit.dart';
 import 'package:count_champ/logic/cubits/deck_cubit/deck_cubit.dart';
 import 'package:count_champ/widgets/game_settings_sidebar.dart';
 import 'package:flutter/material.dart';

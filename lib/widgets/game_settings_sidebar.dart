@@ -1,4 +1,4 @@
-import 'package:count_champ/logic/cubits/game_settings_cubit/cubit/game_settings_cubit.dart';
+import 'package:count_champ/logic/cubits/game_settings_cubit/game_settings_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

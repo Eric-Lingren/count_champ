@@ -1,4 +1,4 @@
-import 'package:count_champ/logic/cubits/basic_strategey_cubit.dart/cubit/basic_strategey_cubit.dart';
+import 'package:count_champ/logic/cubits/basic_strategey_cubit.dart/basic_strategey_cubit.dart';
 import 'package:count_champ/logic/cubits/deck_cubit/deck_cubit.dart';
 import 'package:count_champ/logic/cubits/player_cubit/player_cubit.dart';
 import 'package:count_champ/router/app_router.dart';
@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
-import 'logic/cubits/game_settings_cubit/cubit/game_settings_cubit.dart';
+import 'logic/cubits/game_settings_cubit/game_settings_cubit.dart';
 
 
 void main() {
