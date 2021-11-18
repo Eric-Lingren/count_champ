@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:count_champ/logic/cubits/deck_cubit/deck_cubit.dart';
 import 'package:equatable/equatable.dart';
 
 part 'basic_strategey_state.dart';

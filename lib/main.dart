@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
+import 'logic/cubits/game_settings_cubit/cubit/game_settings_cubit.dart';
+
 
 void main() {
   runApp(MyApp(
@@ -30,6 +32,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+      BlocProvider<GameSettingsCubit>(
+            create: (context) => GameSettingsCubit()),
       BlocProvider<BasicStrategeyCubit>(
             create: (context) => BasicStrategeyCubit()),
         BlocProvider<DeckCubit>(
