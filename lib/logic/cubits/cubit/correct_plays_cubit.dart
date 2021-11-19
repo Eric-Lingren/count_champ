@@ -116,7 +116,11 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
       handRules = findSoftBsRules();
     }
     if (_handType == 'split') {
-      handRules = findSplitBsRules();
+      if (_playerTotal == 10 || _playerTotal == 20 ) {
+        handRules = findHardBsRules();
+      } else {
+        handRules = findSplitBsRules();
+      }
     }
 
     print(_dealerFaceTotal);
@@ -188,21 +192,24 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
       _handRules = Soft13Plays(_canDoubleAny2, _deckQuantity).fetch();
     }
     if (_playerTotal == 14) {
-      _handRules = Soft14Plays(_canDoubleAny2, _dealerHitsSoft17, _deckQuantity).fetch();
+      _handRules =
+          Soft14Plays(_canDoubleAny2, _dealerHitsSoft17, _deckQuantity).fetch();
     }
     if (_playerTotal == 15 || _playerTotal == 16) {
       _handRules = Soft1516Plays(_canDoubleAny2, _deckQuantity).fetch();
     }
-    if (_playerTotal == 17 ) {
+    if (_playerTotal == 17) {
       _handRules = Soft17Plays(_canDoubleAny2, _deckQuantity).fetch();
     }
-    if (_playerTotal == 18 ) {
-      _handRules = Soft18Plays(_canDoubleAny2, _dealerHitsSoft17, _deckQuantity).fetch();
+    if (_playerTotal == 18) {
+      _handRules =
+          Soft18Plays(_canDoubleAny2, _dealerHitsSoft17, _deckQuantity).fetch();
     }
-    if (_playerTotal == 19 ) {
-      _handRules = Soft19Plays(_canDoubleAny2, _dealerHitsSoft17, _deckQuantity).fetch();
+    if (_playerTotal == 19) {
+      _handRules =
+          Soft19Plays(_canDoubleAny2, _dealerHitsSoft17, _deckQuantity).fetch();
     }
-    if (_playerTotal >= 20 ) {
+    if (_playerTotal >= 20) {
       _handRules = Soft20Plays().fetch();
     }
     return _handRules;
