@@ -131,6 +131,8 @@ class DeckCubit extends Cubit<DeckState> {
     print('Split :');
     print(_practiceBsSplitHands);
 
+    
+
     for (int i = 0; i < 4; i++) {
       if (i.isEven) {
         if (i == 0) tempRemainingCards[i].isHoleCard = true;

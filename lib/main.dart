@@ -10,6 +10,9 @@ import 'package:provider/provider.dart';
 import 'logic/cubits/game_settings_cubit/game_settings_cubit.dart';
 
 
+
+//! This is a test comment for get merge
+
 void main() {
   runApp(MyApp(
     appRouter: AppRouter(),
