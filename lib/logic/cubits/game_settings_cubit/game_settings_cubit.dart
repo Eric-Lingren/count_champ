@@ -280,9 +280,7 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
   };
   void togglePracticeBsHardHands(value) => {
     if (value) {
-      bsAllHands = false,
-      bsSoftHands = state.practiceBsSoftHands,
-      bsSplitHands = state.practiceBsSplitHands
+      bsAllHands = false
     },
     emit(GameSettingsState(
         canDas: state.canDas,
@@ -298,17 +296,15 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
         deckPenetration: state.deckPenetration,
         practiceBsAllHands: bsAllHands,
         practiceBsHardHands: value,
-        practiceBsSoftHands: bsSoftHands,
-        practiceBsSplitHands: bsSplitHands,
+        practiceBsSoftHands: state.practiceBsSoftHands,
+        practiceBsSplitHands: state.practiceBsSplitHands,
         practiceIllustrious18: state.practiceIllustrious18,
         practiceFab4: state.practiceFab4,
       ))
   };
   void togglePracticeBsSoftHands(value) => {
     if (value) {
-      bsAllHands = false,
-      bsHardHands = state.practiceBsHardHands,
-      bsSplitHands = state.practiceBsSplitHands
+      bsAllHands = false
     },
     emit(GameSettingsState(
         canDas: state.canDas,
@@ -323,18 +319,16 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
         deckQuantity: state.deckQuantity,
         deckPenetration: state.deckPenetration,
         practiceBsAllHands: bsAllHands,
-        practiceBsHardHands: bsHardHands,
+        practiceBsHardHands: state.practiceBsHardHands,
         practiceBsSoftHands: value,
-        practiceBsSplitHands: bsSplitHands,
+        practiceBsSplitHands: state.practiceBsSplitHands,
         practiceIllustrious18: state.practiceIllustrious18,
         practiceFab4: state.practiceFab4,
       ))
   };
   void togglePracticeBsSplitHands(value) => {
     if (value) {
-      bsAllHands = false,
-      bsHardHands = state.practiceBsHardHands,
-      bsSoftHands = state.practiceBsSoftHands
+      bsAllHands = false
     },
     emit(GameSettingsState(
         canDas: state.canDas,
@@ -349,8 +343,8 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
         deckQuantity: state.deckQuantity,
         deckPenetration: state.deckPenetration,
         practiceBsAllHands: bsAllHands,
-        practiceBsHardHands: bsHardHands,
-        practiceBsSoftHands: bsSoftHands,
+        practiceBsHardHands: state.practiceBsHardHands,
+        practiceBsSoftHands: state.practiceBsSoftHands,
         practiceBsSplitHands: value,
         practiceIllustrious18: state.practiceIllustrious18,
         practiceFab4: state.practiceFab4,

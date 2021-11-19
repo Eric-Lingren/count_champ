@@ -10,6 +10,12 @@ part 'deck_state.dart';
 class DeckCubit extends Cubit<DeckState> {
   double _deckQuantity = 8.0;
   double _deckPenetration = 80.0;
+  // bool _practiceBsHardHands = false;
+  // bool _practiceBsSoftHands = false;
+  // bool _practiceBsSplitHands = false;
+  var _practiceBsHardHands;
+  var _practiceBsSoftHands;
+  var _practiceBsSplitHands;
   final BasicStrategeyCubit basicStrategeyCubit;
   late StreamSubscription basicStrategeyStreamSubscription;
   final GameSettingsCubit gameSettingsCubit;
@@ -21,13 +27,12 @@ class DeckCubit extends Cubit<DeckState> {
       required this.gameSettingsCubit,
       gameSettingsStreamSubscription})
       : super(DeckState(
-          deckRepository: const [],
-          shuffledDeck: const [],
-          cutCardIndex: 0,
-          dealtCards: const [],
-          dealerHand: const [],
-          playerHand: const [],
-        )) {
+            deckRepository: const [],
+            shuffledDeck: const [],
+            cutCardIndex: 0,
+            dealtCards: const [],
+            dealerHand: const [],
+            playerHand: const [])) {
     fetchCardData();
     shuffleDeck();
     monitorBasicStrategeyCubit();
@@ -50,6 +55,10 @@ class DeckCubit extends Cubit<DeckState> {
         gameSettingsCubit.stream.listen((gameSettingsState) {
       _deckQuantity = gameSettingsState.deckQuantity;
       _deckPenetration = gameSettingsState.deckPenetration;
+      _practiceBsHardHands = gameSettingsState.practiceBsHardHands;
+      _practiceBsSoftHands = gameSettingsState.practiceBsSoftHands;
+      _practiceBsSplitHands = gameSettingsState.practiceBsSplitHands;
+
       shuffleDeck();
       dealStartingHand();
     });
@@ -115,6 +124,12 @@ class DeckCubit extends Cubit<DeckState> {
     var dealtCards = [];
     var tempDealerHand = [];
     var tempPlayerHand = [];
+    print('Hard :');
+    print(_practiceBsHardHands);
+    print('soft :');
+    print(_practiceBsSoftHands);
+    print('Split :');
+    print(_practiceBsSplitHands);
 
     for (int i = 0; i < 4; i++) {
       if (i.isEven) {
