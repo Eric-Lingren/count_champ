@@ -1,6 +1,8 @@
 import 'package:count_champ/data/models/card_template.dart';
-import 'package:count_champ/logic/cubits/basic_strategey_cubit.dart/basic_strategey_cubit.dart';
+import 'package:count_champ/logic/cubits/basic_strategey_cubit/basic_strategey_cubit.dart';
+import 'package:count_champ/logic/cubits/cubit/correct_plays_cubit.dart';
 import 'package:count_champ/logic/cubits/deck_cubit/deck_cubit.dart';
+import 'package:count_champ/widgets/correct_play_widget.dart';
 import 'package:count_champ/widgets/game_settings_sidebar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,23 +16,6 @@ class BasicStrategeyTrainer extends StatefulWidget {
 }
 
 class _BasicStrategeyTrainerState extends State<BasicStrategeyTrainer> {
-  bool isSwitched = false;
-
-
-
-  bool canDAS = true;
-  bool canDoubleAny2 = true; // False = reno rules - double only on 9-11 hard
-  bool canResplit = true;
-  bool canSplitAces = true;
-  bool canHitAfterSplitAces = true;
-  bool dealerHitsSoft17 = false;
-  bool canEarlySurrender = false;
-  bool canLateSurrender = true;
-  bool isNoPeek = false;
-  int deckQuantity = 1;
-  double deckPenetration = 1.00;
-
-
   @override
   Widget build(BuildContext context) {
     return (Scaffold(
@@ -39,7 +24,9 @@ class _BasicStrategeyTrainerState extends State<BasicStrategeyTrainer> {
             builder: (BuildContext context) {
               return IconButton(
                 icon: const Icon(Icons.arrow_back),
-                onPressed: () { Navigator.pop(context); },
+                onPressed: () {
+                  Navigator.pop(context);
+                },
               );
             },
           ),
@@ -47,14 +34,17 @@ class _BasicStrategeyTrainerState extends State<BasicStrategeyTrainer> {
           foregroundColor: Colors.white,
         ),
         endDrawer: const Drawer(
-          elevation: 16.0,
-          child: SafeArea(
-            child: GameSettingsSidebar(),
-          )
-        ),
+            elevation: 16.0,
+            child: SafeArea(
+              child: GameSettingsSidebar(),
+            )),
         body: SafeArea(
             child: Column(
           children: <Widget>[
+            BlocBuilder<CorrectPlaysCubit, CorrectPlaysState>(
+                builder: (context, state) {
+              return CorrectPlayWidget(playWasCorrect: state.playWasCorrect, correctPlay: state.correctPlay, hand: state.hand, streak: state.streak);
+            }),
             BlocBuilder<DeckCubit, DeckState>(builder: (context, state) {
               if (state.dealerHand.isNotEmpty) {
                 return Row(
@@ -97,26 +87,53 @@ class _BasicStrategeyTrainerState extends State<BasicStrategeyTrainer> {
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               ElevatedButton(
                   onPressed: () {
-                    context.read<BasicStrategeyCubit>().choosePlay('hit');
+                    // context.read<BasicStrategeyCubit>().choosePlay('hit');
+                    context.read<CorrectPlaysCubit>().checkPlay('hit');
+                    context.read<BasicStrategeyCubit>().initNextHand();
                   },
                   child: const Text('Hit')),
               ElevatedButton(
                   onPressed: () {
-                    context.read<BasicStrategeyCubit>().choosePlay('stand');
+                    // context.read<BasicStrategeyCubit>().choosePlay('stand');
+                    context.read<CorrectPlaysCubit>().checkPlay('stand');
+                    context.read<BasicStrategeyCubit>().initNextHand();
                   },
                   child: const Text('Stand')),
               ElevatedButton(
                   onPressed: () {
-                    context.read<BasicStrategeyCubit>().choosePlay('double');
+                    // context.read<BasicStrategeyCubit>().choosePlay('double');
+                    context.read<CorrectPlaysCubit>().checkPlay('double');
+                    context.read<BasicStrategeyCubit>().initNextHand();
                   },
                   child: const Text('Double')),
               ElevatedButton(
                   onPressed: () {
-                    context.read<BasicStrategeyCubit>().choosePlay('split');
+                    // context.read<BasicStrategeyCubit>().choosePlay('split');
+                    context.read<CorrectPlaysCubit>().checkPlay('split');
+                    context.read<BasicStrategeyCubit>().initNextHand();
                   },
                   child: const Text('Split')),
+            ]),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              ElevatedButton(
+                  onPressed: () {
+                    context.read<CorrectPlaysCubit>().checkPlay('surrender');
+                    context.read<BasicStrategeyCubit>().initNextHand();
+                  },
+                  child: const Text('Surrender')),
             ]),
           ],
         ))));
   }
 }
+
+// return (BlocBuilder<CorrectPlaysCubit, CorrectPlaysState>(
+//         builder: (context, state) {
+//       print(state.playWasCorrect);
+//       var backgroundColor;
+//       if (!state.playWasCorrect) {
+//         backgroundColor = Colors.red[400];
+//       } else {
+//         backgroundColor = Colors.green[300];
+//       }
+//       return

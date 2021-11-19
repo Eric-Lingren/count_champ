@@ -1,17 +1,25 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:count_champ/constants/raw_deck_data.dart';
-import 'package:count_champ/logic/cubits/basic_strategey_cubit.dart/basic_strategey_cubit.dart';
+import 'package:count_champ/logic/cubits/basic_strategey_cubit/basic_strategey_cubit.dart';
+import 'package:count_champ/logic/cubits/game_settings_cubit/game_settings_cubit.dart';
 import 'package:count_champ/utils/services/json_storage_service.dart';
 import 'package:equatable/equatable.dart';
 part 'deck_state.dart';
 
 class DeckCubit extends Cubit<DeckState> {
+  double _deckQuantity = 8.0;
+  double _deckPenetration = 80.0;
   final BasicStrategeyCubit basicStrategeyCubit;
   late StreamSubscription basicStrategeyStreamSubscription;
+  final GameSettingsCubit gameSettingsCubit;
+  late StreamSubscription gameSettingsStreamSubscription;
 
   DeckCubit(
-      {required this.basicStrategeyCubit, basicStrategeyStreamSubscription})
+      {required this.basicStrategeyCubit,
+      basicStrategeyStreamSubscription,
+      required this.gameSettingsCubit,
+      gameSettingsStreamSubscription})
       : super(DeckState(
           deckRepository: const [],
           shuffledDeck: const [],
@@ -23,17 +31,29 @@ class DeckCubit extends Cubit<DeckState> {
     fetchCardData();
     shuffleDeck();
     monitorBasicStrategeyCubit();
+    monitorGameSettingsCubit();
   }
 
   StreamSubscription<BasicStrategeyState> monitorBasicStrategeyCubit() {
-    dealStartingHand(); //* Deals Cards initially on screen mount
+    dealStartingHand(); //* Deals Cards initially on BS trainer screen mount
     return basicStrategeyStreamSubscription =
-        basicStrategeyCubit.stream.listen((chosenPlay) {
-      dealStartingHand(); //* Deals cards again each time a BS button action is chosen.
+        basicStrategeyCubit.stream.listen((basicStrategeyState) {
+      if (basicStrategeyState.didChoosePlay == true) {
+        dealStartingHand(); //* Deals cards again each time a BS button action is chosen.
+      }
     });
   }
 
-  // StreamController<double> controller = StreamController<double>();
+  StreamSubscription<GameSettingsState> monitorGameSettingsCubit() {
+    // * If the user changes the deck quantity or pennetration in settings, it will adjust the deck accordingly.
+    return gameSettingsStreamSubscription =
+        gameSettingsCubit.stream.listen((gameSettingsState) {
+      _deckQuantity = gameSettingsState.deckQuantity;
+      _deckPenetration = gameSettingsState.deckPenetration;
+      shuffleDeck();
+      dealStartingHand();
+    });
+  }
 
   Future<List> fetchCardData() async {
     List cards =
@@ -51,15 +71,10 @@ class DeckCubit extends Cubit<DeckState> {
         cutCardIndex: 0,
       ));
 
-  testFunc() {
-    dealStartingHand();
-  }
-
   void shuffleDeck() {
-    int deckQuantity = 1; // TODO -- Grab this value from settings
     int counter = 0;
     List tempDeck = [];
-    while (counter < deckQuantity) {
+    while (counter < _deckQuantity.round()) {
       var newDeck = state.deckRepository;
       newDeck.shuffle();
       tempDeck.add(newDeck);
@@ -76,8 +91,7 @@ class DeckCubit extends Cubit<DeckState> {
   _initPlayableCards(shuffledDeck) {
     // * Sets the max allowable cards that can be dealt out of the deck after shuffle
     // * Contingent upon deck quantity and deck penetration (cut card depth).
-    // TODO -- Grab this deck pen value from settings:
-    double deckPenetration = 0.80; // * range from .1-.8
+    double deckPenetration = _deckPenetration / 100; // * range from .1-.8
     double availableCardsQuantity = shuffledDeck.length * deckPenetration;
     int cutCardIndex = availableCardsQuantity.floor();
     _setPlayableCards(shuffledDeck, cutCardIndex);
@@ -96,7 +110,6 @@ class DeckCubit extends Cubit<DeckState> {
     // * Deals 2 cards to each person (dealer and player)
     // * First card face up to player, Second card face down to dealer
     // * Third card face up to player, Fourth card face up to dealer
-
     if (state.dealtCards.length > state.cutCardIndex) shuffleDeck();
     var tempRemainingCards = state.shuffledDeck;
     var dealtCards = [];
@@ -126,6 +139,7 @@ class DeckCubit extends Cubit<DeckState> {
   @override
   Future<void> close() {
     basicStrategeyStreamSubscription.cancel();
+    gameSettingsStreamSubscription.cancel();
     return super.close();
   }
 }

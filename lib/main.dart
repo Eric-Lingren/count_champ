@@ -1,4 +1,5 @@
-import 'package:count_champ/logic/cubits/basic_strategey_cubit.dart/basic_strategey_cubit.dart';
+import 'package:count_champ/logic/cubits/basic_strategey_cubit/basic_strategey_cubit.dart';
+import 'package:count_champ/logic/cubits/cubit/correct_plays_cubit.dart';
 import 'package:count_champ/logic/cubits/deck_cubit/deck_cubit.dart';
 import 'package:count_champ/logic/cubits/player_cubit/player_cubit.dart';
 import 'package:count_champ/router/app_router.dart';
@@ -34,10 +35,16 @@ class _MyAppState extends State<MyApp> {
       providers: [
       BlocProvider<GameSettingsCubit>(
             create: (context) => GameSettingsCubit()),
+      // BlocProvider<CorrectPlaysCubit>(
+      //       create: (context) => CorrectPlaysCubit()),
       BlocProvider<BasicStrategeyCubit>(
             create: (context) => BasicStrategeyCubit()),
         BlocProvider<DeckCubit>(
-            create: (context) => DeckCubit(basicStrategeyCubit: context.read<BasicStrategeyCubit>())),
+            create: (context) => DeckCubit(
+              basicStrategeyCubit: context.read<BasicStrategeyCubit>(), 
+              gameSettingsCubit: context.read<GameSettingsCubit>())),
+      BlocProvider<CorrectPlaysCubit>(
+            create: (context) => CorrectPlaysCubit(deckCubit: context.read<DeckCubit>(), gameSettingsCubit: context.read<GameSettingsCubit>())),
         BlocProvider<PlayerCubit>(
             create: (context) => PlayerCubit()),
       ],
