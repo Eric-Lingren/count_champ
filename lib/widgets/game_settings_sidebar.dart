@@ -16,7 +16,7 @@ class _GameSettingsSidebarState extends State<GameSettingsSidebar> {
         body: Column(
       children: <Widget>[
         ListTile(
-            title: const Text("Can Double After Split"),
+            title: const Text("Double After Split"),
             leading: BlocBuilder<GameSettingsCubit, GameSettingsState>(
                 builder: (context, state) {
               return Switch(
@@ -28,8 +28,8 @@ class _GameSettingsSidebarState extends State<GameSettingsSidebar> {
                 activeColor: Colors.green,
               );
             })),
-        ListTile(
-            title: const Text("Can Double Any Two Cards"),
+        ListTile( // TODO Off is Reno rules
+            title: const Text("Double Any Two Cards"), 
             leading: BlocBuilder<GameSettingsCubit, GameSettingsState>(
                 builder: (context, state) {
               return Switch(
@@ -41,23 +41,23 @@ class _GameSettingsSidebarState extends State<GameSettingsSidebar> {
                 activeColor: Colors.green,
               );
             })),
+        // ListTile( // TODO - Only for GamePlay, not BS
+        //     title: const Text("Can Resplit Pairs"), 
+        //     leading: BlocBuilder<GameSettingsCubit, GameSettingsState>(
+        //         builder: (context, state) {
+        //       return Switch(
+        //         value: state.canResplitPairs,
+        //         onChanged: (value) {
+        //           context
+        //               .read<GameSettingsCubit>()
+        //               .toggleCanResplitPairs(value);
+        //         },
+        //         activeTrackColor: Colors.lightGreenAccent[700],
+        //         activeColor: Colors.green,
+        //       );
+        //     })),
         ListTile(
-            title: const Text("Can Resplit Pairs"),
-            leading: BlocBuilder<GameSettingsCubit, GameSettingsState>(
-                builder: (context, state) {
-              return Switch(
-                value: state.canResplitPairs,
-                onChanged: (value) {
-                  context
-                      .read<GameSettingsCubit>()
-                      .toggleCanResplitPairs(value);
-                },
-                activeTrackColor: Colors.lightGreenAccent[700],
-                activeColor: Colors.green,
-              );
-            })),
-        ListTile(
-            title: const Text("Can Split Aces"),
+            title: const Text("Splitting Aces"),
             leading: BlocBuilder<GameSettingsCubit, GameSettingsState>(
                 builder: (context, state) {
               return Switch(
@@ -69,21 +69,21 @@ class _GameSettingsSidebarState extends State<GameSettingsSidebar> {
                 activeColor: Colors.green,
               );
             })),
-        ListTile(
-            title: const Text("Can Hit After Splitting Aces"),
-            leading: BlocBuilder<GameSettingsCubit, GameSettingsState>(
-                builder: (context, state) {
-              return Switch(
-                value: state.canHitAfterSplittingAces,
-                onChanged: (value) {
-                  context
-                      .read<GameSettingsCubit>()
-                      .toggleCanHitAfterSplitingAces(value);
-                },
-                activeTrackColor: Colors.lightGreenAccent[700],
-                activeColor: Colors.green,
-              );
-            })),
+        // ListTile( // TODO - Only for GamePlay, not BS
+        //     title: const Text("Can Hit After Splitting Aces"), 
+        //     leading: BlocBuilder<GameSettingsCubit, GameSettingsState>(
+        //         builder: (context, state) {
+        //       return Switch(
+        //         value: state.canHitAfterSplittingAces,
+        //         onChanged: (value) {
+        //           context
+        //               .read<GameSettingsCubit>()
+        //               .toggleCanHitAfterSplitingAces(value);
+        //         },
+        //         activeTrackColor: Colors.lightGreenAccent[700],
+        //         activeColor: Colors.green,
+        //       );
+        //     })),
         ListTile(
             title: const Text("Dealer Hits Soft 17"),
             leading: BlocBuilder<GameSettingsCubit, GameSettingsState>(
@@ -129,19 +129,19 @@ class _GameSettingsSidebarState extends State<GameSettingsSidebar> {
                 activeColor: Colors.green,
               );
             })),
-        ListTile(
-            title: const Text("Dealer Peeks for 21"),
-            leading: BlocBuilder<GameSettingsCubit, GameSettingsState>(
-                builder: (context, state) {
-              return Switch(
-                value: state.dealerPeeks,
-                onChanged: (value) {
-                  context.read<GameSettingsCubit>().toggleDealerPeeks(value);
-                },
-                activeTrackColor: Colors.lightGreenAccent[700],
-                activeColor: Colors.green,
-              );
-            })),
+        // ListTile( // TODO - Only for GamePlay, not BS
+        //     title: const Text("Dealer Peeks for 21"),
+        //     leading: BlocBuilder<GameSettingsCubit, GameSettingsState>(
+        //         builder: (context, state) {
+        //       return Switch(
+        //         value: state.dealerPeeks,
+        //         onChanged: (value) {
+        //           context.read<GameSettingsCubit>().toggleDealerPeeks(value);
+        //         },
+        //         activeTrackColor: Colors.lightGreenAccent[700],
+        //         activeColor: Colors.green,
+        //       );
+        //     })),
         BlocBuilder<GameSettingsCubit, GameSettingsState>(
             builder: (context, state) {
           return ListTile(
@@ -158,22 +158,22 @@ class _GameSettingsSidebarState extends State<GameSettingsSidebar> {
                 },
               ));
         }),
-        BlocBuilder<GameSettingsCubit, GameSettingsState>(
-            builder: (context, state) {
-          return ListTile(
-              title: Text('Deck Penetration:${state.deckPenetration.round()}%'),
-              isThreeLine: true,
-              subtitle: Slider(
-                min: 0.0,
-                max: 100.0,
-                value: state.deckPenetration,
-                divisions: 20,
-                label: '${state.deckPenetration.round()}',
-                onChanged: (value) {
-                  context.read<GameSettingsCubit>().setDeckPenetration(value);
-                },
-              ));
-        }),
+        // BlocBuilder<GameSettingsCubit, GameSettingsState>(
+        //     builder: (context, state) {
+        //   return ListTile( // TODO - Only for GamePlay and Counting, not BS
+        //       title: Text('Deck Penetration:${state.deckPenetration.round()}%'),
+        //       isThreeLine: true,
+        //       subtitle: Slider(
+        //         min: 0.0,
+        //         max: 100.0,
+        //         value: state.deckPenetration,
+        //         divisions: 20,
+        //         label: '${state.deckPenetration.round()}',
+        //         onChanged: (value) {
+        //           context.read<GameSettingsCubit>().setDeckPenetration(value);
+        //         },
+        //       ));
+        // }),
       ],
     )));
   }

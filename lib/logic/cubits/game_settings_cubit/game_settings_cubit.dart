@@ -4,6 +4,7 @@ import 'package:equatable/equatable.dart';
 part 'game_settings_state.dart';
 
 class GameSettingsCubit extends Cubit<GameSettingsState> {
+  var alternateSurrenderValue;
   GameSettingsCubit()
       : super(GameSettingsState(
             // * Initial Default Game Rules:
@@ -97,32 +98,46 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
         deckQuantity: state.deckQuantity,
         deckPenetration: state.deckPenetration,
       ));
-  void toggleCanEarlySurrender(value) => emit(GameSettingsState(
-        canDas: state.canDas,
-        canResplitPairs: state.canResplitPairs,
-        canDoubleAny2: state.canDoubleAny2,
-        canSplitAces: state.canSplitAces,
-        canHitAfterSplittingAces: state.canHitAfterSplittingAces,
-        dealerHitsSoft17: state.dealerHitsSoft17,
-        canEarlySurrender: value,
-        canLateSurrender: state.canLateSurrender,
-        dealerPeeks: state.dealerPeeks,
-        deckQuantity: state.deckQuantity,
-        deckPenetration: state.deckPenetration,
-      ));
-  void toggleCanLateSurrender(value) => emit(GameSettingsState(
-        canDas: state.canDas,
-        canResplitPairs: state.canResplitPairs,
-        canDoubleAny2: state.canDoubleAny2,
-        canSplitAces: state.canSplitAces,
-        canHitAfterSplittingAces: state.canHitAfterSplittingAces,
-        dealerHitsSoft17: state.dealerHitsSoft17,
-        canEarlySurrender: state.canEarlySurrender,
-        canLateSurrender: value,
-        dealerPeeks: state.dealerPeeks,
-        deckQuantity: state.deckQuantity,
-        deckPenetration: state.deckPenetration,
-      ));
+  void toggleCanEarlySurrender(value) => {
+    if(value && state.canLateSurrender){
+      alternateSurrenderValue = false
+    } else{
+      alternateSurrenderValue = state.canLateSurrender
+    },
+        emit(GameSettingsState(
+          canDas: state.canDas,
+          canResplitPairs: state.canResplitPairs,
+          canDoubleAny2: state.canDoubleAny2,
+          canSplitAces: state.canSplitAces,
+          canHitAfterSplittingAces: state.canHitAfterSplittingAces,
+          dealerHitsSoft17: state.dealerHitsSoft17,
+          canEarlySurrender: value,
+          canLateSurrender: alternateSurrenderValue,
+          dealerPeeks: state.dealerPeeks,
+          deckQuantity: state.deckQuantity,
+          deckPenetration: state.deckPenetration,
+        ))
+      };
+  void toggleCanLateSurrender(value) => {
+    if(value && state.canEarlySurrender){
+      alternateSurrenderValue = false
+    } else{
+      alternateSurrenderValue = state.canEarlySurrender
+    },
+        emit(GameSettingsState(
+          canDas: state.canDas,
+          canResplitPairs: state.canResplitPairs,
+          canDoubleAny2: state.canDoubleAny2,
+          canSplitAces: state.canSplitAces,
+          canHitAfterSplittingAces: state.canHitAfterSplittingAces,
+          dealerHitsSoft17: state.dealerHitsSoft17,
+          canEarlySurrender: alternateSurrenderValue,
+          canLateSurrender: value,
+          dealerPeeks: state.dealerPeeks,
+          deckQuantity: state.deckQuantity,
+          deckPenetration: state.deckPenetration,
+        ))
+      };
   void toggleDealerPeeks(value) => emit(GameSettingsState(
         canDas: state.canDas,
         canResplitPairs: state.canResplitPairs,

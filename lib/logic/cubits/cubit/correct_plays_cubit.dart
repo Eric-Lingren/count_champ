@@ -10,6 +10,14 @@ import 'package:count_champ/data/models/basic_strategey_charts/bs_hard_hands/har
 import 'package:count_champ/data/models/basic_strategey_charts/bs_hard_hands/hard_17_plays.dart';
 import 'package:count_champ/data/models/basic_strategey_charts/bs_hard_hands/hard_18_plays.dart';
 import 'package:count_champ/data/models/basic_strategey_charts/bs_hard_hands/hard_9_plays.dart';
+import 'package:count_champ/data/models/basic_strategey_charts/bs_pair_hands/pair_12_plays.dart';
+import 'package:count_champ/data/models/basic_strategey_charts/bs_pair_hands/pair_14_plays.dart';
+import 'package:count_champ/data/models/basic_strategey_charts/bs_pair_hands/pair_16_plays.dart';
+import 'package:count_champ/data/models/basic_strategey_charts/bs_pair_hands/pair_18_plays.dart';
+import 'package:count_champ/data/models/basic_strategey_charts/bs_pair_hands/pair_22_plays.dart';
+import 'package:count_champ/data/models/basic_strategey_charts/bs_pair_hands/pair_4_plays.dart';
+import 'package:count_champ/data/models/basic_strategey_charts/bs_pair_hands/pair_6_plays.dart';
+import 'package:count_champ/data/models/basic_strategey_charts/bs_pair_hands/pair_8_plays.dart';
 import 'package:count_champ/data/models/basic_strategey_charts/bs_soft_hands/soft_13_plays.dart';
 import 'package:count_champ/data/models/basic_strategey_charts/bs_soft_hands/soft_14_plays.dart';
 import 'package:count_champ/data/models/basic_strategey_charts/bs_soft_hands/soft_15_16_plays.dart';
@@ -33,13 +41,10 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
   late StreamSubscription deckStreamSubscription;
   late bool _canDas;
   late bool _canDoubleAny2;
-  late bool _canResplitPairs;
   late bool _canSplitAces;
-  late bool _canHitAfterSplittingAces;
   late bool _dealerHitsSoft17;
   late bool _canEarlySurrender;
   late bool _canLateSurrender;
-  late bool _dealerPeeks;
   late double _deckQuantity;
   int _playerTotal = 0;
   int _dealerFaceTotal = 0;
@@ -69,13 +74,10 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
   void manageLocalRules(gameSettingsState) {
     _canDas = gameSettingsState.canDas;
     _canDoubleAny2 = gameSettingsState.canDoubleAny2;
-    _canResplitPairs = gameSettingsState.canResplitPairs;
     _canSplitAces = gameSettingsState.canSplitAces;
-    _canHitAfterSplittingAces = gameSettingsState.canHitAfterSplittingAces;
     _dealerHitsSoft17 = gameSettingsState.dealerHitsSoft17;
     _canEarlySurrender = gameSettingsState.canEarlySurrender;
     _canLateSurrender = gameSettingsState.canLateSurrender;
-    _dealerPeeks = gameSettingsState.dealerPeeks;
     _deckQuantity = gameSettingsState.deckQuantity;
   }
 
@@ -103,29 +105,21 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
   void checkPlay(chosenPlay) {
     print('Player Choose : ${chosenPlay}');
     List handRules = [];
-
-    _handType = 'soft';
-    _dealerFaceTotal = 6;
-    _playerTotal = 21;
-
+    
     if (_handType == 'hard') {
       handRules = findHardBsRules();
     }
     if (_handType == 'soft') {
-      print('chechking soft');
       handRules = findSoftBsRules();
     }
     if (_handType == 'split') {
-      if (_playerTotal == 10 || _playerTotal == 20 ) {
+      if (_playerTotal == 10 || _playerTotal == 20) {
         handRules = findHardBsRules();
       } else {
         handRules = findSplitBsRules();
       }
     }
 
-    print(_dealerFaceTotal);
-    print(_playerTotal);
-    print(handRules);
     String correctPlay = handRules[_dealerFaceTotal - 2];
     String hand = 'Player: ${_playerTotal}  VS  Dealer: ${_dealerFaceTotal}';
 
@@ -217,8 +211,29 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
 
   findSplitBsRules() {
     List _handRules = [];
-    if (_playerTotal == 13) {
-      _handRules = Hard7Plays().fetch();
+    if (_playerTotal == 4) {
+      _handRules = Pair4Plays(_canDas, _deckQuantity).fetch();
+    }
+    if (_playerTotal == 6) {
+      _handRules = Pair6Plays(_canDas, _deckQuantity).fetch();
+    }
+    if (_playerTotal == 8) {
+      _handRules = Pair8Plays(_canDas, _canDoubleAny2, _deckQuantity).fetch();
+    }
+    if (_playerTotal == 12) {
+      _handRules = Pair12Plays(_canDas, _deckQuantity).fetch();
+    }
+    if (_playerTotal == 14) {
+      _handRules = Pair14Plays(_canDas, _dealerHitsSoft17, _canEarlySurrender, _canLateSurrender, _deckQuantity).fetch();
+    }
+    if (_playerTotal == 16) {
+      _handRules = Pair16Plays(_dealerHitsSoft17, _canEarlySurrender, _canLateSurrender, _deckQuantity).fetch();
+    }
+    if (_playerTotal == 18) {
+      _handRules = Pair18Plays(_canDas, _dealerHitsSoft17, _deckQuantity).fetch();
+    }
+    if (_playerTotal == 22) {
+      _handRules = Pair22Plays(_canSplitAces).fetch();
     }
     return _handRules;
   }

@@ -2,7 +2,7 @@ part of 'game_settings_cubit.dart';
 
 class GameSettingsState extends Equatable {
   bool canDas;
-  bool canDoubleAny2; // False = reno rules - double only on 9-11 hard
+  bool canDoubleAny2; // False = reno rules - double only on 10-11 
   bool canResplitPairs;
   bool canSplitAces;
   bool canHitAfterSplittingAces;
