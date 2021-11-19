@@ -13,7 +13,7 @@ class _GameSettingsSidebarState extends State<GameSettingsSidebar> {
   @override
   Widget build(BuildContext context) {
     return (Scaffold(
-        body: Column(
+        body: SingleChildScrollView(child: Column(
       children: <Widget>[
         ListTile(
             title: const Text("Double After Split"),
@@ -142,22 +142,6 @@ class _GameSettingsSidebarState extends State<GameSettingsSidebar> {
         //         activeColor: Colors.green,
         //       );
         //     })),
-        BlocBuilder<GameSettingsCubit, GameSettingsState>(
-            builder: (context, state) {
-          return ListTile(
-              title: Text('Deck Quantity: ${state.deckQuantity.round()}'),
-              isThreeLine: true,
-              subtitle: Slider(
-                min: 1.0,
-                max: 8.0,
-                value: state.deckQuantity,
-                divisions: 8,
-                label: '${state.deckQuantity.round()}',
-                onChanged: (value) {
-                  context.read<GameSettingsCubit>().setDeckQuantity(value);
-                },
-              ));
-        }),
         // BlocBuilder<GameSettingsCubit, GameSettingsState>(
         //     builder: (context, state) {
         //   return ListTile( // TODO - Only for GamePlay and Counting, not BS
@@ -174,7 +158,113 @@ class _GameSettingsSidebarState extends State<GameSettingsSidebar> {
         //         },
         //       ));
         // }),
+        ListTile( // TODO BS Settings Only
+            title: const Text("Practice All Hands"),
+            leading: BlocBuilder<GameSettingsCubit, GameSettingsState>(
+                builder: (context, state) {
+              return Switch(
+                value: state.practiceBsAllHands,
+                onChanged: (value) {
+                  context
+                      .read<GameSettingsCubit>()
+                      .togglePracticeBsAllHands(value);
+                },
+                activeTrackColor: Colors.lightGreenAccent[700],
+                activeColor: Colors.green,
+              );
+            })),
+        ListTile( // TODO BS Settings Only
+            title: const Text("Practice Hard Hands"),
+            leading: BlocBuilder<GameSettingsCubit, GameSettingsState>(
+                builder: (context, state) {
+              return Switch(
+                value: state.practiceBsHardHands,
+                onChanged: (value) {
+                  context
+                      .read<GameSettingsCubit>()
+                      .togglePracticeBsHardHands(value);
+                },
+                activeTrackColor: Colors.lightGreenAccent[700],
+                activeColor: Colors.green,
+              );
+            })),
+        ListTile( // TODO BS Settings Only
+            title: const Text("Practice Soft Hands"),
+            leading: BlocBuilder<GameSettingsCubit, GameSettingsState>(
+                builder: (context, state) {
+              return Switch(
+                value: state.practiceBsSoftHands,
+                onChanged: (value) {
+                  context
+                      .read<GameSettingsCubit>()
+                      .togglePracticeBsSoftHands(value);
+                },
+                activeTrackColor: Colors.lightGreenAccent[700],
+                activeColor: Colors.green,
+              );
+            })),
+        ListTile( // TODO BS Settings Only
+            title: const Text("Practice Split Hands"),
+            leading: BlocBuilder<GameSettingsCubit, GameSettingsState>(
+                builder: (context, state) {
+              return Switch(
+                value: state.practiceBsSplitHands,
+                onChanged: (value) {
+                  context
+                      .read<GameSettingsCubit>()
+                      .togglePracticeBsSplitHands(value);
+                },
+                activeTrackColor: Colors.lightGreenAccent[700],
+                activeColor: Colors.green,
+              );
+            })),
+        ListTile( // TODO BS and Game Settings Only
+            title: const Text("Illustrious 18 Deviations"),
+            leading: BlocBuilder<GameSettingsCubit, GameSettingsState>(
+                builder: (context, state) {
+              return Switch(
+                value: state.practiceIllustrious18,
+                onChanged: (value) {
+                  context
+                      .read<GameSettingsCubit>()
+                      .toggleIllustrious18(value);
+                },
+                activeTrackColor: Colors.lightGreenAccent[700],
+                activeColor: Colors.green,
+              );
+            })),
+        ListTile( // TODO BS and Game Settings Only
+            title: const Text("Fab 4 Deviations"),
+            leading: BlocBuilder<GameSettingsCubit, GameSettingsState>(
+                builder: (context, state) {
+              return Switch(
+                value: state.practiceFab4,
+                onChanged: (value) {
+                  context
+                      .read<GameSettingsCubit>()
+                      .toggleFab4(value);
+                },
+                activeTrackColor: Colors.lightGreenAccent[700],
+                activeColor: Colors.green,
+              );
+            })),
+                    BlocBuilder<GameSettingsCubit, GameSettingsState>(
+            builder: (context, state) {
+          return ListTile(
+              title: Text('Deck Quantity: ${state.deckQuantity.round()}'),
+              isThreeLine: true,
+              subtitle: Slider(
+                min: 1.0,
+                max: 8.0,
+                value: state.deckQuantity,
+                divisions: 8,
+                label: '${state.deckQuantity.round()}',
+                onChanged: (value) {
+                  context.read<GameSettingsCubit>().setDeckQuantity(value);
+                },
+              ));
+        }),
       ],
-    )));
+    ))));
   }
 }

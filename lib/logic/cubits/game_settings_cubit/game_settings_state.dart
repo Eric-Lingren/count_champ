@@ -12,6 +12,12 @@ class GameSettingsState extends Equatable {
   bool dealerPeeks;
   double deckQuantity;
   double deckPenetration;
+  bool practiceBsAllHands;
+  bool practiceBsHardHands;
+  bool practiceBsSoftHands;
+  bool practiceBsSplitHands;
+  bool practiceIllustrious18;
+  bool practiceFab4;
 
   GameSettingsState({
     required this.canDas,
@@ -25,6 +31,12 @@ class GameSettingsState extends Equatable {
     required this.dealerPeeks,
     required this.deckQuantity,
     required this.deckPenetration,
+    required this.practiceBsAllHands,
+    required this.practiceBsHardHands,
+    required this.practiceBsSoftHands,
+    required this.practiceBsSplitHands,
+    required this.practiceIllustrious18,
+    required this.practiceFab4,
   });
 
   @override
@@ -40,6 +52,12 @@ class GameSettingsState extends Equatable {
     dealerPeeks,
     deckQuantity,
     deckPenetration,
+    practiceBsAllHands,
+    practiceBsHardHands,
+    practiceBsSoftHands,
+    practiceBsSplitHands,
+    practiceIllustrious18,
+    practiceFab4,
   ];
 }
 
