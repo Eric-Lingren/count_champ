@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:count_champ/data/models/basic_strategey_charts/bs_deviations/deviation_plays.dart';
+import 'package:count_champ/data/models/basic_strategey_charts/bs_deviations/insurance_plays.dart';
 import 'package:count_champ/data/models/basic_strategey_charts/bs_hard_hands/hard_10_plays.dart';
 import 'package:count_champ/data/models/basic_strategey_charts/bs_hard_hands/hard_11_plays.dart';
 import 'package:count_champ/data/models/basic_strategey_charts/bs_hard_hands/hard_12_plays.dart';
@@ -48,6 +49,7 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
   late bool _canLateSurrender;
   late bool _practiceIllustrious18;
   late bool _practiceFab4;
+  late bool _practiceInsurance;
   late double _deckQuantity;
   late int _trueCount;
   int _playerTotal = 0;
@@ -85,6 +87,7 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
     _deckQuantity = gameSettingsState.deckQuantity;
     _practiceIllustrious18 = gameSettingsState.practiceIllustrious18;
     _practiceFab4 = gameSettingsState.practiceFab4;
+    _practiceInsurance = gameSettingsState.practiceInsurance;
   }
 
   StreamSubscription<DeckState> monitorDeckCubit() {
@@ -117,9 +120,21 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
     // print('ILLUSTRIOUS 18 : ${_practiceIllustrious18}');
     List handRules = [];
     String correctPlay = '';
+    bool foundInsuranceMatch = false;
     bool foundDeviationMatch = false;
 
-    if (_practiceFab4 == true || _practiceIllustrious18 == true) {
+
+    if(_practiceInsurance){
+      print('Checking deviations');
+      //* Checks Insurance Gameplay Rules for the correct play
+      correctPlay = findInsuranceBsRules();
+      if (correctPlay != 'none') {
+        print('FOUND Insurance MATCH!!!');
+        foundInsuranceMatch = true;
+      }
+    }
+
+    if (!foundInsuranceMatch && (_practiceFab4 == true || _practiceIllustrious18 == true)) {
       print('Checking deviations');
       //* Checks Deviation Gameplay Rules for the corerct play
       correctPlay = findDeviationBsRules();
@@ -130,7 +145,7 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
       }
     }
     
-    if(!foundDeviationMatch) {
+    if(!foundInsuranceMatch && !foundDeviationMatch ) {
       print('checking standard plays');
       //* Checks Standard Gameplay Rules for all hand options
       if (_handType == 'hard') {
@@ -271,6 +286,12 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
     return _handRules;
   }
 
+  findInsuranceBsRules(){
+    String _correctPlay = '';
+    _correctPlay = InsurancePlays(_trueCount, _dealerFaceTotal, _deckQuantity, _practiceInsurance).fetch();
+    return _correctPlay;
+  }
+
   findDeviationBsRules() {
     String _correctPlay = '';
     _correctPlay = DeviationPlays(
@@ -281,7 +302,9 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
             _canEarlySurrender,
             _canLateSurrender,
             _canDoubleAny2,
-            _deckQuantity)
+            _deckQuantity,
+            _practiceInsurance, 
+            _handType)
         .fetch();
     return _correctPlay;
   }

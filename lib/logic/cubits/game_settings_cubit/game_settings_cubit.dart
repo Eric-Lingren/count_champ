@@ -29,6 +29,7 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
           practiceBsSplitHands: false,
           practiceIllustrious18: false,
           practiceFab4: false,
+          practiceInsurance: false,
         ));
 
   void toggleDas(value) => emit(GameSettingsState(
@@ -49,6 +50,7 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
         practiceBsSplitHands: state.practiceBsSplitHands,
         practiceIllustrious18: state.practiceIllustrious18,
         practiceFab4: state.practiceFab4,
+        practiceInsurance: state.practiceInsurance,
       ));
   void toggleCanDoubleAny2(value) => emit(GameSettingsState(
         canDas: state.canDas,
@@ -68,6 +70,7 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
         practiceBsSplitHands: state.practiceBsSplitHands,
         practiceIllustrious18: state.practiceIllustrious18,
         practiceFab4: state.practiceFab4,
+        practiceInsurance: state.practiceInsurance,
       ));
   void toggleCanResplitPairs(value) => emit(GameSettingsState(
         canDas: state.canDas,
@@ -87,6 +90,7 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
         practiceBsSplitHands: state.practiceBsSplitHands,
         practiceIllustrious18: state.practiceIllustrious18,
         practiceFab4: state.practiceFab4,
+        practiceInsurance: state.practiceInsurance,
       ));
   void toggleCanSplitAces(value) => emit(GameSettingsState(
         canDas: state.canDas,
@@ -106,6 +110,7 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
         practiceBsSplitHands: state.practiceBsSplitHands,
         practiceIllustrious18: state.practiceIllustrious18,
         practiceFab4: state.practiceFab4,
+        practiceInsurance: state.practiceInsurance,
       ));
   void toggleCanHitAfterSplitingAces(value) => emit(GameSettingsState(
         canDas: state.canDas,
@@ -125,6 +130,7 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
         practiceBsSplitHands: state.practiceBsSplitHands,
         practiceIllustrious18: state.practiceIllustrious18,
         practiceFab4: state.practiceFab4,
+        practiceInsurance: state.practiceInsurance,
       ));
   void toggleDealerHitsSoft17(value) => emit(GameSettingsState(
         canDas: state.canDas,
@@ -144,6 +150,7 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
         practiceBsSplitHands: state.practiceBsSplitHands,
         practiceIllustrious18: state.practiceIllustrious18,
         practiceFab4: state.practiceFab4,
+        practiceInsurance: state.practiceInsurance,
       ));
   void toggleCanEarlySurrender(value) => {
         if (value && state.canLateSurrender)
@@ -168,6 +175,7 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
           practiceBsSplitHands: state.practiceBsSplitHands,
           practiceIllustrious18: state.practiceIllustrious18,
           practiceFab4: state.practiceFab4,
+          practiceInsurance: state.practiceInsurance,
         ))
       };
   void toggleCanLateSurrender(value) => {
@@ -193,6 +201,7 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
           practiceBsSplitHands: state.practiceBsSplitHands,
           practiceIllustrious18: state.practiceIllustrious18,
           practiceFab4: state.practiceFab4,
+          practiceInsurance: state.practiceInsurance,
         ))
       };
   void toggleDealerPeeks(value) => emit(GameSettingsState(
@@ -213,6 +222,7 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
         practiceBsSplitHands: state.practiceBsSplitHands,
         practiceIllustrious18: state.practiceIllustrious18,
         practiceFab4: state.practiceFab4,
+        practiceInsurance: state.practiceInsurance,
       ));
   void setDeckQuantity(value) => emit(GameSettingsState(
         canDas: state.canDas,
@@ -232,6 +242,7 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
         practiceBsSplitHands: state.practiceBsSplitHands,
         practiceIllustrious18: state.practiceIllustrious18,
         practiceFab4: state.practiceFab4,
+        practiceInsurance: state.practiceInsurance,
       ));
   void setDeckPenetration(value) => emit(GameSettingsState(
         canDas: state.canDas,
@@ -251,6 +262,7 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
         practiceBsSplitHands: state.practiceBsSplitHands,
         practiceIllustrious18: state.practiceIllustrious18,
         practiceFab4: state.practiceFab4,
+        practiceInsurance: state.practiceInsurance,
       ));
   void togglePracticeBsAllHands(value) => {
         if (value)
@@ -273,6 +285,7 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
           practiceBsSplitHands: bsSplitHands,
           practiceIllustrious18: state.practiceIllustrious18,
           practiceFab4: state.practiceFab4,
+          practiceInsurance: state.practiceInsurance,
         ))
       };
   void togglePracticeBsHardHands(value) => {
@@ -295,6 +308,7 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
           practiceBsSplitHands: false,
           practiceIllustrious18: state.practiceIllustrious18,
           practiceFab4: state.practiceFab4,
+          practiceInsurance: state.practiceInsurance,
         ))
       };
   void togglePracticeBsSoftHands(value) => {
@@ -317,6 +331,7 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
           practiceBsSplitHands: false,
           practiceIllustrious18: state.practiceIllustrious18,
           practiceFab4: state.practiceFab4,
+          practiceInsurance: state.practiceInsurance,
         ))
       };
   void togglePracticeBsSplitHands(value) => {
@@ -339,6 +354,7 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
           practiceBsSplitHands: value,
           practiceIllustrious18: state.practiceIllustrious18,
           practiceFab4: state.practiceFab4,
+          practiceInsurance: state.practiceInsurance,
         ))
       };
   void toggleIllustrious18(value) => emit(GameSettingsState(
@@ -359,6 +375,7 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
         practiceBsSplitHands: state.practiceBsSplitHands,
         practiceIllustrious18: value,
         practiceFab4: state.practiceFab4,
+        practiceInsurance: state.practiceInsurance,
       ));
   void toggleFab4(value) => {
         // if (value) {alternateSurrenderValue = true},
@@ -380,9 +397,31 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
           practiceBsSplitHands: state.practiceBsSplitHands,
           practiceIllustrious18: state.practiceIllustrious18,
           practiceFab4: value,
+          practiceInsurance: state.practiceInsurance,
         )),
         if (value) toggleCanLateSurrender(value)
       };
+  void toggleInsurance(value) => 
+        emit(GameSettingsState(
+          canDas: state.canDas,
+          canResplitPairs: state.canResplitPairs,
+          canDoubleAny2: state.canDoubleAny2,
+          canSplitAces: state.canSplitAces,
+          canHitAfterSplittingAces: state.canHitAfterSplittingAces,
+          dealerHitsSoft17: state.dealerHitsSoft17,
+          canEarlySurrender: state.canEarlySurrender,
+          canLateSurrender: state.canLateSurrender,
+          dealerPeeks: state.dealerPeeks,
+          deckQuantity: state.deckQuantity,
+          deckPenetration: state.deckPenetration,
+          practiceBsAllHands: state.practiceBsAllHands,
+          practiceBsHardHands: state.practiceBsHardHands,
+          practiceBsSoftHands: state.practiceBsSoftHands,
+          practiceBsSplitHands: state.practiceBsSplitHands,
+          practiceIllustrious18: state.practiceIllustrious18,
+          practiceFab4: state.practiceFab4,
+          practiceInsurance: value,
+        ));
 
   getRules() => state;
 }

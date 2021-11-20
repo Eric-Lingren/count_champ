@@ -18,6 +18,7 @@ class GameSettingsState extends Equatable {
   bool practiceBsSplitHands;
   bool practiceIllustrious18;
   bool practiceFab4;
+  bool practiceInsurance;
 
   GameSettingsState({
     required this.canDas,
@@ -37,6 +38,7 @@ class GameSettingsState extends Equatable {
     required this.practiceBsSplitHands,
     required this.practiceIllustrious18,
     required this.practiceFab4,
+    required this.practiceInsurance,
   });
 
   @override
@@ -58,6 +60,7 @@ class GameSettingsState extends Equatable {
     practiceBsSplitHands,
     practiceIllustrious18,
     practiceFab4,
+    practiceInsurance,
   ];
 }
 

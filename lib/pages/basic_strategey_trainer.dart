@@ -148,7 +148,7 @@ class _BasicStrategeyTrainerState extends State<BasicStrategeyTrainer> {
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               BlocBuilder<GameSettingsCubit, GameSettingsState>(
                   builder: (context, state) {
-                if (state.practiceIllustrious18 == true) {
+                if (state.practiceInsurance == true) {
                   return ElevatedButton(
                       onPressed: () {
                         context
@@ -162,7 +162,7 @@ class _BasicStrategeyTrainerState extends State<BasicStrategeyTrainer> {
               }),
                   BlocBuilder<GameSettingsCubit, GameSettingsState>(
                     builder: (context, state) {
-                    if (state.practiceFab4 == true || state.practiceIllustrious18 == true) {
+                    if (state.practiceFab4 == true || state.practiceIllustrious18 == true || state.practiceInsurance == true) {
                       return Column(
                         children: [
                           const Text('True Count:'),
