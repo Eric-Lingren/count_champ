@@ -2,6 +2,7 @@ import 'package:count_champ/data/models/card_template.dart';
 import 'package:count_champ/logic/cubits/basic_strategey_cubit/basic_strategey_cubit.dart';
 import 'package:count_champ/logic/cubits/cubit/correct_plays_cubit.dart';
 import 'package:count_champ/logic/cubits/deck_cubit/deck_cubit.dart';
+import 'package:count_champ/logic/cubits/game_settings_cubit/game_settings_cubit.dart';
 import 'package:count_champ/widgets/correct_play_widget.dart';
 import 'package:count_champ/widgets/game_settings_sidebar.dart';
 import 'package:flutter/material.dart';
@@ -43,18 +44,45 @@ class _BasicStrategeyTrainerState extends State<BasicStrategeyTrainer> {
           children: <Widget>[
             BlocBuilder<CorrectPlaysCubit, CorrectPlaysState>(
                 builder: (context, state) {
-              return CorrectPlayWidget(playWasCorrect: state.playWasCorrect, correctPlay: state.correctPlay, hand: state.hand, streak: state.streak);
+              return CorrectPlayWidget(
+                  playWasCorrect: state.playWasCorrect,
+                  correctPlay: state.correctPlay,
+                  hand: state.hand,
+                  streak: state.streak);
             }),
             BlocBuilder<DeckCubit, DeckState>(builder: (context, state) {
               if (state.dealerHand.isNotEmpty) {
+                bool isHoleCard = false;
                 return Row(
-                    children: state.dealerHand
-                        .map<Widget>((card) => CardTemplate(
-                                cardCode: card.code,
-                                value: card.value,
-                                isHoleCard: card.isHoleCard)
-                            .getWidget())
-                        .toList());
+                    children:
+                        // state.dealerHand.map((card) {
+                        //   print(card);
+                        //   var w = CardTemplate(
+                        //             cardCode: card.code,
+                        //             value: card.value,
+                        //             isHoleCard: card.isHoleCard)
+                        //         .getWidget();
+                        //   // doSomething(card.key);
+                        //   return w;
+                        // }).toList());
+                        // [
+                        // for(int i = 0; i < state.dealerHand.length; i++)
+
+                        // if(i %2 == 0)
+                        // // Text(list[index])
+                        // CardTemplate(
+                        //           cardCode: card.code,
+                        //           value: card.value,
+                        //           isHoleCard: card.isHoleCard)
+                        //       .getWidget()
+                        // ]
+                        state.dealerHand
+                            .map<Widget>((card) => CardTemplate(
+                                    cardCode: card.code,
+                                    value: card.value,
+                                    isHoleCard: card.isHoleCard)
+                                .getWidget())
+                            .toList());
               }
               return const SizedBox.shrink();
             }),
@@ -114,26 +142,56 @@ class _BasicStrategeyTrainerState extends State<BasicStrategeyTrainer> {
                   },
                   child: const Text('Split')),
             ]),
+
+
+
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-              ElevatedButton(
-                  onPressed: () {
-                    context.read<CorrectPlaysCubit>().checkPlay('surrender');
-                    context.read<BasicStrategeyCubit>().initNextHand();
-                  },
-                  child: const Text('Surrender')),
+              BlocBuilder<GameSettingsCubit, GameSettingsState>(
+                  builder: (context, state) {
+                if (state.practiceIllustrious18 == true) {
+                  return ElevatedButton(
+                      onPressed: () {
+                        context
+                            .read<CorrectPlaysCubit>()
+                            .checkPlay('insurance');
+                        context.read<BasicStrategeyCubit>().initNextHand();
+                      },
+                      child: const Text('Insurance'));
+                }
+                return const SizedBox.shrink();
+              }),
+                  BlocBuilder<GameSettingsCubit, GameSettingsState>(
+                    builder: (context, state) {
+                    if (state.practiceFab4 == true || state.practiceIllustrious18 == true) {
+                      return Column(
+                        children: [
+                          const Text('True Count:'),
+                          BlocBuilder<DeckCubit, DeckState>(
+                            builder: (context, state) {
+                              return Text(state.trueCount.toString());
+                          }),
+                        ],
+                      );
+                    }
+                    return const SizedBox.shrink();
+                  }),
+              BlocBuilder<GameSettingsCubit, GameSettingsState>(
+                  builder: (context, state) {
+                if (state.canEarlySurrender == true ||
+                    state.canLateSurrender == true) {
+                  return ElevatedButton(
+                      onPressed: () {
+                        context
+                            .read<CorrectPlaysCubit>()
+                            .checkPlay('surrender');
+                        context.read<BasicStrategeyCubit>().initNextHand();
+                      },
+                      child: const Text('Surrender'));
+                }
+                return const SizedBox.shrink();
+              }),
             ]),
           ],
         ))));
   }
 }
-
-// return (BlocBuilder<CorrectPlaysCubit, CorrectPlaysState>(
-//         builder: (context, state) {
-//       print(state.playWasCorrect);
-//       var backgroundColor;
-//       if (!state.playWasCorrect) {
-//         backgroundColor = Colors.red[400];
-//       } else {
-//         backgroundColor = Colors.green[300];
-//       }
-//       return

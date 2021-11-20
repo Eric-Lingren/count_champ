@@ -220,6 +220,7 @@ class _GameSettingsSidebarState extends State<GameSettingsSidebar> {
             })),
         ListTile( // TODO BS and Game Settings Only
             title: const Text("Illustrious 18 Deviations"),
+            tileColor: Colors.yellow[200],
             leading: BlocBuilder<GameSettingsCubit, GameSettingsState>(
                 builder: (context, state) {
               return Switch(
@@ -235,6 +236,7 @@ class _GameSettingsSidebarState extends State<GameSettingsSidebar> {
             })),
         ListTile( // TODO BS and Game Settings Only
             title: const Text("Fab 4 Deviations"),
+            tileColor: Colors.yellow[200],
             leading: BlocBuilder<GameSettingsCubit, GameSettingsState>(
                 builder: (context, state) {
               return Switch(

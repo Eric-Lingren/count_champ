@@ -253,103 +253,94 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
         practiceFab4: state.practiceFab4,
       ));
   void togglePracticeBsAllHands(value) => {
-    if (value) {
-      bsHardHands = false,
-      bsSoftHands = false,
-      bsSplitHands = false
-    },
-    emit(GameSettingsState(
-        canDas: state.canDas,
-        canResplitPairs: state.canResplitPairs,
-        canDoubleAny2: state.canDoubleAny2,
-        canSplitAces: state.canSplitAces,
-        canHitAfterSplittingAces: state.canHitAfterSplittingAces,
-        dealerHitsSoft17: state.dealerHitsSoft17,
-        canEarlySurrender: state.canEarlySurrender,
-        canLateSurrender: state.canLateSurrender,
-        dealerPeeks: state.dealerPeeks,
-        deckQuantity: state.deckQuantity,
-        deckPenetration: state.deckPenetration,
-        practiceBsAllHands: value,
-        practiceBsHardHands: bsHardHands,
-        practiceBsSoftHands: bsSoftHands,
-        practiceBsSplitHands: bsSplitHands,
-        practiceIllustrious18: state.practiceIllustrious18,
-        practiceFab4: state.practiceFab4,
-      ))
-  };
+        if (value)
+          {bsHardHands = false, bsSoftHands = false, bsSplitHands = false},
+        emit(GameSettingsState(
+          canDas: state.canDas,
+          canResplitPairs: state.canResplitPairs,
+          canDoubleAny2: state.canDoubleAny2,
+          canSplitAces: state.canSplitAces,
+          canHitAfterSplittingAces: state.canHitAfterSplittingAces,
+          dealerHitsSoft17: state.dealerHitsSoft17,
+          canEarlySurrender: state.canEarlySurrender,
+          canLateSurrender: state.canLateSurrender,
+          dealerPeeks: state.dealerPeeks,
+          deckQuantity: state.deckQuantity,
+          deckPenetration: state.deckPenetration,
+          practiceBsAllHands: value,
+          practiceBsHardHands: bsHardHands,
+          practiceBsSoftHands: bsSoftHands,
+          practiceBsSplitHands: bsSplitHands,
+          practiceIllustrious18: state.practiceIllustrious18,
+          practiceFab4: state.practiceFab4,
+        ))
+      };
   void togglePracticeBsHardHands(value) => {
-    if (value) {
-      bsAllHands = false
-    },
-    emit(GameSettingsState(
-        canDas: state.canDas,
-        canResplitPairs: state.canResplitPairs,
-        canDoubleAny2: state.canDoubleAny2,
-        canSplitAces: state.canSplitAces,
-        canHitAfterSplittingAces: state.canHitAfterSplittingAces,
-        dealerHitsSoft17: state.dealerHitsSoft17,
-        canEarlySurrender: state.canEarlySurrender,
-        canLateSurrender: state.canLateSurrender,
-        dealerPeeks: state.dealerPeeks,
-        deckQuantity: state.deckQuantity,
-        deckPenetration: state.deckPenetration,
-        practiceBsAllHands: bsAllHands,
-        practiceBsHardHands: value,
-        practiceBsSoftHands: state.practiceBsSoftHands,
-        practiceBsSplitHands: state.practiceBsSplitHands,
-        practiceIllustrious18: state.practiceIllustrious18,
-        practiceFab4: state.practiceFab4,
-      ))
-  };
+        if (value) {bsAllHands = false},
+        emit(GameSettingsState(
+          canDas: state.canDas,
+          canResplitPairs: state.canResplitPairs,
+          canDoubleAny2: state.canDoubleAny2,
+          canSplitAces: state.canSplitAces,
+          canHitAfterSplittingAces: state.canHitAfterSplittingAces,
+          dealerHitsSoft17: state.dealerHitsSoft17,
+          canEarlySurrender: state.canEarlySurrender,
+          canLateSurrender: state.canLateSurrender,
+          dealerPeeks: state.dealerPeeks,
+          deckQuantity: state.deckQuantity,
+          deckPenetration: state.deckPenetration,
+          practiceBsAllHands: bsAllHands,
+          practiceBsHardHands: value,
+          practiceBsSoftHands: false,
+          practiceBsSplitHands: false,
+          practiceIllustrious18: state.practiceIllustrious18,
+          practiceFab4: state.practiceFab4,
+        ))
+      };
   void togglePracticeBsSoftHands(value) => {
-    if (value) {
-      bsAllHands = false
-    },
-    emit(GameSettingsState(
-        canDas: state.canDas,
-        canResplitPairs: state.canResplitPairs,
-        canDoubleAny2: state.canDoubleAny2,
-        canSplitAces: state.canSplitAces,
-        canHitAfterSplittingAces: state.canHitAfterSplittingAces,
-        dealerHitsSoft17: state.dealerHitsSoft17,
-        canEarlySurrender: state.canEarlySurrender,
-        canLateSurrender: state.canLateSurrender,
-        dealerPeeks: state.dealerPeeks,
-        deckQuantity: state.deckQuantity,
-        deckPenetration: state.deckPenetration,
-        practiceBsAllHands: bsAllHands,
-        practiceBsHardHands: state.practiceBsHardHands,
-        practiceBsSoftHands: value,
-        practiceBsSplitHands: state.practiceBsSplitHands,
-        practiceIllustrious18: state.practiceIllustrious18,
-        practiceFab4: state.practiceFab4,
-      ))
-  };
+        if (value) {bsAllHands = false},
+        emit(GameSettingsState(
+          canDas: state.canDas,
+          canResplitPairs: state.canResplitPairs,
+          canDoubleAny2: state.canDoubleAny2,
+          canSplitAces: state.canSplitAces,
+          canHitAfterSplittingAces: state.canHitAfterSplittingAces,
+          dealerHitsSoft17: state.dealerHitsSoft17,
+          canEarlySurrender: state.canEarlySurrender,
+          canLateSurrender: state.canLateSurrender,
+          dealerPeeks: state.dealerPeeks,
+          deckQuantity: state.deckQuantity,
+          deckPenetration: state.deckPenetration,
+          practiceBsAllHands: bsAllHands,
+          practiceBsHardHands: false,
+          practiceBsSoftHands: value,
+          practiceBsSplitHands: false,
+          practiceIllustrious18: state.practiceIllustrious18,
+          practiceFab4: state.practiceFab4,
+        ))
+      };
   void togglePracticeBsSplitHands(value) => {
-    if (value) {
-      bsAllHands = false
-    },
-    emit(GameSettingsState(
-        canDas: state.canDas,
-        canResplitPairs: state.canResplitPairs,
-        canDoubleAny2: state.canDoubleAny2,
-        canSplitAces: state.canSplitAces,
-        canHitAfterSplittingAces: state.canHitAfterSplittingAces,
-        dealerHitsSoft17: state.dealerHitsSoft17,
-        canEarlySurrender: state.canEarlySurrender,
-        canLateSurrender: state.canLateSurrender,
-        dealerPeeks: state.dealerPeeks,
-        deckQuantity: state.deckQuantity,
-        deckPenetration: state.deckPenetration,
-        practiceBsAllHands: bsAllHands,
-        practiceBsHardHands: state.practiceBsHardHands,
-        practiceBsSoftHands: state.practiceBsSoftHands,
-        practiceBsSplitHands: value,
-        practiceIllustrious18: state.practiceIllustrious18,
-        practiceFab4: state.practiceFab4,
-      ))
-  };
+        if (value) {bsAllHands = false},
+        emit(GameSettingsState(
+          canDas: state.canDas,
+          canResplitPairs: state.canResplitPairs,
+          canDoubleAny2: state.canDoubleAny2,
+          canSplitAces: state.canSplitAces,
+          canHitAfterSplittingAces: state.canHitAfterSplittingAces,
+          dealerHitsSoft17: state.dealerHitsSoft17,
+          canEarlySurrender: state.canEarlySurrender,
+          canLateSurrender: state.canLateSurrender,
+          dealerPeeks: state.dealerPeeks,
+          deckQuantity: state.deckQuantity,
+          deckPenetration: state.deckPenetration,
+          practiceBsAllHands: bsAllHands,
+          practiceBsHardHands: false,
+          practiceBsSoftHands: false,
+          practiceBsSplitHands: value,
+          practiceIllustrious18: state.practiceIllustrious18,
+          practiceFab4: state.practiceFab4,
+        ))
+      };
   void toggleIllustrious18(value) => emit(GameSettingsState(
         canDas: state.canDas,
         canResplitPairs: state.canResplitPairs,
@@ -369,25 +360,29 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
         practiceIllustrious18: value,
         practiceFab4: state.practiceFab4,
       ));
-  void toggleFab4(value) => emit(GameSettingsState(
-        canDas: state.canDas,
-        canResplitPairs: state.canResplitPairs,
-        canDoubleAny2: state.canDoubleAny2,
-        canSplitAces: state.canSplitAces,
-        canHitAfterSplittingAces: state.canHitAfterSplittingAces,
-        dealerHitsSoft17: state.dealerHitsSoft17,
-        canEarlySurrender: state.canEarlySurrender,
-        canLateSurrender: state.canLateSurrender,
-        dealerPeeks: state.dealerPeeks,
-        deckQuantity: state.deckQuantity,
-        deckPenetration: state.deckPenetration,
-        practiceBsAllHands: state.practiceBsAllHands,
-        practiceBsHardHands: state.practiceBsHardHands,
-        practiceBsSoftHands: state.practiceBsSoftHands,
-        practiceBsSplitHands: state.practiceBsSplitHands,
-        practiceIllustrious18: state.practiceIllustrious18,
-        practiceFab4: value,
-      ));
+  void toggleFab4(value) => {
+        // if (value) {alternateSurrenderValue = true},
+        emit(GameSettingsState(
+          canDas: state.canDas,
+          canResplitPairs: state.canResplitPairs,
+          canDoubleAny2: state.canDoubleAny2,
+          canSplitAces: state.canSplitAces,
+          canHitAfterSplittingAces: state.canHitAfterSplittingAces,
+          dealerHitsSoft17: state.dealerHitsSoft17,
+          canEarlySurrender: state.canEarlySurrender,
+          canLateSurrender: state.canLateSurrender,
+          dealerPeeks: state.dealerPeeks,
+          deckQuantity: state.deckQuantity,
+          deckPenetration: state.deckPenetration,
+          practiceBsAllHands: state.practiceBsAllHands,
+          practiceBsHardHands: state.practiceBsHardHands,
+          practiceBsSoftHands: state.practiceBsSoftHands,
+          practiceBsSplitHands: state.practiceBsSplitHands,
+          practiceIllustrious18: state.practiceIllustrious18,
+          practiceFab4: value,
+        )),
+        if (value) toggleCanLateSurrender(value)
+      };
 
   getRules() => state;
 }

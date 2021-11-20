@@ -7,6 +7,7 @@ class DeckState extends Equatable {
   List playerHand;
   int cutCardIndex;
   List shuffledDeck;
+  int trueCount;
 
   DeckState({
     required this.deckRepository,
@@ -14,6 +15,7 @@ class DeckState extends Equatable {
     required this.dealtCards,
     required this.dealerHand,
     required this.playerHand,
+    required this.trueCount,
     List? cutCards,
     required this.cutCardIndex});
 
@@ -23,7 +25,8 @@ class DeckState extends Equatable {
     shuffledDeck, 
     dealerHand, 
     playerHand, 
-    dealtCards
+    dealtCards,
+    trueCount
   ];
 
 }
