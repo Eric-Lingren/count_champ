@@ -126,7 +126,6 @@ class DeckCubit extends Cubit<DeckState> {
     // * Third card face up to player, Fourth card face up to dealer
     if (state.dealtCards.length > state.cutCardIndex) shuffleDeck();
 
-
     List handsDealt = [];
 
     // if (_practiceBsHardHands != true &&
@@ -143,19 +142,19 @@ class DeckCubit extends Cubit<DeckState> {
     // if (_practiceBsSplitHands == true) {
     //   handsDealt = dealSplitHand();
     // }
-    handsDealt = dealFab4Hand();
-
+    handsDealt = dealIllustruous18Hand();
+    // handsDealt = dealFab4Hand();
 
     int fakeTrueCount = generateRandomTrueCount();
 
     emit(DeckState(
-        deckRepository: state.deckRepository,
-        shuffledDeck: state.shuffledDeck,
-        cutCardIndex: state.cutCardIndex,
-        dealerHand: handsDealt[0],
-        playerHand: handsDealt[1],
-        dealtCards: [...state.dealtCards, ...handsDealt[2]],
-        trueCount: fakeTrueCount,
+      deckRepository: state.deckRepository,
+      shuffledDeck: state.shuffledDeck,
+      cutCardIndex: state.cutCardIndex,
+      dealerHand: handsDealt[0],
+      playerHand: handsDealt[1],
+      dealtCards: [...state.dealtCards, ...handsDealt[2]],
+      trueCount: fakeTrueCount,
     ));
   }
 
@@ -304,10 +303,136 @@ class DeckCubit extends Cubit<DeckState> {
     dealtCards.add(playerFirstCard);
     // Finds the players second card where the total will match the desired
     var requestedSecondCard = requestedPlayerTotal - tempPlayerHand[0].value;
-    var playerSecondCard = tempRemainingCards
-        .firstWhere((i) => i.value == requestedSecondCard);
-    var patcheSeconddIndex = tempRemainingCards.indexOf(playerSecondCard);
-    tempRemainingCards.remove(patcheSeconddIndex);
+    var playerSecondCard =
+        tempRemainingCards.firstWhere((i) => i.value == requestedSecondCard);
+    var matchedSecondIndex = tempRemainingCards.indexOf(playerSecondCard);
+    tempRemainingCards.remove(matchedSecondIndex);
+    tempPlayerHand.add(playerSecondCard);
+    dealtCards.add(playerSecondCard);
+    return [tempDealerHand, tempPlayerHand, dealtCards];
+  }
+
+  dealIllustruous18Hand() {
+    resetDealerHoleCards();
+    var tempRemainingCards = state.shuffledDeck;
+    var dealtCards = [];
+    var tempDealerHand = [];
+    var tempPlayerHand = [];
+    // Deals First card to dealer
+    for (int i = 0; i < 1; i++) {
+      if (i == 0) tempRemainingCards[i].isHoleCard = true;
+      tempDealerHand.add(tempRemainingCards[i]);
+      dealtCards.add(tempRemainingCards[i]);
+    }
+    tempRemainingCards.removeRange(0, 1);
+
+    // Finds an dealer face up card that is not 8
+    var dealerSecondCard = tempRemainingCards.firstWhere((i) => i.value != 8);
+    var dealerSecondCardIndex = tempRemainingCards.indexOf(dealerSecondCard);
+    tempRemainingCards.remove(dealerSecondCardIndex);
+    tempDealerHand.add(dealerSecondCard);
+    dealtCards.add(dealerSecondCard);
+
+    var dealerFaceCard = tempDealerHand[1].value;
+
+    // Hand options:
+    // dealer = 2 ; player = 9 || 13   any
+    // dealer = 3 ; player = 12 || 13  any
+    // dealer = 4 ; player = 12  2-10
+    // dealer = 5 ; player = 10 + 10 || 12  2-10
+    // dealer = 6 ; player = 10 + 10 || 12  2-10
+    // dealer = 7 ; player = 9    2-7
+    // dealer = 9 ; player = 16  any
+    // dealer = 10 ; player = 16 || 15 || 10  any
+    // dealer = 11 ; player = 10  2-8
+
+    List dealerOptions1 = [
+      2,
+      3,
+      9,
+      10
+    ]; // if dealer has these, player first card can be any
+    List dealerOptions2 = [
+      4,
+      5,
+      6
+    ]; // if dealer has these, player first card can 2-10
+    List dealerOptions3 = [
+      7
+    ]; // if dealer has these, player first card can 2-7
+    List dealerOptions4 = [
+      11
+    ]; // if dealer has these, player first card can 2-8
+
+
+    bool dealerMatchingList1 = dealerOptions1.contains(dealerFaceCard);
+    bool dealerMatchingList2 = dealerOptions2.contains(dealerFaceCard);
+    bool dealerMatchingList3 = dealerOptions3.contains(dealerFaceCard);
+    bool dealerMatchingList4 = dealerOptions4.contains(dealerFaceCard);
+
+    //* Sets the players first card
+    var playerFirstCard;
+    if (dealerMatchingList1 == true) {
+      if(dealerFaceCard == 9){
+        playerFirstCard = tempRemainingCards.firstWhere((i) => i.value >= 2 && i.value != 8);
+      }else{
+        playerFirstCard = tempRemainingCards.firstWhere((i) => i.value >= 2);
+      }
+      
+    }
+    if (dealerMatchingList2 == true) {
+      if(dealerFaceCard == 4 || dealerFaceCard == 5 || dealerFaceCard == 6){
+        playerFirstCard = tempRemainingCards.firstWhere((i) => i.value >= 2 && i.value <= 10 && i.value != 6);
+      }else{
+        playerFirstCard = tempRemainingCards.firstWhere((i) => i.value >= 2 && i.value <= 10);
+      }
+    }
+    if (dealerMatchingList3 == true) {
+      playerFirstCard =
+          tempRemainingCards.firstWhere((i) => i.value >= 2 && i.value <= 7);
+    }
+    if (dealerMatchingList4 == true) {
+      playerFirstCard =
+          tempRemainingCards.firstWhere((i) => i.value >= 2 && i.value <= 8);
+    }
+    var firstMatchedIndex = tempRemainingCards.indexOf(playerFirstCard);
+    tempRemainingCards.remove(firstMatchedIndex);
+    tempPlayerHand.add(playerFirstCard);
+    dealtCards.add(playerFirstCard);
+
+    //* Sets the players second card
+    var playerSecondCard;
+    if(dealerFaceCard == 2){
+      playerSecondCard = tempRemainingCards.firstWhere((i) => ((i.value + tempPlayerHand[0].value == 9) || (i.value + tempPlayerHand[0].value == 13)));
+    }
+    if(dealerFaceCard == 3){
+      playerSecondCard = tempRemainingCards.firstWhere((i) => ( ((i.value + tempPlayerHand[0].value == 12) || (i.value + tempPlayerHand[0].value == 13)) && i.value != tempPlayerHand[0].value));
+    }
+    if(dealerFaceCard == 4){
+      playerSecondCard = tempRemainingCards.firstWhere((i) => (i.value + tempPlayerHand[0].value == 12));
+    }
+    if(dealerFaceCard == 5 || dealerFaceCard == 6){
+      if(tempPlayerHand[0].value == 10){
+        playerSecondCard = tempRemainingCards.firstWhere((i) => i.value == 10 || i.value == 2);
+      } else {
+        playerSecondCard = tempRemainingCards.firstWhere((i) => ((i.value + tempPlayerHand[0].value == 12)));
+      }
+    }
+    if(dealerFaceCard == 7){
+      playerSecondCard = tempRemainingCards.firstWhere((i) => (i.value + tempPlayerHand[0].value == 9));
+    }
+    if(dealerFaceCard == 9){
+      playerSecondCard = tempRemainingCards.firstWhere((i) => i.value + tempPlayerHand[0].value == 16);
+    }
+    if(dealerFaceCard == 10){
+      playerSecondCard = tempRemainingCards.firstWhere((i) => (((i.value + tempPlayerHand[0].value == 16) || (i.value + tempPlayerHand[0].value == 15) || (i.value + tempPlayerHand[0].value == 10)) && i.value != tempPlayerHand[0].value ));
+    }
+    if(dealerFaceCard == 11){
+      playerSecondCard = tempRemainingCards.firstWhere((i) => i.value + tempPlayerHand[0].value == 10);
+    }
+
+    var matchedSecondIndex = tempRemainingCards.indexOf(playerSecondCard);
+    tempRemainingCards.remove(matchedSecondIndex);
     tempPlayerHand.add(playerSecondCard);
     dealtCards.add(playerSecondCard);
     return [tempDealerHand, tempPlayerHand, dealtCards];
