@@ -12,7 +12,6 @@ class InsurancePlays {
 
   fetch() {
     int decks = _deckQuantity.round();
-
     if (_dealerFaceTotal == 11) {
       if (_practiceInsurance) {
         if (decks < 2) {
@@ -26,7 +25,6 @@ class InsurancePlays {
         }
       }
     }
-
     return 'none';
   }
 }

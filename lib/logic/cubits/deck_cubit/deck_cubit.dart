@@ -11,13 +11,12 @@ part 'deck_state.dart';
 class DeckCubit extends Cubit<DeckState> {
   double _deckQuantity = 8.0;
   double _deckPenetration = 80.0;
-  var _practiceBsAllHands;
-  var _practiceBsHardHands;
-  var _practiceBsSoftHands;
-  var _practiceBsSplitHands;
-  var _practiceIllustrious18;
-  var _practiceFab4;
-  var _practiceInsurance;
+  late bool _practiceBsHardHands = false;
+  late bool _practiceBsSoftHands = false;
+  late bool _practiceBsSplitHands = false;
+  late bool _practiceIllustrious18 = false;
+  late bool _practiceFab4 = false;
+  late bool _practiceInsurance = false;
   final BasicStrategeyCubit basicStrategeyCubit;
   late StreamSubscription basicStrategeyStreamSubscription;
   final BasicStrategeySettingsCubit basicStrategeySettingsCubit;
@@ -36,29 +35,28 @@ class DeckCubit extends Cubit<DeckState> {
             dealerHand: const [],
             playerHand: const [],
             trueCount: 0)) {
-    fetchCardData();
-    shuffleDeck();
-    monitorBasicStrategeyCubit();
-    monitorGameSettingsCubit();
+    _fetchCardData();
+    _shuffleDeck();
+    _monitorBasicStrategeyCubit();
+    _monitorBasicStrategeySettingsCubit();
   }
 
-  StreamSubscription<BasicStrategeyState> monitorBasicStrategeyCubit() {
-    dealStartingHand(); //* Deals Cards initially on BS trainer screen mount
+  StreamSubscription<BasicStrategeyState> _monitorBasicStrategeyCubit() {
+    _dealStartingHand(); //* Deals Cards initially on BS trainer screen mount
     return basicStrategeyStreamSubscription =
         basicStrategeyCubit.stream.listen((basicStrategeyState) {
       if (basicStrategeyState.didChoosePlay == true) {
-        dealStartingHand(); //* Deals cards again each time a BS button action is chosen.
+        _dealStartingHand(); //* Deals cards again each time a BS button action is chosen.
       }
     });
   }
 
-  StreamSubscription<BasicStrategeySettingsState> monitorGameSettingsCubit() {
-    // * If the user changes the deck quantity or pennetration in settings, it will adjust the deck accordingly.
+  StreamSubscription<BasicStrategeySettingsState> _monitorBasicStrategeySettingsCubit() {
+    // * If the user changes the settings, it will adjust the deck accordingly.
     return gameSettingsStreamSubscription = basicStrategeySettingsCubit.stream
         .listen((basicStrategeyGameSettingsState) {
       _deckQuantity = basicStrategeyGameSettingsState.deckQuantity;
       _deckPenetration = basicStrategeyGameSettingsState.deckPenetration;
-      _practiceBsAllHands = basicStrategeyGameSettingsState.practiceBsAllHands;
       _practiceBsHardHands =
           basicStrategeyGameSettingsState.practiceBsHardHands;
       _practiceBsSoftHands =
@@ -69,13 +67,12 @@ class DeckCubit extends Cubit<DeckState> {
           basicStrategeyGameSettingsState.practiceIllustrious18;
       _practiceFab4 = basicStrategeyGameSettingsState.practiceFab4;
       _practiceInsurance = basicStrategeyGameSettingsState.practiceInsurance;
-
-      shuffleDeck();
-      dealStartingHand();
+      _shuffleDeck();
+      _dealStartingHand();
     });
   }
 
-  Future<List> fetchCardData() async {
+  Future<List> _fetchCardData() async {
     List cards =
         rawDeckData.map((data) => CardDataTemplate.fromJson(data)).toList();
     _setCardList(cards);
@@ -92,8 +89,7 @@ class DeckCubit extends Cubit<DeckState> {
         trueCount: state.trueCount,
       ));
 
-  void shuffleDeck() {
-    print('************ SHUFFLE **************');
+  void _shuffleDeck() {
     int counter = 0;
     List tempDeck = [];
     while (counter < _deckQuantity.round()) {
@@ -103,10 +99,7 @@ class DeckCubit extends Cubit<DeckState> {
       counter++;
     }
     var shuffledDeck = tempDeck.expand((i) => i).toList();
-    for (var i = 0; i < shuffledDeck.length; i++) {
-      // * Resets all cards in deck:
-      shuffledDeck[i].isHoleCard = false;
-    }
+    _resetDealerHoleCards();
     _initPlayableCards(shuffledDeck);
   }
 
@@ -129,30 +122,30 @@ class DeckCubit extends Cubit<DeckState> {
         trueCount: state.trueCount,
       ));
 
-  dealStartingHand() {
-    if (state.dealtCards.length > state.cutCardIndex) shuffleDeck();
+  _dealStartingHand() {
+    if (state.dealtCards.length > state.cutCardIndex) _shuffleDeck();
     List handsDealt = [];
     int fakeTrueCount = 0;
-
+    //* Deals custom hand types for Basic Strategey Trainer
     if (_practiceBsHardHands == true) {
-      handsDealt = dealHardHand();
+      handsDealt = _dealHardHand();
     } else if (_practiceBsSoftHands == true) {
-      handsDealt = dealSoftHand();
+      handsDealt = _dealSoftHand();
     } else if (_practiceBsSplitHands == true) {
-      handsDealt = dealSplitHand();
+      handsDealt = _dealSplitHand();
     } else if (_practiceIllustrious18 == true) {
-      handsDealt = dealIllustruous18Hand();
-      fakeTrueCount = generateRandomTrueCount();
+      handsDealt = _dealIllustruous18Hand();
+      fakeTrueCount = _generateRandomTrueCount();
     } else if (_practiceFab4 == true) {
-      handsDealt = dealFab4Hand();
-      fakeTrueCount = generateRandomTrueCount();
+      handsDealt = _dealFab4Hand();
+      fakeTrueCount = _generateRandomTrueCount();
     } else if (_practiceInsurance == true) {
-      handsDealt = dealInsuranceHand();
-      fakeTrueCount = generateRandomTrueCount();
+      handsDealt = _dealInsuranceHand();
+      fakeTrueCount = _generateRandomTrueCount();
     } else {
-      handsDealt = dealRandomHand();
+      //* Deals standard random statring hand from the deck
+      handsDealt = _dealRandomHand();
     }
-
     emit(DeckState(
       deckRepository: state.deckRepository,
       shuffledDeck: state.shuffledDeck,
@@ -164,7 +157,7 @@ class DeckCubit extends Cubit<DeckState> {
     ));
   }
 
-  dealRandomHand() {
+  _dealRandomHand() {
     var tempRemainingCards = state.shuffledDeck;
     var dealtCards = [];
     var tempDealerHand = [];
@@ -182,13 +175,13 @@ class DeckCubit extends Cubit<DeckState> {
     return [tempDealerHand, tempPlayerHand, dealtCards];
   }
 
-  dealSplitHand() {
-    resetDealerHoleCards();
+  _dealSplitHand() {
+    _resetDealerHoleCards();
     var tempRemainingCards = state.shuffledDeck;
     var dealtCards = [];
     var tempDealerHand = [];
     var tempPlayerHand = [];
-    // Deals First 2 cards to each dealer and first card to player
+    //* Deals First 2 cards to each dealer and first card to player
     for (int i = 0; i < 3; i++) {
       if (i.isEven) {
         if (i == 0) tempRemainingCards[i].isHoleCard = true;
@@ -199,7 +192,7 @@ class DeckCubit extends Cubit<DeckState> {
       dealtCards.add(tempRemainingCards[i]);
     }
     tempRemainingCards.removeRange(0, 3);
-    // Finds a mathing pair for players last card
+    //* Finds a mathing pair for players last card
     var secondPlayerCard = tempRemainingCards
         .firstWhere((i) => i.value == tempPlayerHand[0].value);
     var matchedIndex = tempRemainingCards.indexOf(secondPlayerCard);
@@ -209,13 +202,13 @@ class DeckCubit extends Cubit<DeckState> {
     return [tempDealerHand, tempPlayerHand, dealtCards];
   }
 
-  dealSoftHand() {
-    resetDealerHoleCards();
+  _dealSoftHand() {
+    _resetDealerHoleCards();
     var tempRemainingCards = state.shuffledDeck;
     var dealtCards = [];
     var tempDealerHand = [];
     var tempPlayerHand = [];
-    // Deals First 2 cards to each dealer and first card to player
+    //* Deals First 2 cards to each dealer and first card to player
     for (int i = 0; i < 3; i++) {
       if (i.isEven) {
         if (i == 0) tempRemainingCards[i].isHoleCard = true;
@@ -226,37 +219,36 @@ class DeckCubit extends Cubit<DeckState> {
       dealtCards.add(tempRemainingCards[i]);
     }
     tempRemainingCards.removeRange(0, 3);
-    // Finds an 11 for players last card
+    //* Finds an 11 for players last card
     var playerSecondCard = tempRemainingCards.firstWhere((i) => i.value == 11);
     var matchedIndex = tempRemainingCards.indexOf(playerSecondCard);
     tempRemainingCards.remove(matchedIndex);
     tempPlayerHand.add(playerSecondCard);
-    tempPlayerHand
-        .shuffle(); // To randomize the position of the ace on the screen
+    tempPlayerHand .shuffle(); //* Randomize the the ace location on the screen
     dealtCards.add(playerSecondCard);
     return [tempDealerHand, tempPlayerHand, dealtCards];
   }
 
-  dealHardHand() {
-    resetDealerHoleCards();
+  _dealHardHand() {
+    _resetDealerHoleCards();
     var tempRemainingCards = state.shuffledDeck;
     var dealtCards = [];
     var tempDealerHand = [];
     var tempPlayerHand = [];
-    // Deals First 2 cards to dealer
+    //* Deals First 2 cards to dealer
     for (int i = 0; i < 2; i++) {
       if (i == 0) tempRemainingCards[i].isHoleCard = true;
       tempDealerHand.add(tempRemainingCards[i]);
       dealtCards.add(tempRemainingCards[i]);
     }
     tempRemainingCards.removeRange(0, 2);
-    // Finds an Non 11 for players first card
+    //* Finds an Non 11 for players first card
     var playerFirstCard = tempRemainingCards.firstWhere((i) => i.value != 11);
     var firstMatchedIndex = tempRemainingCards.indexOf(playerFirstCard);
     tempRemainingCards.remove(firstMatchedIndex);
     tempPlayerHand.add(playerFirstCard);
     dealtCards.add(playerFirstCard);
-    // Finds an Non 11 and non pair for players second card
+    //* Finds an Non 11 and non pair for players second card
     var playerSecondCard = tempRemainingCards
         .firstWhere((i) => i.value != 11 && i.value != tempPlayerHand[0].value);
     var patcheSeconddIndex = tempRemainingCards.indexOf(playerSecondCard);
@@ -266,13 +258,13 @@ class DeckCubit extends Cubit<DeckState> {
     return [tempDealerHand, tempPlayerHand, dealtCards];
   }
 
-  dealIllustruous18Hand() {
-    resetDealerHoleCards();
+  _dealIllustruous18Hand() {
+    _resetDealerHoleCards();
     var tempRemainingCards = state.shuffledDeck;
     var dealtCards = [];
     var tempDealerHand = [];
     var tempPlayerHand = [];
-    // Deals First card to dealer
+    //* Deals First card to dealer
     for (int i = 0; i < 1; i++) {
       if (i == 0) tempRemainingCards[i].isHoleCard = true;
       tempDealerHand.add(tempRemainingCards[i]);
@@ -280,16 +272,15 @@ class DeckCubit extends Cubit<DeckState> {
     }
     tempRemainingCards.removeRange(0, 1);
 
-    // Finds an dealer face up card that is not 8
+    //* Finds an dealer face up card that is not 8
     var dealerSecondCard = tempRemainingCards.firstWhere((i) => i.value != 8);
     var dealerSecondCardIndex = tempRemainingCards.indexOf(dealerSecondCard);
     tempRemainingCards.remove(dealerSecondCardIndex);
     tempDealerHand.add(dealerSecondCard);
     dealtCards.add(dealerSecondCard);
-
     var dealerFaceCard = tempDealerHand[1].value;
 
-    // Hand options:
+    //* Hand options:
     // dealer = 2 ; player = 9 || 13   any
     // dealer = 3 ; player = 12 || 13  any
     // dealer = 4 ; player = 12  2-10
@@ -305,16 +296,16 @@ class DeckCubit extends Cubit<DeckState> {
       3,
       9,
       10
-    ]; // if dealer has these, player first card can be any except 11
+    ]; //* If dealer has these, player first card can be any except 11
     List dealerOptions2 = [
       4,
       5,
       6
-    ]; // if dealer has these, player first card can 2-10
+    ]; //* If dealer has these, player first card can 2-10
     List dealerOptions3 = [7]; // if dealer has these, player first card can 2-7
     List dealerOptions4 = [
       11
-    ]; // if dealer has these, player first card can 2-8
+    ]; //* If dealer has these, player first card can 2-8
 
     bool dealerMatchingList1 = dealerOptions1.contains(dealerFaceCard);
     bool dealerMatchingList2 = dealerOptions2.contains(dealerFaceCard);
@@ -407,13 +398,13 @@ class DeckCubit extends Cubit<DeckState> {
     return [tempDealerHand, tempPlayerHand, dealtCards];
   }
 
-  dealFab4Hand() {
-    resetDealerHoleCards();
+  _dealFab4Hand() {
+    _resetDealerHoleCards();
     var tempRemainingCards = state.shuffledDeck;
     var dealtCards = [];
     var tempDealerHand = [];
     var tempPlayerHand = [];
-    // Deals First card to dealer
+    //* Deals First card to dealer
     for (int i = 0; i < 1; i++) {
       if (i == 0) tempRemainingCards[i].isHoleCard = true;
       tempDealerHand.add(tempRemainingCards[i]);
@@ -421,7 +412,7 @@ class DeckCubit extends Cubit<DeckState> {
     }
     tempRemainingCards.removeRange(0, 1);
 
-    // Finds an 9,10,or 11 for dealer face up card
+    //* Finds an 9,10,or 11 for dealer face up card
     var dealerSecondCard = tempRemainingCards
         .firstWhere((i) => i.value == 9 || i.value == 10 || i.value == 11);
     var dealerSecondCardIndex = tempRemainingCards.indexOf(dealerSecondCard);
@@ -429,8 +420,8 @@ class DeckCubit extends Cubit<DeckState> {
     tempDealerHand.add(dealerSecondCard);
     dealtCards.add(dealerSecondCard);
 
-    // if dealer has 10, player can have 14 or 15
-    // if dealer has any other card, player must have 15
+    //* If dealer has 10, player can have 14 or 15
+    //* If dealer has any other card, player must have 15
     int requestedPlayerTotal = 0;
     if (tempDealerHand[1].value == 9 || tempDealerHand[1].value == 11) {
       requestedPlayerTotal = 15;
@@ -441,13 +432,14 @@ class DeckCubit extends Cubit<DeckState> {
       requestedPlayerTotal = min + random.nextInt(max - min);
     }
 
-    // Finds the players first card that can total to 15
-    var playerFirstCard = tempRemainingCards.firstWhere((i) => i.value >= 5 && i.value < 11);
+    //* Finds the players first card that can total to 15
+    var playerFirstCard =
+        tempRemainingCards.firstWhere((i) => i.value >= 5 && i.value < 11);
     var firstMatchedIndex = tempRemainingCards.indexOf(playerFirstCard);
     tempRemainingCards.remove(firstMatchedIndex);
     tempPlayerHand.add(playerFirstCard);
     dealtCards.add(playerFirstCard);
-    // Finds the players second card where the total will match the desired
+    //* Finds the players second card where the total will match the desired
     var requestedSecondCard = requestedPlayerTotal - tempPlayerHand[0].value;
     var playerSecondCard =
         tempRemainingCards.firstWhere((i) => i.value == requestedSecondCard);
@@ -458,13 +450,13 @@ class DeckCubit extends Cubit<DeckState> {
     return [tempDealerHand, tempPlayerHand, dealtCards];
   }
 
-  dealInsuranceHand() {
-    resetDealerHoleCards();
+  _dealInsuranceHand() {
+    _resetDealerHoleCards();
     var tempRemainingCards = state.shuffledDeck;
     var dealtCards = [];
     var tempDealerHand = [];
     var tempPlayerHand = [];
-    // Deals First card to dealer
+    //* Deals random first card to dealer
     for (int i = 0; i < 1; i++) {
       if (i == 0) tempRemainingCards[i].isHoleCard = true;
       tempDealerHand.add(tempRemainingCards[i]);
@@ -472,14 +464,14 @@ class DeckCubit extends Cubit<DeckState> {
     }
     tempRemainingCards.removeRange(0, 1);
 
-    // Finds an 11 for dealer face up card
+    //* Finds an 11 for dealer face up card
     var dealerSecondCard = tempRemainingCards.firstWhere((i) => i.value == 11);
     var dealerSecondCardIndex = tempRemainingCards.indexOf(dealerSecondCard);
     tempRemainingCards.remove(dealerSecondCardIndex);
     tempDealerHand.add(dealerSecondCard);
     dealtCards.add(dealerSecondCard);
 
-    // Deals 2 cards to player
+    //* Deals 2 random cards to player
     for (int i = 0; i < 2; i++) {
       tempPlayerHand.add(tempRemainingCards[i]);
       dealtCards.add(tempRemainingCards[i]);
@@ -488,7 +480,8 @@ class DeckCubit extends Cubit<DeckState> {
     return [tempDealerHand, tempPlayerHand, dealtCards];
   }
 
-  void resetDealerHoleCards() {
+  //* Removes 'hole cards' from deck
+  void _resetDealerHoleCards() {
     if (state.dealtCards.isNotEmpty) {
       for (var i = 0; i < state.dealtCards.length; i++) {
         state.dealtCards[i].isHoleCard = false;
@@ -496,10 +489,10 @@ class DeckCubit extends Cubit<DeckState> {
     }
   }
 
-  generateRandomTrueCount() {
+  _generateRandomTrueCount() {
     final random = Random();
-    final min = -10;
-    final max = 10;
+    const min = -10;
+    const max = 10;
     return min + random.nextInt(max - min);
   }
 

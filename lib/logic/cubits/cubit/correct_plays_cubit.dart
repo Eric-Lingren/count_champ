@@ -38,7 +38,7 @@ part 'correct_plays_state.dart';
 
 class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
   final BasicStrategeySettingsCubit basicStrategeySettingsCubit;
-  late StreamSubscription gameSettingsStreamSubscription;
+  late StreamSubscription basicStrategeySettingsStreamSubscription;
   final DeckCubit deckCubit;
   late StreamSubscription deckStreamSubscription;
   late bool _canDas;
@@ -60,23 +60,23 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
       {required this.basicStrategeySettingsCubit,
       required this.deckCubit,
       deckStreamSubscription,
-      gameSettingsStreamSubscription})
+      basicStrategeySettingsStreamSubscription})
       : super(CorrectPlaysState(
             playWasCorrect: true, correctPlay: '', hand: '', streak: 0)) {
-    manageLocalRules(basicStrategeySettingsCubit.state);
-    setHandInfo(deckCubit.state);
-    monitorGameSettingsCubit();
-    monitorDeckCubit();
+    _manageLocalRules(basicStrategeySettingsCubit.state);
+    _setHandInfo(deckCubit.state);
+    _monitorBasicStrategeySettingsCubit();
+    _monitorDeckCubit();
   }
 
-  StreamSubscription<BasicStrategeySettingsState> monitorGameSettingsCubit() {
-    return gameSettingsStreamSubscription =
+  StreamSubscription<BasicStrategeySettingsState> _monitorBasicStrategeySettingsCubit() {
+    return basicStrategeySettingsStreamSubscription =
         basicStrategeySettingsCubit.stream.listen((basisStrategeyGameSettingsState) {
-      manageLocalRules(basisStrategeyGameSettingsState);
+      _manageLocalRules(basisStrategeyGameSettingsState);
     });
   }
 
-  void manageLocalRules(basisStrategeyGameSettingsState) {
+  void _manageLocalRules(basisStrategeyGameSettingsState) {
     _canDas = basisStrategeyGameSettingsState.canDas;
     _canDoubleAny2 = basisStrategeyGameSettingsState.canDoubleAny2;
     _canSplitAces = basisStrategeyGameSettingsState.canSplitAces;
@@ -88,13 +88,13 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
     _practiceInsurance = basisStrategeyGameSettingsState.practiceInsurance;
   }
 
-  StreamSubscription<DeckState> monitorDeckCubit() {
+  StreamSubscription<DeckState> _monitorDeckCubit() {
     return deckStreamSubscription = deckCubit.stream.listen((deckState) {
-      if (deckState.playerHand.isNotEmpty) setHandInfo(deckState);
+      if (deckState.playerHand.isNotEmpty) _setHandInfo(deckState);
     });
   }
 
-  void setHandInfo(deckState) {
+  void _setHandInfo(deckState) {
     _playerTotal =
         deckState.playerHand[0].value + deckState.playerHand[1].value;
     _dealerFaceTotal = deckState.dealerHand[1].value;
@@ -111,69 +111,52 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
   }
 
   void checkPlay(chosenPlay) {
-    print('Player Choose : ${chosenPlay}');
-    print('Hand Type : ${_handType}');
-    print('TRUE COUNT : ${_trueCount}');
-    // print('FAB4 : ${_practiceFab4}');
-    // print('ILLUSTRIOUS 18 : ${_practiceIllustrious18}');
     List handRules = [];
     String correctPlay = '';
     bool foundInsuranceMatch = false;
     bool foundDeviationMatch = false;
 
-
+    //* Checks Insurance Gameplay Rules for the correct play
     if(_practiceInsurance){
-      print('Checking deviations');
-      //* Checks Insurance Gameplay Rules for the correct play
-      correctPlay = findInsuranceBsRules();
-      if (correctPlay != 'none') {
-        print('FOUND Insurance MATCH!!!');
-        foundInsuranceMatch = true;
-      }
+      correctPlay = _findInsuranceBsRules();
+      if (correctPlay != 'none') foundInsuranceMatch = true;
     }
 
+    //* Checks Deviation Gameplay Rules for the corerct play
     if (!foundInsuranceMatch && (_practiceFab4 == true || _practiceIllustrious18 == true)) {
-      print('Checking deviations');
-      //* Checks Deviation Gameplay Rules for the corerct play
-      correctPlay = findDeviationBsRules();
-      if (correctPlay != 'none') {
-        print('FOUND DEVIATION MATCH!!!');
-        print(correctPlay);
-        foundDeviationMatch = true;
-      }
+      correctPlay = _findDeviationBsRules();
+      if (correctPlay != 'none') foundDeviationMatch = true;
     }
     
+    //* Checks Standard Gameplay Rules for all hand options
     if(!foundInsuranceMatch && !foundDeviationMatch ) {
-      print('checking standard plays');
-      //* Checks Standard Gameplay Rules for all hand options
-      if (_handType == 'hard') {
-        handRules = findHardBsRules();
-      }
-      if (_handType == 'soft') {
-        handRules = findSoftBsRules();
-      }
+      if (_handType == 'hard') handRules = _findHardBsRules();
+      if (_handType == 'soft') handRules = _findSoftBsRules();
       if (_handType == 'pair') {
         if (_playerTotal == 10 || _playerTotal == 20) {
-          handRules = findHardBsRules();
+          handRules = _findHardBsRules();
         } else {
-          handRules = findPairBsRules();
+          handRules = _findPairBsRules();
         }
       }
+      //* Sets the correct play for comparison
       correctPlay = handRules[_dealerFaceTotal - 2];
     }
 
+    //* Renders text outputt for CorrectPlayWidget
     String hand = 'Player: ${_playerTotal}  VS  Dealer: ${_dealerFaceTotal}';
 
+    //* Determines if correct play matched users play
     if (correctPlay == chosenPlay) {
       int streak = state.streak + 1;
-      emitCorrectPlay(correctPlay, hand, streak);
+      _emitCorrectPlay(correctPlay, hand, streak);
     } else {
       int streak = 0;
-      emitIncorrectPlay(correctPlay, hand, streak);
+      _emitIncorrectPlay(correctPlay, hand, streak);
     }
   }
 
-  findHardBsRules() {
+  _findHardBsRules() {
     List _handRules = [];
     if (_playerTotal < 8) {
       _handRules = Hard7Plays().fetch();
@@ -221,7 +204,7 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
     return _handRules;
   }
 
-  findSoftBsRules() {
+  _findSoftBsRules() {
     List _handRules = [];
     if (_playerTotal == 13) {
       _handRules = Soft13Plays(_canDoubleAny2, _deckQuantity).fetch();
@@ -250,7 +233,7 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
     return _handRules;
   }
 
-  findPairBsRules() {
+  _findPairBsRules() {
     List _handRules = [];
     if (_playerTotal == 4) {
       _handRules = Pair4Plays(_canDas, _deckQuantity).fetch();
@@ -282,13 +265,13 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
     return _handRules;
   }
 
-  findInsuranceBsRules(){
+  _findInsuranceBsRules(){
     String _correctPlay = '';
     _correctPlay = InsurancePlays(_trueCount, _dealerFaceTotal, _deckQuantity, _practiceInsurance).fetch();
     return _correctPlay;
   }
 
-  findDeviationBsRules() {
+  _findDeviationBsRules() {
     String _correctPlay = '';
     _correctPlay = DeviationPlays(
             _dealerHitsSoft17,
@@ -304,12 +287,12 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
     return _correctPlay;
   }
 
-  void emitCorrectPlay(correctPlay, hand, streak) => emit(CorrectPlaysState(
+  void _emitCorrectPlay(correctPlay, hand, streak) => emit(CorrectPlaysState(
       playWasCorrect: true,
       correctPlay: correctPlay,
       hand: hand,
       streak: streak));
-  void emitIncorrectPlay(correctPlay, hand, streak) => emit(CorrectPlaysState(
+  void _emitIncorrectPlay(correctPlay, hand, streak) => emit(CorrectPlaysState(
       playWasCorrect: false,
       correctPlay: correctPlay,
       hand: hand,
@@ -317,7 +300,7 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
 
   @override
   Future<void> close() {
-    gameSettingsStreamSubscription.cancel();
+    basicStrategeySettingsStreamSubscription.cancel();
     deckStreamSubscription.cancel();
     return super.close();
   }

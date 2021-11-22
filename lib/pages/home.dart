@@ -19,7 +19,7 @@ class _HomeState extends State<Home> {
             onPressed: () {
               Navigator.pushNamed(context, '/basic_strategy_trainer');
             },
-            child: Text('Basic Strategy')),
+            child: const Text('Basic Strategy')),
       ],
     ))));
   }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-// Below is how we can pass data from a stafeul widget to a stateless widget:
 class CorrectPlayWidget extends StatelessWidget {
   final bool playWasCorrect;
   final String correctPlay;
@@ -22,7 +21,6 @@ class CorrectPlayWidget extends StatelessWidget {
     Color? backgroundColor;
 
     if (playWasCorrect == true) {
-      wasCorrect = 'CORRECT!';
       backgroundColor = Colors.green[300];
     } else if (playWasCorrect == false) {
       wasCorrect = 'Correct Play Was: '+ correctPlay.toUpperCase();
@@ -34,31 +32,40 @@ class CorrectPlayWidget extends StatelessWidget {
 
     return Container(
         color: backgroundColor,
-        height: 40,
+        height: 50,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Text(hand),
-              Text(wasCorrect),
-            ],
-          ),
+            Container(
+              margin: const EdgeInsets.only(left: 10.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text('Last Hand - '+ hand),
+                  Text(wasCorrect),
+                ],
+              ),
+            ),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children:  [
-              const Text('STREAK:'),
+              const Text('Streak:'),
               Text('$streak')
             ],
           ),
-          Column(children: const [
-            Icon(
-              Icons.show_chart_outlined,
-              color: Colors.black,
-              size: 36.0,
-            ),
-          ])
+          Container(
+            margin: const EdgeInsets.only(right: 10.0),
+            child: Column(children: [
+              IconButton(
+                icon: Icon(Icons.show_chart_outlined,
+                color: Colors.black,
+                size: 36.0),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/basic_strategy_stats');
+                },
+              ),
+            ]),
+          )
         ]));
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-// Below is how we can pass data from a stafeul widget to a stateless widget:
 class CardWidget extends StatelessWidget {
   final String cardCode;
   final String initImagePath = 'assets/images/cards/card_faces/';

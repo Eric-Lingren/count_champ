@@ -6,26 +6,15 @@ part 'basic_strategey_state.dart';
 
 class BasicStrategeyCubit extends Cubit<BasicStrategeyState> {
 
+  BasicStrategeyCubit() : super(BasicStrategeyState());
 
-  BasicStrategeyCubit()
-      : super(BasicStrategeyState());
-      // : super(BasicStrategeyState(chosenPlay: ''));
-
-  // void choosePlay(chosenPlay) {
-  //   print('------ Player Chose ${chosenPlay}');
-  //   emit(BasicStrategeyState(chosenPlay: chosenPlay, didChoosePlay: true));
-  //   toggleNewPlay();
-  // }
   void initNextHand() {
     emit(BasicStrategeyState(didChoosePlay: true));
-    toggleNewPlay();
+    _toggleNewPlay();
   }
 
-  void toggleNewPlay() {
+  void _toggleNewPlay() {
     emit(BasicStrategeyState(didChoosePlay: false));
   }
-  // void toggleNewPlay() {
-  //   emit(BasicStrategeyState(
-  //       chosenPlay: state.chosenPlay, didChoosePlay: false));
-  // }
+
 }
