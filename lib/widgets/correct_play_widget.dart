@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:count_champ/logic/cubits/basic_strategey_stats_cubit copy/basic_strategey_stats_cubit.dart';
 
 class CorrectPlayWidget extends StatelessWidget {
   final bool playWasCorrect;
   final String correctPlay;
   final String hand;
-  final int streak;
 
 
   const CorrectPlayWidget({
@@ -12,7 +13,6 @@ class CorrectPlayWidget extends StatelessWidget {
     required this.playWasCorrect,
     required this.correctPlay,
     required this.hand,
-    required this.streak,
   }) : super(key: key);
 
   @override
@@ -41,7 +41,7 @@ class CorrectPlayWidget extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Text('Last Hand - '+ hand),
+                  Text(hand),
                   Text(wasCorrect),
                 ],
               ),
@@ -50,7 +50,10 @@ class CorrectPlayWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children:  [
               const Text('Streak:'),
-              Text('$streak')
+              BlocBuilder<BasicStrategeyStatsCubit, BasicStrategeyStatsState>(
+                builder: (context, state) {
+                return Text(state.currentStreak.toString());
+              }),
             ],
           ),
           Container(

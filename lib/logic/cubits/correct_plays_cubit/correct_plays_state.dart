@@ -4,13 +4,13 @@ class CorrectPlaysState extends Equatable {
   final bool playWasCorrect;
   final String correctPlay;
   final String hand;
-  int streak;
+  final String handType;
 
   CorrectPlaysState(
-      {required this.playWasCorrect, required this.correctPlay, required this.hand, required this.streak});
+      {required this.playWasCorrect, required this.correctPlay, required this.hand, required this.handType});
 
   @override
-  List<Object> get props => [playWasCorrect, correctPlay, hand, streak, ];
+  List<Object> get props => [playWasCorrect, correctPlay, hand, handType, ];
 }
 
 // class CorrectPlaysInitial extends CorrectPlaysState {}

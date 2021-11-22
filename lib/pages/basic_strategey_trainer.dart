@@ -1,7 +1,7 @@
 import 'package:count_champ/data/models/card_template.dart';
 import 'package:count_champ/logic/cubits/basic_strategey_cubit/basic_strategey_cubit.dart';
+import 'package:count_champ/logic/cubits/correct_plays_cubit/correct_plays_cubit.dart';
 import 'package:count_champ/logic/cubits/settings/basic_strategey_settings_cubit/basic_strategey_settings_cubit.dart';
-import 'package:count_champ/logic/cubits/cubit/correct_plays_cubit.dart';
 import 'package:count_champ/logic/cubits/deck_cubit/deck_cubit.dart';
 import 'package:count_champ/widgets/correct_play_widget.dart';
 import 'package:count_champ/widgets/basic_strategey_settings_sidebar.dart';
@@ -47,8 +47,7 @@ class _BasicStrategeyTrainerState extends State<BasicStrategeyTrainer> {
               return CorrectPlayWidget(
                   playWasCorrect: state.playWasCorrect,
                   correctPlay: state.correctPlay,
-                  hand: state.hand,
-                  streak: state.streak);
+                  hand: state.hand);
             }),
             BlocBuilder<DeckCubit, DeckState>(builder: (context, state) {
               if (state.dealerHand.isNotEmpty) {

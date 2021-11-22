@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
+
 import 'package:count_champ/data/models/basic_strategey_charts/bs_deviations/deviation_plays.dart';
 import 'package:count_champ/data/models/basic_strategey_charts/bs_deviations/insurance_plays.dart';
 import 'package:count_champ/data/models/basic_strategey_charts/bs_hard_hands/hard_10_plays.dart';
@@ -11,6 +13,8 @@ import 'package:count_champ/data/models/basic_strategey_charts/bs_hard_hands/har
 import 'package:count_champ/data/models/basic_strategey_charts/bs_hard_hands/hard_16_plays.dart';
 import 'package:count_champ/data/models/basic_strategey_charts/bs_hard_hands/hard_17_plays.dart';
 import 'package:count_champ/data/models/basic_strategey_charts/bs_hard_hands/hard_18_plays.dart';
+import 'package:count_champ/data/models/basic_strategey_charts/bs_hard_hands/hard_7_plays.dart';
+import 'package:count_champ/data/models/basic_strategey_charts/bs_hard_hands/hard_8_plays.dart';
 import 'package:count_champ/data/models/basic_strategey_charts/bs_hard_hands/hard_9_plays.dart';
 import 'package:count_champ/data/models/basic_strategey_charts/bs_pair_hands/pair_12_plays.dart';
 import 'package:count_champ/data/models/basic_strategey_charts/bs_pair_hands/pair_14_plays.dart';
@@ -27,12 +31,8 @@ import 'package:count_champ/data/models/basic_strategey_charts/bs_soft_hands/sof
 import 'package:count_champ/data/models/basic_strategey_charts/bs_soft_hands/soft_18_plays.dart';
 import 'package:count_champ/data/models/basic_strategey_charts/bs_soft_hands/soft_19_plays.dart';
 import 'package:count_champ/data/models/basic_strategey_charts/bs_soft_hands/soft_20_plays.dart';
-import 'package:count_champ/logic/cubits/settings/basic_strategey_settings_cubit/basic_strategey_settings_cubit.dart';
-
 import 'package:count_champ/logic/cubits/deck_cubit/deck_cubit.dart';
-import 'package:count_champ/data/models/basic_strategey_charts/bs_hard_hands/hard_7_plays.dart';
-import 'package:count_champ/data/models/basic_strategey_charts/bs_hard_hands/hard_8_plays.dart';
-import 'package:equatable/equatable.dart';
+import 'package:count_champ/logic/cubits/settings/basic_strategey_settings_cubit/basic_strategey_settings_cubit.dart';
 
 part 'correct_plays_state.dart';
 
@@ -62,7 +62,7 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
       deckStreamSubscription,
       basicStrategeySettingsStreamSubscription})
       : super(CorrectPlaysState(
-            playWasCorrect: true, correctPlay: '', hand: '', streak: 0)) {
+            playWasCorrect: true, correctPlay: '', hand: '', handType: '')) {
     _manageLocalRules(basicStrategeySettingsCubit.state);
     _setHandInfo(deckCubit.state);
     _monitorBasicStrategeySettingsCubit();
@@ -146,13 +146,20 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
     //* Renders text outputt for CorrectPlayWidget
     String hand = 'Player: ${_playerTotal}  VS  Dealer: ${_dealerFaceTotal}';
 
+    //* Resets a pair of 10's to a hard hand of 20 for convention in reporting
+    if (_playerTotal == 20) _handType = 'hard';
+    //* Set hand type for reporting
+    if(_practiceIllustrious18) _handType = 'illustrious18';
+    //* Set hand type for reporting
+    if(_practiceFab4) _handType = 'fab4';
+    //* Set hand type for reporting
+    if(_practiceInsurance) _handType = 'insurance';
+
     //* Determines if correct play matched users play
     if (correctPlay == chosenPlay) {
-      int streak = state.streak + 1;
-      _emitCorrectPlay(correctPlay, hand, streak);
+      _emitCorrectPlay(correctPlay, hand, _handType);
     } else {
-      int streak = 0;
-      _emitIncorrectPlay(correctPlay, hand, streak);
+      _emitIncorrectPlay(correctPlay, hand, _handType);
     }
   }
 
@@ -287,16 +294,16 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
     return _correctPlay;
   }
 
-  void _emitCorrectPlay(correctPlay, hand, streak) => emit(CorrectPlaysState(
+  void _emitCorrectPlay(correctPlay, hand, _handType) => emit(CorrectPlaysState(
       playWasCorrect: true,
       correctPlay: correctPlay,
       hand: hand,
-      streak: streak));
-  void _emitIncorrectPlay(correctPlay, hand, streak) => emit(CorrectPlaysState(
+      handType: _handType));
+  void _emitIncorrectPlay(correctPlay, hand, _handType) => emit(CorrectPlaysState(
       playWasCorrect: false,
       correctPlay: correctPlay,
       hand: hand,
-      streak: streak));
+      handType: _handType));
 
   @override
   Future<void> close() {

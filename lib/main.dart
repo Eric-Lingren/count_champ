@@ -1,11 +1,13 @@
 import 'package:count_champ/logic/cubits/basic_strategey_cubit/basic_strategey_cubit.dart';
+import 'package:count_champ/logic/cubits/correct_plays_cubit/correct_plays_cubit.dart';
 import 'package:count_champ/logic/cubits/settings/basic_strategey_settings_cubit/basic_strategey_settings_cubit.dart';
-import 'package:count_champ/logic/cubits/cubit/correct_plays_cubit.dart';
 import 'package:count_champ/logic/cubits/deck_cubit/deck_cubit.dart';
 import 'package:count_champ/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+
+import 'logic/cubits/basic_strategey_stats_cubit copy/basic_strategey_stats_cubit.dart';
 
 void main() {
   runApp(MyApp(
@@ -34,12 +36,14 @@ class _MyAppState extends State<MyApp> {
             create: (context) => BasicStrategeySettingsCubit()),
       BlocProvider<BasicStrategeyCubit>(
             create: (context) => BasicStrategeyCubit()),
-        BlocProvider<DeckCubit>(
+      BlocProvider<DeckCubit>(
             create: (context) => DeckCubit(
               basicStrategeyCubit: context.read<BasicStrategeyCubit>(), 
               basicStrategeySettingsCubit: context.read<BasicStrategeySettingsCubit>())),
       BlocProvider<CorrectPlaysCubit>(
             create: (context) => CorrectPlaysCubit(deckCubit: context.read<DeckCubit>(), basicStrategeySettingsCubit: context.read<BasicStrategeySettingsCubit>())),
+      BlocProvider<BasicStrategeyStatsCubit>(
+            create: (context) => BasicStrategeyStatsCubit(correctPlaysCubit: context.read<CorrectPlaysCubit>())),
       ],
       child: MaterialApp(
         title: 'Count Champ',
