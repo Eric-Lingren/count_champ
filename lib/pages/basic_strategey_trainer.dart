@@ -1,8 +1,8 @@
 import 'package:count_champ/data/models/card_template.dart';
 import 'package:count_champ/logic/cubits/basic_strategey_cubit/basic_strategey_cubit.dart';
+import 'package:count_champ/logic/cubits/settings/basic_strategey_settings_cubit/basic_strategey_settings_cubit.dart';
 import 'package:count_champ/logic/cubits/cubit/correct_plays_cubit.dart';
 import 'package:count_champ/logic/cubits/deck_cubit/deck_cubit.dart';
-import 'package:count_champ/logic/cubits/game_settings_cubit/game_settings_cubit.dart';
 import 'package:count_champ/widgets/correct_play_widget.dart';
 import 'package:count_champ/widgets/game_settings_sidebar.dart';
 import 'package:flutter/material.dart';
@@ -146,7 +146,7 @@ class _BasicStrategeyTrainerState extends State<BasicStrategeyTrainer> {
 
 
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-              BlocBuilder<GameSettingsCubit, GameSettingsState>(
+              BlocBuilder<BasicStrategeySettingsCubit, BasicStrategeySettingsState>(
                   builder: (context, state) {
                 if (state.practiceInsurance == true) {
                   return ElevatedButton(
@@ -160,7 +160,7 @@ class _BasicStrategeyTrainerState extends State<BasicStrategeyTrainer> {
                 }
                 return const SizedBox.shrink();
               }),
-                  BlocBuilder<GameSettingsCubit, GameSettingsState>(
+                  BlocBuilder<BasicStrategeySettingsCubit, BasicStrategeySettingsState>(
                     builder: (context, state) {
                     if (state.practiceFab4 == true || state.practiceIllustrious18 == true || state.practiceInsurance == true) {
                       return Column(
@@ -175,10 +175,9 @@ class _BasicStrategeyTrainerState extends State<BasicStrategeyTrainer> {
                     }
                     return const SizedBox.shrink();
                   }),
-              BlocBuilder<GameSettingsCubit, GameSettingsState>(
+              BlocBuilder<BasicStrategeySettingsCubit, BasicStrategeySettingsState>(
                   builder: (context, state) {
-                if (state.canEarlySurrender == true ||
-                    state.canLateSurrender == true) {
+                if (state.canSurrender == true) {
                   return ElevatedButton(
                       onPressed: () {
                         context

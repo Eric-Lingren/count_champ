@@ -8,17 +8,15 @@ class Pair14Plays {
   //* Settings Rules Needed:
   final bool _canDas;
   final bool _dealerHitsSoft17;
-  final bool _canEarlySurrender;
-  final bool _canLateSurrender;
+  final bool _canSurrender;
   final double _deckQuantity;
 
-  Pair14Plays(this._canDas, this._dealerHitsSoft17, this._canEarlySurrender,
-      this._canLateSurrender, this._deckQuantity);
+  Pair14Plays(this._canDas, this._dealerHitsSoft17, this._canSurrender, this._deckQuantity);
 
   fetch() {
     int deckCount = _deckQuantity.round();
     bool canSurrender = false;
-    if (_canEarlySurrender || _canLateSurrender) canSurrender = true;
+    if (_canSurrender) canSurrender = true;
 
     if (deckCount >= 4) {
       return pair14MultiDeck;

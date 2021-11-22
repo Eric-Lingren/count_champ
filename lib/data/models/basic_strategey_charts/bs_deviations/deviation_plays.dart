@@ -3,8 +3,7 @@ class DeviationPlays {
   final int _trueCount;
   final int _dealerFaceTotal;
   final int _playerTotal;
-  final bool _canEarlySurrender;
-  final bool _canLateSurrender;
+  final bool _canSurrender;
   final bool _canDoubleAny2;
   final double _deckQuantity;
   final bool _practiceInsurance;
@@ -15,8 +14,7 @@ class DeviationPlays {
       this._trueCount,
       this._dealerFaceTotal,
       this._playerTotal,
-      this._canEarlySurrender,
-      this._canLateSurrender,
+      this._canSurrender,
       this._canDoubleAny2,
       this._deckQuantity,
       this._practiceInsurance,
@@ -25,7 +23,7 @@ class DeviationPlays {
   fetch() {
     int decks = _deckQuantity.round();
     bool canSurrender = false;
-    if (_canEarlySurrender || _canLateSurrender) canSurrender = true;
+    if (_canSurrender) canSurrender = true;
 
     if (_dealerFaceTotal == 11) {
       if (_practiceInsurance) {

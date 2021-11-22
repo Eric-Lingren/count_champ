@@ -27,9 +27,9 @@ import 'package:count_champ/data/models/basic_strategey_charts/bs_soft_hands/sof
 import 'package:count_champ/data/models/basic_strategey_charts/bs_soft_hands/soft_18_plays.dart';
 import 'package:count_champ/data/models/basic_strategey_charts/bs_soft_hands/soft_19_plays.dart';
 import 'package:count_champ/data/models/basic_strategey_charts/bs_soft_hands/soft_20_plays.dart';
+import 'package:count_champ/logic/cubits/settings/basic_strategey_settings_cubit/basic_strategey_settings_cubit.dart';
 
 import 'package:count_champ/logic/cubits/deck_cubit/deck_cubit.dart';
-import 'package:count_champ/logic/cubits/game_settings_cubit/game_settings_cubit.dart';
 import 'package:count_champ/data/models/basic_strategey_charts/bs_hard_hands/hard_7_plays.dart';
 import 'package:count_champ/data/models/basic_strategey_charts/bs_hard_hands/hard_8_plays.dart';
 import 'package:equatable/equatable.dart';
@@ -37,7 +37,7 @@ import 'package:equatable/equatable.dart';
 part 'correct_plays_state.dart';
 
 class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
-  final GameSettingsCubit gameSettingsCubit;
+  final BasicStrategeySettingsCubit basicStrategeySettingsCubit;
   late StreamSubscription gameSettingsStreamSubscription;
   final DeckCubit deckCubit;
   late StreamSubscription deckStreamSubscription;
@@ -45,8 +45,7 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
   late bool _canDoubleAny2;
   late bool _canSplitAces;
   late bool _dealerHitsSoft17;
-  late bool _canEarlySurrender;
-  late bool _canLateSurrender;
+  late bool _canSurrender;
   late bool _practiceIllustrious18;
   late bool _practiceFab4;
   late bool _practiceInsurance;
@@ -58,36 +57,35 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
   int count = 0;
 
   CorrectPlaysCubit(
-      {required this.gameSettingsCubit,
+      {required this.basicStrategeySettingsCubit,
       required this.deckCubit,
       deckStreamSubscription,
       gameSettingsStreamSubscription})
       : super(CorrectPlaysState(
             playWasCorrect: true, correctPlay: '', hand: '', streak: 0)) {
-    manageLocalRules(gameSettingsCubit.state);
+    manageLocalRules(basicStrategeySettingsCubit.state);
     setHandInfo(deckCubit.state);
     monitorGameSettingsCubit();
     monitorDeckCubit();
   }
 
-  StreamSubscription<GameSettingsState> monitorGameSettingsCubit() {
+  StreamSubscription<BasicStrategeySettingsState> monitorGameSettingsCubit() {
     return gameSettingsStreamSubscription =
-        gameSettingsCubit.stream.listen((gameSettingsState) {
-      manageLocalRules(gameSettingsState);
+        basicStrategeySettingsCubit.stream.listen((basisStrategeyGameSettingsState) {
+      manageLocalRules(basisStrategeyGameSettingsState);
     });
   }
 
-  void manageLocalRules(gameSettingsState) {
-    _canDas = gameSettingsState.canDas;
-    _canDoubleAny2 = gameSettingsState.canDoubleAny2;
-    _canSplitAces = gameSettingsState.canSplitAces;
-    _dealerHitsSoft17 = gameSettingsState.dealerHitsSoft17;
-    _canEarlySurrender = gameSettingsState.canEarlySurrender;
-    _canLateSurrender = gameSettingsState.canLateSurrender;
-    _deckQuantity = gameSettingsState.deckQuantity;
-    _practiceIllustrious18 = gameSettingsState.practiceIllustrious18;
-    _practiceFab4 = gameSettingsState.practiceFab4;
-    _practiceInsurance = gameSettingsState.practiceInsurance;
+  void manageLocalRules(basisStrategeyGameSettingsState) {
+    _canDas = basisStrategeyGameSettingsState.canDas;
+    _canDoubleAny2 = basisStrategeyGameSettingsState.canDoubleAny2;
+    _canSplitAces = basisStrategeyGameSettingsState.canSplitAces;
+    _dealerHitsSoft17 = basisStrategeyGameSettingsState.dealerHitsSoft17;
+    _canSurrender = basisStrategeyGameSettingsState.canSurrender;
+    _deckQuantity = basisStrategeyGameSettingsState.deckQuantity;
+    _practiceIllustrious18 = basisStrategeyGameSettingsState.practiceIllustrious18;
+    _practiceFab4 = basisStrategeyGameSettingsState.practiceFab4;
+    _practiceInsurance = basisStrategeyGameSettingsState.practiceInsurance;
   }
 
   StreamSubscription<DeckState> monitorDeckCubit() {
@@ -204,17 +202,17 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
     }
     if (_playerTotal == 15) {
       _handRules = Hard15Plays(_dealerHitsSoft17, _deckQuantity,
-              _canEarlySurrender, _canLateSurrender)
+              _canSurrender)
           .fetch();
     }
     if (_playerTotal == 16) {
       _handRules = Hard16Plays(_dealerHitsSoft17, _deckQuantity,
-              _canEarlySurrender, _canLateSurrender)
+              _canSurrender)
           .fetch();
     }
     if (_playerTotal == 17) {
       _handRules = Hard17Plays(_dealerHitsSoft17, _deckQuantity,
-              _canEarlySurrender, _canLateSurrender)
+              _canSurrender)
           .fetch();
     }
     if (_playerTotal >= 18) {
@@ -267,13 +265,11 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
       _handRules = Pair12Plays(_canDas, _deckQuantity).fetch();
     }
     if (_playerTotal == 14) {
-      _handRules = Pair14Plays(_canDas, _dealerHitsSoft17, _canEarlySurrender,
-              _canLateSurrender, _deckQuantity)
+      _handRules = Pair14Plays(_canDas, _dealerHitsSoft17, _canSurrender, _deckQuantity)
           .fetch();
     }
     if (_playerTotal == 16) {
-      _handRules = Pair16Plays(_dealerHitsSoft17, _canEarlySurrender,
-              _canLateSurrender, _deckQuantity)
+      _handRules = Pair16Plays(_dealerHitsSoft17, _canSurrender, _deckQuantity)
           .fetch();
     }
     if (_playerTotal == 18) {
@@ -299,8 +295,7 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
             _trueCount,
             _dealerFaceTotal,
             _playerTotal,
-            _canEarlySurrender,
-            _canLateSurrender,
+            _canSurrender,
             _canDoubleAny2,
             _deckQuantity,
             _practiceInsurance, 

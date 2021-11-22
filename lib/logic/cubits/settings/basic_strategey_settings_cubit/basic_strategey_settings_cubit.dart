@@ -1,16 +1,18 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-part 'game_settings_state.dart';
+part 'basic_strategey_settings_state.dart';
 
-class GameSettingsCubit extends Cubit<GameSettingsState> {
-  var alternateSurrenderValue;
+class BasicStrategeySettingsCubit extends Cubit<BasicStrategeySettingsState> {
   var bsAllHands;
   var bsHardHands;
   var bsSoftHands;
   var bsSplitHands;
-  GameSettingsCubit()
-      : super(GameSettingsState(
+  var bsIllustrious18;
+  var bsfab4;
+  var bsInsurance;
+  BasicStrategeySettingsCubit()
+      : super(BasicStrategeySettingsState(
           // * Initial Default Game Rules:
           canDas: false,
           canDoubleAny2: true,
@@ -18,8 +20,7 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
           canSplitAces: true,
           canHitAfterSplittingAces: false,
           dealerHitsSoft17: true,
-          canEarlySurrender: false,
-          canLateSurrender: false,
+          canSurrender: false,
           dealerPeeks: true,
           deckQuantity: 8,
           deckPenetration: 80,
@@ -32,15 +33,14 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
           practiceInsurance: false,
         ));
 
-  void toggleDas(value) => emit(GameSettingsState(
+  void toggleDas(value) => emit(BasicStrategeySettingsState(
         canDas: value,
         canResplitPairs: state.canResplitPairs,
         canDoubleAny2: state.canDoubleAny2,
         canSplitAces: state.canSplitAces,
         canHitAfterSplittingAces: state.canHitAfterSplittingAces,
         dealerHitsSoft17: state.dealerHitsSoft17,
-        canEarlySurrender: state.canEarlySurrender,
-        canLateSurrender: state.canLateSurrender,
+        canSurrender: state.canSurrender,
         dealerPeeks: state.dealerPeeks,
         deckQuantity: state.deckQuantity,
         deckPenetration: state.deckPenetration,
@@ -52,15 +52,14 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
         practiceFab4: state.practiceFab4,
         practiceInsurance: state.practiceInsurance,
       ));
-  void toggleCanDoubleAny2(value) => emit(GameSettingsState(
+  void toggleCanDoubleAny2(value) => emit(BasicStrategeySettingsState(
         canDas: state.canDas,
         canResplitPairs: state.canResplitPairs,
         canDoubleAny2: value,
         canSplitAces: state.canSplitAces,
         canHitAfterSplittingAces: state.canHitAfterSplittingAces,
         dealerHitsSoft17: state.dealerHitsSoft17,
-        canEarlySurrender: state.canEarlySurrender,
-        canLateSurrender: state.canLateSurrender,
+        canSurrender: state.canSurrender,
         dealerPeeks: state.dealerPeeks,
         deckQuantity: state.deckQuantity,
         deckPenetration: state.deckPenetration,
@@ -72,15 +71,14 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
         practiceFab4: state.practiceFab4,
         practiceInsurance: state.practiceInsurance,
       ));
-  void toggleCanResplitPairs(value) => emit(GameSettingsState(
+  void toggleCanResplitPairs(value) => emit(BasicStrategeySettingsState(
         canDas: state.canDas,
         canResplitPairs: value,
         canDoubleAny2: state.canDoubleAny2,
         canSplitAces: state.canSplitAces,
         canHitAfterSplittingAces: state.canHitAfterSplittingAces,
         dealerHitsSoft17: state.dealerHitsSoft17,
-        canEarlySurrender: state.canEarlySurrender,
-        canLateSurrender: state.canLateSurrender,
+        canSurrender: state.canSurrender,
         dealerPeeks: state.dealerPeeks,
         deckQuantity: state.deckQuantity,
         deckPenetration: state.deckPenetration,
@@ -92,15 +90,14 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
         practiceFab4: state.practiceFab4,
         practiceInsurance: state.practiceInsurance,
       ));
-  void toggleCanSplitAces(value) => emit(GameSettingsState(
+  void toggleCanSplitAces(value) => emit(BasicStrategeySettingsState(
         canDas: state.canDas,
         canResplitPairs: state.canResplitPairs,
         canDoubleAny2: state.canDoubleAny2,
         canSplitAces: value,
         canHitAfterSplittingAces: state.canHitAfterSplittingAces,
         dealerHitsSoft17: state.dealerHitsSoft17,
-        canEarlySurrender: state.canEarlySurrender,
-        canLateSurrender: state.canLateSurrender,
+        canSurrender: state.canSurrender,
         dealerPeeks: state.dealerPeeks,
         deckQuantity: state.deckQuantity,
         deckPenetration: state.deckPenetration,
@@ -112,15 +109,14 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
         practiceFab4: state.practiceFab4,
         practiceInsurance: state.practiceInsurance,
       ));
-  void toggleCanHitAfterSplitingAces(value) => emit(GameSettingsState(
+  void toggleCanHitAfterSplitingAces(value) => emit(BasicStrategeySettingsState(
         canDas: state.canDas,
         canResplitPairs: state.canResplitPairs,
         canDoubleAny2: state.canDoubleAny2,
         canSplitAces: state.canSplitAces,
         canHitAfterSplittingAces: value,
         dealerHitsSoft17: state.dealerHitsSoft17,
-        canEarlySurrender: state.canEarlySurrender,
-        canLateSurrender: state.canLateSurrender,
+        canSurrender: state.canSurrender,
         dealerPeeks: state.dealerPeeks,
         deckQuantity: state.deckQuantity,
         deckPenetration: state.deckPenetration,
@@ -132,15 +128,14 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
         practiceFab4: state.practiceFab4,
         practiceInsurance: state.practiceInsurance,
       ));
-  void toggleDealerHitsSoft17(value) => emit(GameSettingsState(
+  void toggleDealerHitsSoft17(value) => emit(BasicStrategeySettingsState(
         canDas: state.canDas,
         canResplitPairs: state.canResplitPairs,
         canDoubleAny2: state.canDoubleAny2,
         canSplitAces: state.canSplitAces,
         canHitAfterSplittingAces: state.canHitAfterSplittingAces,
         dealerHitsSoft17: value,
-        canEarlySurrender: state.canEarlySurrender,
-        canLateSurrender: state.canLateSurrender,
+        canSurrender: state.canSurrender,
         dealerPeeks: state.dealerPeeks,
         deckQuantity: state.deckQuantity,
         deckPenetration: state.deckPenetration,
@@ -152,20 +147,15 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
         practiceFab4: state.practiceFab4,
         practiceInsurance: state.practiceInsurance,
       ));
-  void toggleCanEarlySurrender(value) => {
-        if (value && state.canLateSurrender)
-          {alternateSurrenderValue = false}
-        else
-          {alternateSurrenderValue = state.canLateSurrender},
-        emit(GameSettingsState(
+  void toggleCanSurrender(value) => {
+        emit(BasicStrategeySettingsState(
           canDas: state.canDas,
           canResplitPairs: state.canResplitPairs,
           canDoubleAny2: state.canDoubleAny2,
           canSplitAces: state.canSplitAces,
           canHitAfterSplittingAces: state.canHitAfterSplittingAces,
           dealerHitsSoft17: state.dealerHitsSoft17,
-          canEarlySurrender: value,
-          canLateSurrender: alternateSurrenderValue,
+          canSurrender: value,
           dealerPeeks: state.dealerPeeks,
           deckQuantity: state.deckQuantity,
           deckPenetration: state.deckPenetration,
@@ -178,41 +168,14 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
           practiceInsurance: state.practiceInsurance,
         ))
       };
-  void toggleCanLateSurrender(value) => {
-        if (value && state.canEarlySurrender)
-          {alternateSurrenderValue = false}
-        else
-          {alternateSurrenderValue = state.canEarlySurrender},
-        emit(GameSettingsState(
-          canDas: state.canDas,
-          canResplitPairs: state.canResplitPairs,
-          canDoubleAny2: state.canDoubleAny2,
-          canSplitAces: state.canSplitAces,
-          canHitAfterSplittingAces: state.canHitAfterSplittingAces,
-          dealerHitsSoft17: state.dealerHitsSoft17,
-          canEarlySurrender: alternateSurrenderValue,
-          canLateSurrender: value,
-          dealerPeeks: state.dealerPeeks,
-          deckQuantity: state.deckQuantity,
-          deckPenetration: state.deckPenetration,
-          practiceBsAllHands: state.practiceBsAllHands,
-          practiceBsHardHands: state.practiceBsHardHands,
-          practiceBsSoftHands: state.practiceBsSoftHands,
-          practiceBsSplitHands: state.practiceBsSplitHands,
-          practiceIllustrious18: state.practiceIllustrious18,
-          practiceFab4: state.practiceFab4,
-          practiceInsurance: state.practiceInsurance,
-        ))
-      };
-  void toggleDealerPeeks(value) => emit(GameSettingsState(
+  void toggleDealerPeeks(value) => emit(BasicStrategeySettingsState(
         canDas: state.canDas,
         canResplitPairs: state.canResplitPairs,
         canDoubleAny2: state.canDoubleAny2,
         canSplitAces: state.canSplitAces,
         canHitAfterSplittingAces: state.canHitAfterSplittingAces,
         dealerHitsSoft17: state.dealerHitsSoft17,
-        canEarlySurrender: state.canEarlySurrender,
-        canLateSurrender: state.canLateSurrender,
+        canSurrender: state.canSurrender,
         dealerPeeks: value,
         deckQuantity: state.deckQuantity,
         deckPenetration: state.deckPenetration,
@@ -224,15 +187,14 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
         practiceFab4: state.practiceFab4,
         practiceInsurance: state.practiceInsurance,
       ));
-  void setDeckQuantity(value) => emit(GameSettingsState(
+  void setDeckQuantity(value) => emit(BasicStrategeySettingsState(
         canDas: state.canDas,
         canResplitPairs: state.canResplitPairs,
         canDoubleAny2: state.canDoubleAny2,
         canSplitAces: state.canSplitAces,
         canHitAfterSplittingAces: state.canHitAfterSplittingAces,
         dealerHitsSoft17: state.dealerHitsSoft17,
-        canEarlySurrender: state.canEarlySurrender,
-        canLateSurrender: state.canLateSurrender,
+        canSurrender: state.canSurrender,
         dealerPeeks: state.dealerPeeks,
         deckQuantity: value,
         deckPenetration: state.deckPenetration,
@@ -244,15 +206,14 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
         practiceFab4: state.practiceFab4,
         practiceInsurance: state.practiceInsurance,
       ));
-  void setDeckPenetration(value) => emit(GameSettingsState(
+  void setDeckPenetration(value) => emit(BasicStrategeySettingsState(
         canDas: state.canDas,
         canResplitPairs: state.canResplitPairs,
         canDoubleAny2: state.canDoubleAny2,
         canSplitAces: state.canSplitAces,
         canHitAfterSplittingAces: state.canHitAfterSplittingAces,
         dealerHitsSoft17: state.dealerHitsSoft17,
-        canEarlySurrender: state.canEarlySurrender,
-        canLateSurrender: state.canLateSurrender,
+        canSurrender: state.canSurrender,
         dealerPeeks: state.dealerPeeks,
         deckQuantity: state.deckQuantity,
         deckPenetration: value,
@@ -266,16 +227,15 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
       ));
   void togglePracticeBsAllHands(value) => {
         if (value)
-          {bsHardHands = false, bsSoftHands = false, bsSplitHands = false},
-        emit(GameSettingsState(
+          {bsHardHands = false, bsSoftHands = false, bsSplitHands = false, bsIllustrious18 = false, bsfab4 = false, bsInsurance = false},
+        emit(BasicStrategeySettingsState(
           canDas: state.canDas,
           canResplitPairs: state.canResplitPairs,
           canDoubleAny2: state.canDoubleAny2,
           canSplitAces: state.canSplitAces,
           canHitAfterSplittingAces: state.canHitAfterSplittingAces,
           dealerHitsSoft17: state.dealerHitsSoft17,
-          canEarlySurrender: state.canEarlySurrender,
-          canLateSurrender: state.canLateSurrender,
+          canSurrender: state.canSurrender,
           dealerPeeks: state.dealerPeeks,
           deckQuantity: state.deckQuantity,
           deckPenetration: state.deckPenetration,
@@ -283,22 +243,21 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
           practiceBsHardHands: bsHardHands,
           practiceBsSoftHands: bsSoftHands,
           practiceBsSplitHands: bsSplitHands,
-          practiceIllustrious18: state.practiceIllustrious18,
-          practiceFab4: state.practiceFab4,
-          practiceInsurance: state.practiceInsurance,
+          practiceIllustrious18: bsIllustrious18,
+          practiceFab4: bsfab4,
+          practiceInsurance: bsInsurance,
         ))
       };
   void togglePracticeBsHardHands(value) => {
-        if (value) {bsAllHands = false},
-        emit(GameSettingsState(
+        if (value) {bsAllHands = false, bsIllustrious18 = false, bsfab4 = false, bsInsurance = false},
+        emit(BasicStrategeySettingsState(
           canDas: state.canDas,
           canResplitPairs: state.canResplitPairs,
           canDoubleAny2: state.canDoubleAny2,
           canSplitAces: state.canSplitAces,
           canHitAfterSplittingAces: state.canHitAfterSplittingAces,
           dealerHitsSoft17: state.dealerHitsSoft17,
-          canEarlySurrender: state.canEarlySurrender,
-          canLateSurrender: state.canLateSurrender,
+          canSurrender: state.canSurrender,
           dealerPeeks: state.dealerPeeks,
           deckQuantity: state.deckQuantity,
           deckPenetration: state.deckPenetration,
@@ -306,22 +265,21 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
           practiceBsHardHands: value,
           practiceBsSoftHands: false,
           practiceBsSplitHands: false,
-          practiceIllustrious18: state.practiceIllustrious18,
-          practiceFab4: state.practiceFab4,
-          practiceInsurance: state.practiceInsurance,
+          practiceIllustrious18: bsIllustrious18,
+          practiceFab4: bsfab4,
+          practiceInsurance: bsInsurance,
         ))
       };
   void togglePracticeBsSoftHands(value) => {
-        if (value) {bsAllHands = false},
-        emit(GameSettingsState(
+        if (value) {bsAllHands = false, bsIllustrious18 = false, bsfab4 = false, bsInsurance = false},
+        emit(BasicStrategeySettingsState(
           canDas: state.canDas,
           canResplitPairs: state.canResplitPairs,
           canDoubleAny2: state.canDoubleAny2,
           canSplitAces: state.canSplitAces,
           canHitAfterSplittingAces: state.canHitAfterSplittingAces,
           dealerHitsSoft17: state.dealerHitsSoft17,
-          canEarlySurrender: state.canEarlySurrender,
-          canLateSurrender: state.canLateSurrender,
+          canSurrender: state.canSurrender,
           dealerPeeks: state.dealerPeeks,
           deckQuantity: state.deckQuantity,
           deckPenetration: state.deckPenetration,
@@ -329,22 +287,21 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
           practiceBsHardHands: false,
           practiceBsSoftHands: value,
           practiceBsSplitHands: false,
-          practiceIllustrious18: state.practiceIllustrious18,
-          practiceFab4: state.practiceFab4,
-          practiceInsurance: state.practiceInsurance,
+          practiceIllustrious18: bsIllustrious18,
+          practiceFab4: bsfab4,
+          practiceInsurance: bsInsurance,
         ))
       };
   void togglePracticeBsSplitHands(value) => {
-        if (value) {bsAllHands = false},
-        emit(GameSettingsState(
+        if (value) {bsAllHands = false, bsIllustrious18 = false, bsfab4 = false, bsInsurance = false},
+        emit(BasicStrategeySettingsState(
           canDas: state.canDas,
           canResplitPairs: state.canResplitPairs,
           canDoubleAny2: state.canDoubleAny2,
           canSplitAces: state.canSplitAces,
           canHitAfterSplittingAces: state.canHitAfterSplittingAces,
           dealerHitsSoft17: state.dealerHitsSoft17,
-          canEarlySurrender: state.canEarlySurrender,
-          canLateSurrender: state.canLateSurrender,
+          canSurrender: state.canSurrender,
           dealerPeeks: state.dealerPeeks,
           deckQuantity: state.deckQuantity,
           deckPenetration: state.deckPenetration,
@@ -352,76 +309,84 @@ class GameSettingsCubit extends Cubit<GameSettingsState> {
           practiceBsHardHands: false,
           practiceBsSoftHands: false,
           practiceBsSplitHands: value,
-          practiceIllustrious18: state.practiceIllustrious18,
-          practiceFab4: state.practiceFab4,
-          practiceInsurance: state.practiceInsurance,
+          practiceIllustrious18: bsIllustrious18,
+          practiceFab4: bsfab4,
+          practiceInsurance: bsInsurance,
         ))
       };
-  void toggleIllustrious18(value) => emit(GameSettingsState(
-        canDas: state.canDas,
-        canResplitPairs: state.canResplitPairs,
-        canDoubleAny2: state.canDoubleAny2,
-        canSplitAces: state.canSplitAces,
-        canHitAfterSplittingAces: state.canHitAfterSplittingAces,
-        dealerHitsSoft17: state.dealerHitsSoft17,
-        canEarlySurrender: state.canEarlySurrender,
-        canLateSurrender: state.canLateSurrender,
-        dealerPeeks: state.dealerPeeks,
-        deckQuantity: state.deckQuantity,
-        deckPenetration: state.deckPenetration,
-        practiceBsAllHands: state.practiceBsAllHands,
-        practiceBsHardHands: state.practiceBsHardHands,
-        practiceBsSoftHands: state.practiceBsSoftHands,
-        practiceBsSplitHands: state.practiceBsSplitHands,
-        practiceIllustrious18: value,
-        practiceFab4: state.practiceFab4,
-        practiceInsurance: state.practiceInsurance,
-      ));
-  void toggleFab4(value) => {
-        // if (value) {alternateSurrenderValue = true},
-        emit(GameSettingsState(
+  void toggleIllustrious18(value) => {
+    if (value)
+          {bsAllHands = false, bsHardHands = false, bsSoftHands = false, bsSplitHands = false, bsfab4 = false, bsInsurance = false},
+        emit(BasicStrategeySettingsState(
           canDas: state.canDas,
           canResplitPairs: state.canResplitPairs,
           canDoubleAny2: state.canDoubleAny2,
           canSplitAces: state.canSplitAces,
           canHitAfterSplittingAces: state.canHitAfterSplittingAces,
           dealerHitsSoft17: state.dealerHitsSoft17,
-          canEarlySurrender: state.canEarlySurrender,
-          canLateSurrender: state.canLateSurrender,
+          canSurrender: state.canSurrender,
           dealerPeeks: state.dealerPeeks,
           deckQuantity: state.deckQuantity,
           deckPenetration: state.deckPenetration,
-          practiceBsAllHands: state.practiceBsAllHands,
-          practiceBsHardHands: state.practiceBsHardHands,
-          practiceBsSoftHands: state.practiceBsSoftHands,
-          practiceBsSplitHands: state.practiceBsSplitHands,
-          practiceIllustrious18: state.practiceIllustrious18,
-          practiceFab4: value,
-          practiceInsurance: state.practiceInsurance,
+          practiceBsAllHands: bsAllHands,
+          practiceBsHardHands: bsHardHands,
+          practiceBsSoftHands: bsSoftHands,
+          practiceBsSplitHands: bsSplitHands,
+          practiceIllustrious18: value,
+          practiceFab4: bsfab4,
+          practiceInsurance: bsInsurance,
         )),
-        if (value) toggleCanLateSurrender(value)
       };
-  void toggleInsurance(value) => 
-        emit(GameSettingsState(
+  void toggleFab4(value) => {
+    if (value)
+          {bsAllHands = false, bsHardHands = false, bsSoftHands = false, bsSplitHands = false, bsIllustrious18 = false, bsInsurance = false},
+        emit(BasicStrategeySettingsState(
           canDas: state.canDas,
           canResplitPairs: state.canResplitPairs,
           canDoubleAny2: state.canDoubleAny2,
           canSplitAces: state.canSplitAces,
           canHitAfterSplittingAces: state.canHitAfterSplittingAces,
           dealerHitsSoft17: state.dealerHitsSoft17,
-          canEarlySurrender: state.canEarlySurrender,
-          canLateSurrender: state.canLateSurrender,
+          canSurrender: state.canSurrender,
           dealerPeeks: state.dealerPeeks,
           deckQuantity: state.deckQuantity,
           deckPenetration: state.deckPenetration,
-          practiceBsAllHands: state.practiceBsAllHands,
-          practiceBsHardHands: state.practiceBsHardHands,
-          practiceBsSoftHands: state.practiceBsSoftHands,
-          practiceBsSplitHands: state.practiceBsSplitHands,
-          practiceIllustrious18: state.practiceIllustrious18,
-          practiceFab4: state.practiceFab4,
+          practiceBsAllHands: bsAllHands,
+          practiceBsHardHands: bsHardHands,
+          practiceBsSoftHands: bsSoftHands,
+          practiceBsSplitHands: bsSplitHands,
+          practiceIllustrious18: bsIllustrious18,
+          practiceFab4: value,
+          practiceInsurance: bsInsurance,
+        )),
+        if (value)
+          {
+            toggleCanSurrender(value),
+          }
+      };
+  void toggleInsurance(value) => {
+    if (value)
+          {bsAllHands = false, bsHardHands = false, bsSoftHands = false, bsSplitHands = false, bsIllustrious18 = false, bsfab4 = false},
+        emit(BasicStrategeySettingsState(
+          canDas: state.canDas,
+          canResplitPairs: state.canResplitPairs,
+          canDoubleAny2: state.canDoubleAny2,
+          canSplitAces: state.canSplitAces,
+          canHitAfterSplittingAces: state.canHitAfterSplittingAces,
+          dealerHitsSoft17: state.dealerHitsSoft17,
+          canSurrender: state.canSurrender,
+          dealerPeeks: state.dealerPeeks,
+          deckQuantity: state.deckQuantity,
+          deckPenetration: state.deckPenetration,
+          practiceBsAllHands: bsAllHands,
+          practiceBsHardHands: bsHardHands,
+          practiceBsSoftHands: bsSoftHands,
+          practiceBsSplitHands: bsSplitHands,
+          practiceIllustrious18: bsIllustrious18,
+          practiceFab4: bsfab4,
           practiceInsurance: value,
-        ));
+        )),
+      };
 
   getRules() => state;
 }

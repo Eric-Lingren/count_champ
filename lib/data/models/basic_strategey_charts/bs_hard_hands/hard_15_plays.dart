@@ -11,16 +11,15 @@ class Hard15Plays {
   //* Settings Rules Needed:
   final bool _dealerHitsSoft17;
   final double _deckQuantity;
-  final bool _canEarlySurrender;
-  final bool _canLateSurrender;
+  final bool _canSurrender;
 
   Hard15Plays(this._dealerHitsSoft17, this._deckQuantity,
-      this._canEarlySurrender, this._canLateSurrender);
+      this._canSurrender);
 
   fetch() {
     int deckCount = _deckQuantity.round();
     bool canSurrender = false;
-    if (_canEarlySurrender || _canLateSurrender) canSurrender = true;
+    if (_canSurrender) canSurrender = true;
 
     if (deckCount >= 4) {
       if (!_dealerHitsSoft17) {

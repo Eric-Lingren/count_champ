@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:bloc/bloc.dart';
 import 'package:count_champ/constants/raw_deck_data.dart';
 import 'package:count_champ/logic/cubits/basic_strategey_cubit/basic_strategey_cubit.dart';
-import 'package:count_champ/logic/cubits/game_settings_cubit/game_settings_cubit.dart';
+import 'package:count_champ/logic/cubits/settings/basic_strategey_settings_cubit/basic_strategey_settings_cubit.dart';
 import 'package:count_champ/utils/services/json_storage_service.dart';
 import 'package:equatable/equatable.dart';
 part 'deck_state.dart';
@@ -11,21 +11,22 @@ part 'deck_state.dart';
 class DeckCubit extends Cubit<DeckState> {
   double _deckQuantity = 8.0;
   double _deckPenetration = 80.0;
-  // bool _practiceBsHardHands = false;
-  // bool _practiceBsSoftHands = false;
-  // bool _practiceBsSplitHands = false;
+  var _practiceBsAllHands;
   var _practiceBsHardHands;
   var _practiceBsSoftHands;
   var _practiceBsSplitHands;
+  var _practiceIllustrious18;
+  var _practiceFab4;
+  var _practiceInsurance;
   final BasicStrategeyCubit basicStrategeyCubit;
   late StreamSubscription basicStrategeyStreamSubscription;
-  final GameSettingsCubit gameSettingsCubit;
+  final BasicStrategeySettingsCubit basicStrategeySettingsCubit;
   late StreamSubscription gameSettingsStreamSubscription;
 
   DeckCubit(
       {required this.basicStrategeyCubit,
       basicStrategeyStreamSubscription,
-      required this.gameSettingsCubit,
+      required this.basicStrategeySettingsCubit,
       gameSettingsStreamSubscription})
       : super(DeckState(
             deckRepository: const [],
@@ -51,15 +52,23 @@ class DeckCubit extends Cubit<DeckState> {
     });
   }
 
-  StreamSubscription<GameSettingsState> monitorGameSettingsCubit() {
+  StreamSubscription<BasicStrategeySettingsState> monitorGameSettingsCubit() {
     // * If the user changes the deck quantity or pennetration in settings, it will adjust the deck accordingly.
-    return gameSettingsStreamSubscription =
-        gameSettingsCubit.stream.listen((gameSettingsState) {
-      _deckQuantity = gameSettingsState.deckQuantity;
-      _deckPenetration = gameSettingsState.deckPenetration;
-      _practiceBsHardHands = gameSettingsState.practiceBsHardHands;
-      _practiceBsSoftHands = gameSettingsState.practiceBsSoftHands;
-      _practiceBsSplitHands = gameSettingsState.practiceBsSplitHands;
+    return gameSettingsStreamSubscription = basicStrategeySettingsCubit.stream
+        .listen((basicStrategeyGameSettingsState) {
+      _deckQuantity = basicStrategeyGameSettingsState.deckQuantity;
+      _deckPenetration = basicStrategeyGameSettingsState.deckPenetration;
+      _practiceBsAllHands = basicStrategeyGameSettingsState.practiceBsAllHands;
+      _practiceBsHardHands =
+          basicStrategeyGameSettingsState.practiceBsHardHands;
+      _practiceBsSoftHands =
+          basicStrategeyGameSettingsState.practiceBsSoftHands;
+      _practiceBsSplitHands =
+          basicStrategeyGameSettingsState.practiceBsSplitHands;
+      _practiceIllustrious18 =
+          basicStrategeyGameSettingsState.practiceIllustrious18;
+      _practiceFab4 = basicStrategeyGameSettingsState.practiceFab4;
+      _practiceInsurance = basicStrategeyGameSettingsState.practiceInsurance;
 
       shuffleDeck();
       dealStartingHand();
@@ -121,31 +130,28 @@ class DeckCubit extends Cubit<DeckState> {
       ));
 
   dealStartingHand() {
-    // * Deals 2 cards to each person (dealer and player)
-    // * First card face up to player, Second card face down to dealer
-    // * Third card face up to player, Fourth card face up to dealer
     if (state.dealtCards.length > state.cutCardIndex) shuffleDeck();
-
     List handsDealt = [];
+    int fakeTrueCount = 0;
 
-    // if (_practiceBsHardHands != true &&
-    //     _practiceBsSoftHands != true &&
-    //     _practiceBsSplitHands != true) {
-    //   handsDealt = dealRandomHand();
-    // }
-    // if (_practiceBsHardHands == true) {
-    //   handsDealt = dealHardHand();
-    // }
-    // if (_practiceBsSoftHands == true) {
-    //   handsDealt = dealSoftHand();
-    // }
-    // if (_practiceBsSplitHands == true) {
-    //   handsDealt = dealSplitHand();
-    // }
-    handsDealt = dealIllustruous18Hand();
-    // handsDealt = dealFab4Hand();
-
-    int fakeTrueCount = generateRandomTrueCount();
+    if (_practiceBsHardHands == true) {
+      handsDealt = dealHardHand();
+    } else if (_practiceBsSoftHands == true) {
+      handsDealt = dealSoftHand();
+    } else if (_practiceBsSplitHands == true) {
+      handsDealt = dealSplitHand();
+    } else if (_practiceIllustrious18 == true) {
+      handsDealt = dealIllustruous18Hand();
+      fakeTrueCount = generateRandomTrueCount();
+    } else if (_practiceFab4 == true) {
+      handsDealt = dealFab4Hand();
+      fakeTrueCount = generateRandomTrueCount();
+    } else if (_practiceInsurance == true) {
+      handsDealt = dealInsuranceHand();
+      fakeTrueCount = generateRandomTrueCount();
+    } else {
+      handsDealt = dealRandomHand();
+    }
 
     emit(DeckState(
       deckRepository: state.deckRepository,
@@ -159,7 +165,6 @@ class DeckCubit extends Cubit<DeckState> {
   }
 
   dealRandomHand() {
-    // print('RANOM HAND!!!!');
     var tempRemainingCards = state.shuffledDeck;
     var dealtCards = [];
     var tempDealerHand = [];
@@ -261,57 +266,6 @@ class DeckCubit extends Cubit<DeckState> {
     return [tempDealerHand, tempPlayerHand, dealtCards];
   }
 
-  dealFab4Hand() {
-    resetDealerHoleCards();
-    var tempRemainingCards = state.shuffledDeck;
-    var dealtCards = [];
-    var tempDealerHand = [];
-    var tempPlayerHand = [];
-    // Deals First card to dealer
-    for (int i = 0; i < 1; i++) {
-      if (i == 0) tempRemainingCards[i].isHoleCard = true;
-      tempDealerHand.add(tempRemainingCards[i]);
-      dealtCards.add(tempRemainingCards[i]);
-    }
-    tempRemainingCards.removeRange(0, 1);
-
-    // Finds an 9,10,0r 11 for dealer face up card
-    var dealerSecondCard = tempRemainingCards
-        .firstWhere((i) => i.value == 9 || i.value == 10 || i.value == 11);
-    var dealerSecondCardIndex = tempRemainingCards.indexOf(dealerSecondCard);
-    tempRemainingCards.remove(dealerSecondCardIndex);
-    tempDealerHand.add(dealerSecondCard);
-    dealtCards.add(dealerSecondCard);
-
-    // if dealer has 10, player can have 14 or 15
-    // if dealer has any other card, player must have 15
-    int requestedPlayerTotal = 0;
-    if (tempDealerHand[1].value == 9 || tempDealerHand[1].value == 11) {
-      requestedPlayerTotal = 15;
-    } else {
-      final random = Random();
-      final min = 14;
-      final max = 16;
-      requestedPlayerTotal = min + random.nextInt(max - min);
-    }
-
-    // Finds the players first card that can total to 15
-    var playerFirstCard = tempRemainingCards.firstWhere((i) => i.value >= 4);
-    var firstMatchedIndex = tempRemainingCards.indexOf(playerFirstCard);
-    tempRemainingCards.remove(firstMatchedIndex);
-    tempPlayerHand.add(playerFirstCard);
-    dealtCards.add(playerFirstCard);
-    // Finds the players second card where the total will match the desired
-    var requestedSecondCard = requestedPlayerTotal - tempPlayerHand[0].value;
-    var playerSecondCard =
-        tempRemainingCards.firstWhere((i) => i.value == requestedSecondCard);
-    var matchedSecondIndex = tempRemainingCards.indexOf(playerSecondCard);
-    tempRemainingCards.remove(matchedSecondIndex);
-    tempPlayerHand.add(playerSecondCard);
-    dealtCards.add(playerSecondCard);
-    return [tempDealerHand, tempPlayerHand, dealtCards];
-  }
-
   dealIllustruous18Hand() {
     resetDealerHoleCards();
     var tempRemainingCards = state.shuffledDeck;
@@ -351,19 +305,16 @@ class DeckCubit extends Cubit<DeckState> {
       3,
       9,
       10
-    ]; // if dealer has these, player first card can be any
+    ]; // if dealer has these, player first card can be any except 11
     List dealerOptions2 = [
       4,
       5,
       6
     ]; // if dealer has these, player first card can 2-10
-    List dealerOptions3 = [
-      7
-    ]; // if dealer has these, player first card can 2-7
+    List dealerOptions3 = [7]; // if dealer has these, player first card can 2-7
     List dealerOptions4 = [
       11
     ]; // if dealer has these, player first card can 2-8
-
 
     bool dealerMatchingList1 = dealerOptions1.contains(dealerFaceCard);
     bool dealerMatchingList2 = dealerOptions2.contains(dealerFaceCard);
@@ -373,18 +324,21 @@ class DeckCubit extends Cubit<DeckState> {
     //* Sets the players first card
     var playerFirstCard;
     if (dealerMatchingList1 == true) {
-      if(dealerFaceCard == 9){
-        playerFirstCard = tempRemainingCards.firstWhere((i) => i.value >= 2 && i.value != 8);
-      }else{
-        playerFirstCard = tempRemainingCards.firstWhere((i) => i.value >= 2);
+      if (dealerFaceCard == 9) {
+        playerFirstCard = tempRemainingCards
+            .firstWhere((i) => i.value >= 2 && i.value != 8 && i.value < 11);
+      } else {
+        playerFirstCard =
+            tempRemainingCards.firstWhere((i) => i.value >= 2 && i.value < 11);
       }
-      
     }
     if (dealerMatchingList2 == true) {
-      if(dealerFaceCard == 4 || dealerFaceCard == 5 || dealerFaceCard == 6){
-        playerFirstCard = tempRemainingCards.firstWhere((i) => i.value >= 2 && i.value <= 10 && i.value != 6);
-      }else{
-        playerFirstCard = tempRemainingCards.firstWhere((i) => i.value >= 2 && i.value <= 10);
+      if (dealerFaceCard == 4 || dealerFaceCard == 5 || dealerFaceCard == 6) {
+        playerFirstCard = tempRemainingCards
+            .firstWhere((i) => i.value >= 2 && i.value <= 10 && i.value != 6);
+      } else {
+        playerFirstCard =
+            tempRemainingCards.firstWhere((i) => i.value >= 2 && i.value <= 10);
       }
     }
     if (dealerMatchingList3 == true) {
@@ -392,8 +346,8 @@ class DeckCubit extends Cubit<DeckState> {
           tempRemainingCards.firstWhere((i) => i.value >= 2 && i.value <= 7);
     }
     if (dealerMatchingList4 == true) {
-      playerFirstCard =
-          tempRemainingCards.firstWhere((i) => i.value >= 2 && i.value <= 8);
+      playerFirstCard = tempRemainingCards
+          .firstWhere((i) => i.value >= 2 && i.value <= 8 && i.value != 5);
     }
     var firstMatchedIndex = tempRemainingCards.indexOf(playerFirstCard);
     tempRemainingCards.remove(firstMatchedIndex);
@@ -402,39 +356,135 @@ class DeckCubit extends Cubit<DeckState> {
 
     //* Sets the players second card
     var playerSecondCard;
-    if(dealerFaceCard == 2){
-      playerSecondCard = tempRemainingCards.firstWhere((i) => ((i.value + tempPlayerHand[0].value == 9) || (i.value + tempPlayerHand[0].value == 13)));
+    if (dealerFaceCard == 2) {
+      playerSecondCard = tempRemainingCards.firstWhere((i) =>
+          ((i.value + tempPlayerHand[0].value == 9) ||
+              (i.value + tempPlayerHand[0].value == 13) && i.value != 11));
     }
-    if(dealerFaceCard == 3){
-      playerSecondCard = tempRemainingCards.firstWhere((i) => ( ((i.value + tempPlayerHand[0].value == 12) || (i.value + tempPlayerHand[0].value == 13)) && i.value != tempPlayerHand[0].value));
+    if (dealerFaceCard == 3) {
+      playerSecondCard = tempRemainingCards.firstWhere((i) =>
+          (((i.value + tempPlayerHand[0].value == 12) ||
+                  (i.value + tempPlayerHand[0].value == 13)) &&
+              i.value != tempPlayerHand[0].value));
     }
-    if(dealerFaceCard == 4){
-      playerSecondCard = tempRemainingCards.firstWhere((i) => (i.value + tempPlayerHand[0].value == 12));
+    if (dealerFaceCard == 4) {
+      playerSecondCard = tempRemainingCards
+          .firstWhere((i) => (i.value + tempPlayerHand[0].value == 12));
     }
-    if(dealerFaceCard == 5 || dealerFaceCard == 6){
-      if(tempPlayerHand[0].value == 10){
-        playerSecondCard = tempRemainingCards.firstWhere((i) => i.value == 10 || i.value == 2);
+    if (dealerFaceCard == 5 || dealerFaceCard == 6) {
+      if (tempPlayerHand[0].value == 10) {
+        playerSecondCard =
+            tempRemainingCards.firstWhere((i) => i.value == 10 || i.value == 2);
       } else {
-        playerSecondCard = tempRemainingCards.firstWhere((i) => ((i.value + tempPlayerHand[0].value == 12)));
+        playerSecondCard = tempRemainingCards
+            .firstWhere((i) => ((i.value + tempPlayerHand[0].value == 12)));
       }
     }
-    if(dealerFaceCard == 7){
-      playerSecondCard = tempRemainingCards.firstWhere((i) => (i.value + tempPlayerHand[0].value == 9));
+    if (dealerFaceCard == 7) {
+      playerSecondCard = tempRemainingCards
+          .firstWhere((i) => (i.value + tempPlayerHand[0].value == 9));
     }
-    if(dealerFaceCard == 9){
-      playerSecondCard = tempRemainingCards.firstWhere((i) => i.value + tempPlayerHand[0].value == 16);
+    if (dealerFaceCard == 9) {
+      playerSecondCard = tempRemainingCards
+          .firstWhere((i) => i.value + tempPlayerHand[0].value == 16);
     }
-    if(dealerFaceCard == 10){
-      playerSecondCard = tempRemainingCards.firstWhere((i) => (((i.value + tempPlayerHand[0].value == 16) || (i.value + tempPlayerHand[0].value == 15) || (i.value + tempPlayerHand[0].value == 10)) && i.value != tempPlayerHand[0].value ));
+    if (dealerFaceCard == 10) {
+      playerSecondCard = tempRemainingCards.firstWhere((i) =>
+          (((i.value + tempPlayerHand[0].value == 16) ||
+                  (i.value + tempPlayerHand[0].value == 15) ||
+                  (i.value + tempPlayerHand[0].value == 10)) &&
+              i.value != tempPlayerHand[0].value));
     }
-    if(dealerFaceCard == 11){
-      playerSecondCard = tempRemainingCards.firstWhere((i) => i.value + tempPlayerHand[0].value == 10);
+    if (dealerFaceCard == 11) {
+      playerSecondCard = tempRemainingCards
+          .firstWhere((i) => i.value + tempPlayerHand[0].value == 10);
     }
 
     var matchedSecondIndex = tempRemainingCards.indexOf(playerSecondCard);
     tempRemainingCards.remove(matchedSecondIndex);
     tempPlayerHand.add(playerSecondCard);
     dealtCards.add(playerSecondCard);
+    return [tempDealerHand, tempPlayerHand, dealtCards];
+  }
+
+  dealFab4Hand() {
+    resetDealerHoleCards();
+    var tempRemainingCards = state.shuffledDeck;
+    var dealtCards = [];
+    var tempDealerHand = [];
+    var tempPlayerHand = [];
+    // Deals First card to dealer
+    for (int i = 0; i < 1; i++) {
+      if (i == 0) tempRemainingCards[i].isHoleCard = true;
+      tempDealerHand.add(tempRemainingCards[i]);
+      dealtCards.add(tempRemainingCards[i]);
+    }
+    tempRemainingCards.removeRange(0, 1);
+
+    // Finds an 9,10,or 11 for dealer face up card
+    var dealerSecondCard = tempRemainingCards
+        .firstWhere((i) => i.value == 9 || i.value == 10 || i.value == 11);
+    var dealerSecondCardIndex = tempRemainingCards.indexOf(dealerSecondCard);
+    tempRemainingCards.remove(dealerSecondCardIndex);
+    tempDealerHand.add(dealerSecondCard);
+    dealtCards.add(dealerSecondCard);
+
+    // if dealer has 10, player can have 14 or 15
+    // if dealer has any other card, player must have 15
+    int requestedPlayerTotal = 0;
+    if (tempDealerHand[1].value == 9 || tempDealerHand[1].value == 11) {
+      requestedPlayerTotal = 15;
+    } else {
+      final random = Random();
+      final min = 14;
+      final max = 16;
+      requestedPlayerTotal = min + random.nextInt(max - min);
+    }
+
+    // Finds the players first card that can total to 15
+    var playerFirstCard = tempRemainingCards.firstWhere((i) => i.value >= 5 && i.value < 11);
+    var firstMatchedIndex = tempRemainingCards.indexOf(playerFirstCard);
+    tempRemainingCards.remove(firstMatchedIndex);
+    tempPlayerHand.add(playerFirstCard);
+    dealtCards.add(playerFirstCard);
+    // Finds the players second card where the total will match the desired
+    var requestedSecondCard = requestedPlayerTotal - tempPlayerHand[0].value;
+    var playerSecondCard =
+        tempRemainingCards.firstWhere((i) => i.value == requestedSecondCard);
+    var matchedSecondIndex = tempRemainingCards.indexOf(playerSecondCard);
+    tempRemainingCards.remove(matchedSecondIndex);
+    tempPlayerHand.add(playerSecondCard);
+    dealtCards.add(playerSecondCard);
+    return [tempDealerHand, tempPlayerHand, dealtCards];
+  }
+
+  dealInsuranceHand() {
+    resetDealerHoleCards();
+    var tempRemainingCards = state.shuffledDeck;
+    var dealtCards = [];
+    var tempDealerHand = [];
+    var tempPlayerHand = [];
+    // Deals First card to dealer
+    for (int i = 0; i < 1; i++) {
+      if (i == 0) tempRemainingCards[i].isHoleCard = true;
+      tempDealerHand.add(tempRemainingCards[i]);
+      dealtCards.add(tempRemainingCards[i]);
+    }
+    tempRemainingCards.removeRange(0, 1);
+
+    // Finds an 11 for dealer face up card
+    var dealerSecondCard = tempRemainingCards.firstWhere((i) => i.value == 11);
+    var dealerSecondCardIndex = tempRemainingCards.indexOf(dealerSecondCard);
+    tempRemainingCards.remove(dealerSecondCardIndex);
+    tempDealerHand.add(dealerSecondCard);
+    dealtCards.add(dealerSecondCard);
+
+    // Deals 2 cards to player
+    for (int i = 0; i < 2; i++) {
+      tempPlayerHand.add(tempRemainingCards[i]);
+      dealtCards.add(tempRemainingCards[i]);
+    }
+    tempRemainingCards.removeRange(0, 2);
     return [tempDealerHand, tempPlayerHand, dealtCards];
   }
 
