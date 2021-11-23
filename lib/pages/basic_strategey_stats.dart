@@ -37,22 +37,23 @@ class BasicStrategeyStats extends StatelessWidget {
               const SizedBox(height: 20),
               const BasicStrategeySessionStats(),
               const SizedBox(height: 40),
-              const Text(
-                'All Time Statistics',
-                style: TextStyle(fontSize: 25),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    'All Time Statistics',
+                    style: TextStyle(fontSize: 25),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.delete_forever),
+                    onPressed: () {
+                      context
+                              .read<BasicStrategeyAlltimeStatsCubit>()
+                              .clearAlltimeStats();
+                    },
+                  ),
+                ],
               ),
-              // IconButton(
-              //   icon: Icon(Icons.arrow_back),
-              //   onPressed: () {
-              //     context.read<BasicStrategeyAlltimeStats>().clear;
-              //   },
-              // ),
-              ElevatedButton(
-                  onPressed: () {
-                    print('null');
-                    // context.read<BasicStrategeyAlltimeStats>().clearAlltimeStats()
-                  },
-                  child: const Text('TEST ME')),
               const SizedBox(height: 20),
               const BasicStrategeyAlltimeStats(),
             ],

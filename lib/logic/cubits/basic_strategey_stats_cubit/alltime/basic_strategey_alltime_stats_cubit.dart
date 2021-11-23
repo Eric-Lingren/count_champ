@@ -210,8 +210,33 @@ class BasicStrategeyAlltimeStatsCubit
   }
 
   void clearAlltimeStats() {
-    print('ran clear');
+    emit(BasicStrategeyAlltimeStatsState(
+      currentStreak: 0,
+      handsPlayed: 0,
+      correctHandsPlayed: 0,
+      incorrectHandsPlayed: 0,
+      hardHandsPlayed: 0,
+      hardHandsCorrect: 0,
+      hardHandsIncorrect: 0,
+      softHandsPlayed: 0,
+      softHandsCorrect: 0,
+      softHandsIncorrect: 0,
+      pairHandsPlayed: 0,
+      pairHandsCorrect: 0,
+      pairHandsIncorrect: 0,
+      illustrious18HandsPlayed: 0,
+      illustrious18HandsCorrect: 0,
+      illustrious18HandsIncorrect: 0,
+      fab4HandsPlayed: 0,
+      fab4HandsCorrect: 0,
+      fab4HandsIncorrect: 0,
+      insuranceHandsPlayed: 0,
+      insuranceHandsCorrect: 0,
+      insuranceHandsIncorrect: 0,
+    ));
   }
+
+
 
   @override
   BasicStrategeyAlltimeStatsState? fromJson(Map<String, dynamic> json) {
