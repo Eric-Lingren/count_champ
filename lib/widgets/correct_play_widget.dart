@@ -1,6 +1,6 @@
+import 'package:count_champ/logic/cubits/basic_strategey_stats_cubit/session/basic_strategey_session_stats_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:count_champ/logic/cubits/basic_strategey_stats_cubit copy/basic_strategey_stats_cubit.dart';
 
 class CorrectPlayWidget extends StatelessWidget {
   final bool playWasCorrect;
@@ -50,7 +50,7 @@ class CorrectPlayWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children:  [
               const Text('Streak:'),
-              BlocBuilder<BasicStrategeyStatsCubit, BasicStrategeyStatsState>(
+              BlocBuilder<BasicStrategeySessionStatsCubit, BasicStrategeySessionStatsState>(
                 builder: (context, state) {
                 return Text(state.currentStreak.toString());
               }),

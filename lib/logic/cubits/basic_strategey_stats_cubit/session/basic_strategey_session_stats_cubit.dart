@@ -2,9 +2,10 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:count_champ/logic/cubits/correct_plays_cubit/correct_plays_cubit.dart';
 import 'package:equatable/equatable.dart';
-part 'basic_strategey_stats_state.dart';
 
-class BasicStrategeyStatsCubit extends Cubit<BasicStrategeyStatsState> {
+part '../session/basic_strategey_session_stats_state.dart';
+
+class BasicStrategeySessionStatsCubit extends Cubit<BasicStrategeySessionStatsState> {
   final CorrectPlaysCubit correctPlaysCubit;
   late StreamSubscription correctPlaysStreamSubscription;
   int _hardHandsPlayed = 0;
@@ -27,10 +28,10 @@ class BasicStrategeyStatsCubit extends Cubit<BasicStrategeyStatsState> {
   int _insuranceHandsCorrect = 0;
   int _insuranceHandsIncorrect = 0;
 
-  BasicStrategeyStatsCubit({
+  BasicStrategeySessionStatsCubit({
     required this.correctPlaysCubit,
     correctPlaysStreamSubscription,
-  }) : super(BasicStrategeyStatsState(
+  }) : super(BasicStrategeySessionStatsState(
           currentStreak: 0,
           handsPlayed: 0,
           correctHandsPlayed: 0,
@@ -79,7 +80,7 @@ class BasicStrategeyStatsCubit extends Cubit<BasicStrategeyStatsState> {
   }
 
   void _incrementCorrectHandPlayed() {
-    emit(BasicStrategeyStatsState(
+    emit(BasicStrategeySessionStatsState(
       currentStreak: state.currentStreak + 1,
       handsPlayed: state.handsPlayed + 1,
       correctHandsPlayed: state.correctHandsPlayed + 1,
@@ -106,7 +107,7 @@ class BasicStrategeyStatsCubit extends Cubit<BasicStrategeyStatsState> {
   }
 
   void _incrementIncorrectHandPlayed() {
-    emit(BasicStrategeyStatsState(
+    emit(BasicStrategeySessionStatsState(
       currentStreak: 0,
       handsPlayed: state.handsPlayed + 1,
       correctHandsPlayed: state.correctHandsPlayed,

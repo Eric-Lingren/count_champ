@@ -1,6 +1,6 @@
-part of 'basic_strategey_stats_cubit.dart';
+part of 'basic_strategey_session_stats_cubit.dart';
 
-class BasicStrategeyStatsState extends Equatable {
+class BasicStrategeySessionStatsState extends Equatable {
   int currentStreak;
   int handsPlayed;
   int correctHandsPlayed;
@@ -25,7 +25,7 @@ class BasicStrategeyStatsState extends Equatable {
   int insuranceHandsCorrect;
   int insuranceHandsIncorrect;
 
-  BasicStrategeyStatsState({
+  BasicStrategeySessionStatsState({
     required this.currentStreak,
     required this.handsPlayed,
     required this.correctHandsPlayed,
