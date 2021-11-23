@@ -1,5 +1,4 @@
 // import 'package:bloc_test/bloc_test.dart';
-import 'package:count_champ/logic/cubits/basic_strategey_cubit/basic_strategey_cubit.dart';
 import 'package:count_champ/logic/cubits/deck_cubit/deck_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';

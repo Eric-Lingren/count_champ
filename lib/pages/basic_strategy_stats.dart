@@ -1,12 +1,12 @@
-import 'package:count_champ/widgets/basic_strategey_widgets/basic_strategey_alltime_stats_widget.dart';
-import 'package:count_champ/widgets/basic_strategey_widgets/basic_strategey_session_stats_widget.dart';
+import 'package:count_champ/logic/cubits/basic_strategy_stats_cubit/alltime/basic_strategy_alltime_stats_cubit.dart';
+import 'package:count_champ/widgets/basic_strategy_widgets/basic_strategy_alltime_stats_widget.dart';
+import 'package:count_champ/widgets/basic_strategy_widgets/basic_strategy_session_stats_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/src/provider.dart';
-import 'package:count_champ/logic/cubits/basic_strategey_stats_cubit/alltime/basic_strategey_alltime_stats_cubit.dart';
 
-class BasicStrategeyStats extends StatelessWidget {
-  const BasicStrategeyStats({Key? key}) : super(key: key);
+class BasicStrategyStats extends StatelessWidget {
+  const BasicStrategyStats({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class BasicStrategeyStats extends StatelessWidget {
               );
             },
           ),
-          title: const Text('Basic Strategey Stats'),
+          title: const Text('Basic Strategy Stats'),
           foregroundColor: Colors.white,
         ),
         body: SafeArea(
@@ -35,7 +35,7 @@ class BasicStrategeyStats extends StatelessWidget {
                 style: TextStyle(fontSize: 25),
               ),
               const SizedBox(height: 20),
-              const BasicStrategeySessionStats(),
+              const BasicStrategySessionStats(),
               const SizedBox(height: 40),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -48,14 +48,14 @@ class BasicStrategeyStats extends StatelessWidget {
                     icon: Icon(Icons.delete_forever),
                     onPressed: () {
                       context
-                              .read<BasicStrategeyAlltimeStatsCubit>()
+                              .read<BasicStrategyAlltimeStatsCubit>()
                               .clearAlltimeStats();
                     },
                   ),
                 ],
               ),
               const SizedBox(height: 20),
-              const BasicStrategeyAlltimeStats(),
+              const BasicStrategyAlltimeStats(),
             ],
           ),
         )));

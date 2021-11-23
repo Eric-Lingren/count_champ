@@ -1,6 +1,6 @@
-part of 'basic_strategey_settings_cubit.dart';
+part of 'basic_strategy_settings_cubit.dart';
 
-class BasicStrategeySettingsState extends Equatable {
+class BasicStrategySettingsState extends Equatable {
   bool canDas;
   bool canDoubleAny2; // False = reno rules - double only on 10-11 
   bool canResplitPairs;
@@ -19,7 +19,7 @@ class BasicStrategeySettingsState extends Equatable {
   bool practiceFab4;
   bool practiceInsurance;
 
-  BasicStrategeySettingsState({
+  BasicStrategySettingsState({
     required this.canDas,
     required this.canDoubleAny2,
     required this.canResplitPairs,

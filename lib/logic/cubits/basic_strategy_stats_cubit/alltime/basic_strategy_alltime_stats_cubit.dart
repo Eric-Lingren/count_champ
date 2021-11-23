@@ -1,11 +1,16 @@
 import 'dart:async';
+import 'dart:convert';
+
 import 'package:bloc/bloc.dart';
-import 'package:count_champ/logic/cubits/correct_plays_cubit/correct_plays_cubit.dart';
 import 'package:equatable/equatable.dart';
 
-part '../session/basic_strategey_session_stats_state.dart';
+import 'package:count_champ/logic/cubits/correct_plays_cubit/correct_plays_cubit.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 
-class BasicStrategeySessionStatsCubit extends Cubit<BasicStrategeySessionStatsState> {
+part 'basic_strategy_alltime_stats_state.dart';
+
+class BasicStrategyAlltimeStatsCubit
+    extends HydratedCubit<BasicStrategyAlltimeStatsState> {
   final CorrectPlaysCubit correctPlaysCubit;
   late StreamSubscription correctPlaysStreamSubscription;
   int _hardHandsPlayed = 0;
@@ -28,10 +33,10 @@ class BasicStrategeySessionStatsCubit extends Cubit<BasicStrategeySessionStatsSt
   int _insuranceHandsCorrect = 0;
   int _insuranceHandsIncorrect = 0;
 
-  BasicStrategeySessionStatsCubit({
+  BasicStrategyAlltimeStatsCubit({
     required this.correctPlaysCubit,
     correctPlaysStreamSubscription,
-  }) : super(BasicStrategeySessionStatsState(
+  }) : super(BasicStrategyAlltimeStatsState(
           currentStreak: 0,
           handsPlayed: 0,
           correctHandsPlayed: 0,
@@ -45,7 +50,6 @@ class BasicStrategeySessionStatsCubit extends Cubit<BasicStrategeySessionStatsSt
           pairHandsPlayed: 0,
           pairHandsCorrect: 0,
           pairHandsIncorrect: 0,
-
           illustrious18HandsPlayed: 0,
           illustrious18HandsCorrect: 0,
           illustrious18HandsIncorrect: 0,
@@ -62,8 +66,6 @@ class BasicStrategeySessionStatsCubit extends Cubit<BasicStrategeySessionStatsSt
   StreamSubscription<CorrectPlaysState> _monitorDeckCubit() {
     return correctPlaysStreamSubscription =
         correctPlaysCubit.stream.listen((correctPlaysState) {
-      print(correctPlaysState);
-
       if (correctPlaysState.handType == 'hard')
         _incrementHardHandPlayed(correctPlaysState.playWasCorrect);
       if (correctPlaysState.handType == 'soft')
@@ -80,7 +82,7 @@ class BasicStrategeySessionStatsCubit extends Cubit<BasicStrategeySessionStatsSt
   }
 
   void _incrementCorrectHandPlayed() {
-    emit(BasicStrategeySessionStatsState(
+    emit(BasicStrategyAlltimeStatsState(
       currentStreak: state.currentStreak + 1,
       handsPlayed: state.handsPlayed + 1,
       correctHandsPlayed: state.correctHandsPlayed + 1,
@@ -107,7 +109,7 @@ class BasicStrategeySessionStatsCubit extends Cubit<BasicStrategeySessionStatsSt
   }
 
   void _incrementIncorrectHandPlayed() {
-    emit(BasicStrategeySessionStatsState(
+    emit(BasicStrategyAlltimeStatsState(
       currentStreak: 0,
       handsPlayed: state.handsPlayed + 1,
       correctHandsPlayed: state.correctHandsPlayed,
@@ -169,7 +171,6 @@ class BasicStrategeySessionStatsCubit extends Cubit<BasicStrategeySessionStatsSt
     }
   }
 
-
   void _incrementIllustrious18HandPlayed(playWasCorrect) {
     _illustrious18HandsPlayed = _illustrious18HandsPlayed + 1;
     if (playWasCorrect == true) {
@@ -181,6 +182,7 @@ class BasicStrategeySessionStatsCubit extends Cubit<BasicStrategeySessionStatsSt
       _incrementIncorrectHandPlayed();
     }
   }
+
   void _incrementFab4HandPlayed(playWasCorrect) {
     _fab4HandsPlayed = _fab4HandsPlayed + 1;
     if (playWasCorrect == true) {
@@ -192,6 +194,7 @@ class BasicStrategeySessionStatsCubit extends Cubit<BasicStrategeySessionStatsSt
       _incrementIncorrectHandPlayed();
     }
   }
+
   void _incrementInsuranceHandPlayed(playWasCorrect) {
     _insuranceHandsPlayed = _insuranceHandsPlayed + 1;
     if (playWasCorrect == true) {
@@ -202,5 +205,44 @@ class BasicStrategeySessionStatsCubit extends Cubit<BasicStrategeySessionStatsSt
       _insuranceHandsIncorrect = _insuranceHandsIncorrect + 1;
       _incrementIncorrectHandPlayed();
     }
+  }
+
+  void clearAlltimeStats() { // TODO - Connect this function to an ad play
+    emit(BasicStrategyAlltimeStatsState(
+      currentStreak: 0,
+      handsPlayed: 0,
+      correctHandsPlayed: 0,
+      incorrectHandsPlayed: 0,
+      hardHandsPlayed: 0,
+      hardHandsCorrect: 0,
+      hardHandsIncorrect: 0,
+      softHandsPlayed: 0,
+      softHandsCorrect: 0,
+      softHandsIncorrect: 0,
+      pairHandsPlayed: 0,
+      pairHandsCorrect: 0,
+      pairHandsIncorrect: 0,
+      illustrious18HandsPlayed: 0,
+      illustrious18HandsCorrect: 0,
+      illustrious18HandsIncorrect: 0,
+      fab4HandsPlayed: 0,
+      fab4HandsCorrect: 0,
+      fab4HandsIncorrect: 0,
+      insuranceHandsPlayed: 0,
+      insuranceHandsCorrect: 0,
+      insuranceHandsIncorrect: 0,
+    ));
+  }
+
+
+
+  @override
+  BasicStrategyAlltimeStatsState? fromJson(Map<String, dynamic> json) {
+    return BasicStrategyAlltimeStatsState.fromMap(json);
+  }
+
+  @override
+  Map<String, dynamic>? toJson(BasicStrategyAlltimeStatsState state) {
+    return state.toMap();
   }
 }

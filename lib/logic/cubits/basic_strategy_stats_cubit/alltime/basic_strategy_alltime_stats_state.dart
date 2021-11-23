@@ -1,8 +1,8 @@
 
-part of 'basic_strategey_alltime_stats_cubit.dart';
+part of 'basic_strategy_alltime_stats_cubit.dart';
 
 
-class BasicStrategeyAlltimeStatsState extends Equatable {
+class BasicStrategyAlltimeStatsState extends Equatable {
   int currentStreak;
   int handsPlayed;
   int correctHandsPlayed;
@@ -27,7 +27,7 @@ class BasicStrategeyAlltimeStatsState extends Equatable {
   int insuranceHandsCorrect;
   int insuranceHandsIncorrect;
 
-  BasicStrategeyAlltimeStatsState({
+  BasicStrategyAlltimeStatsState({
     required this.currentStreak,
     required this.handsPlayed,
     required this.correctHandsPlayed,
@@ -106,8 +106,8 @@ class BasicStrategeyAlltimeStatsState extends Equatable {
     };
   }
 
-  factory BasicStrategeyAlltimeStatsState.fromMap(Map<String, dynamic> map) {
-    return BasicStrategeyAlltimeStatsState(
+  factory BasicStrategyAlltimeStatsState.fromMap(Map<String, dynamic> map) {
+    return BasicStrategyAlltimeStatsState(
       currentStreak: map['currentStreak'],
       handsPlayed: map['handsPlayed'],
       correctHandsPlayed: map['correctHandsPlayed'],
@@ -135,5 +135,5 @@ class BasicStrategeyAlltimeStatsState extends Equatable {
 
   String toJson() => json.encode(toMap());
 
-  factory BasicStrategeyAlltimeStatsState.fromJson(String source) => BasicStrategeyAlltimeStatsState.fromMap(json.decode(source));
+  factory BasicStrategyAlltimeStatsState.fromJson(String source) => BasicStrategyAlltimeStatsState.fromMap(json.decode(source));
 }

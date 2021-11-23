@@ -1,7 +1,9 @@
-import 'package:count_champ/logic/cubits/basic_strategey_cubit/basic_strategey_cubit.dart';
+import 'package:count_champ/logic/cubits/basic_strategy_cubit/basic_strategy_cubit.dart';
+import 'package:count_champ/logic/cubits/basic_strategy_stats_cubit/alltime/basic_strategy_alltime_stats_cubit.dart';
+import 'package:count_champ/logic/cubits/basic_strategy_stats_cubit/session/basic_strategy_session_stats_cubit.dart';
 import 'package:count_champ/logic/cubits/correct_plays_cubit/correct_plays_cubit.dart';
-import 'package:count_champ/logic/cubits/settings/basic_strategey_settings_cubit/basic_strategey_settings_cubit.dart';
 import 'package:count_champ/logic/cubits/deck_cubit/deck_cubit.dart';
+import 'package:count_champ/logic/cubits/settings/basic_strategy_settings_cubit/basic_strategy_settings_cubit.dart';
 import 'package:count_champ/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,8 +11,6 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
-import 'logic/cubits/basic_strategey_stats_cubit/alltime/basic_strategey_alltime_stats_cubit.dart';
-import 'logic/cubits/basic_strategey_stats_cubit/session/basic_strategey_session_stats_cubit.dart';
 
 
 
@@ -47,25 +47,25 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<BasicStrategeySettingsCubit>(
-            create: (context) => BasicStrategeySettingsCubit()),
-        BlocProvider<BasicStrategeyCubit>(
-            create: (context) => BasicStrategeyCubit()),
+        BlocProvider<BasicStrategySettingsCubit>(
+            create: (context) => BasicStrategySettingsCubit()),
+        BlocProvider<BasicStrategyCubit>(
+            create: (context) => BasicStrategyCubit()),
         BlocProvider<DeckCubit>(
             create: (context) => DeckCubit(
-                basicStrategeyCubit: context.read<BasicStrategeyCubit>(),
-                basicStrategeySettingsCubit:
-                    context.read<BasicStrategeySettingsCubit>())),
+                basicStrategyCubit: context.read<BasicStrategyCubit>(),
+                basicStrategySettingsCubit:
+                    context.read<BasicStrategySettingsCubit>())),
         BlocProvider<CorrectPlaysCubit>(
             create: (context) => CorrectPlaysCubit(
                 deckCubit: context.read<DeckCubit>(),
-                basicStrategeySettingsCubit:
-                    context.read<BasicStrategeySettingsCubit>())),
-        BlocProvider<BasicStrategeySessionStatsCubit>(
-            create: (context) => BasicStrategeySessionStatsCubit(
+                basicStrategySettingsCubit:
+                    context.read<BasicStrategySettingsCubit>())),
+        BlocProvider<BasicStrategySessionStatsCubit>(
+            create: (context) => BasicStrategySessionStatsCubit(
                 correctPlaysCubit: context.read<CorrectPlaysCubit>())),
-        BlocProvider<BasicStrategeyAlltimeStatsCubit>(
-            create: (context) => BasicStrategeyAlltimeStatsCubit(
+        BlocProvider<BasicStrategyAlltimeStatsCubit>(
+            create: (context) => BasicStrategyAlltimeStatsCubit(
                 correctPlaysCubit: context.read<CorrectPlaysCubit>())),
       ],
       child: MaterialApp(

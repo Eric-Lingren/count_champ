@@ -1,44 +1,45 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:count_champ/data/models/basic_strategy_charts/bs_deviations/deviation_plays.dart';
+import 'package:count_champ/data/models/basic_strategy_charts/bs_deviations/insurance_plays.dart';
+import 'package:count_champ/data/models/basic_strategy_charts/bs_hard_hands/hard_10_plays.dart';
+import 'package:count_champ/data/models/basic_strategy_charts/bs_hard_hands/hard_11_plays.dart';
+import 'package:count_champ/data/models/basic_strategy_charts/bs_hard_hands/hard_12_plays.dart';
+import 'package:count_champ/data/models/basic_strategy_charts/bs_hard_hands/hard_13_14_plays.dart';
+import 'package:count_champ/data/models/basic_strategy_charts/bs_hard_hands/hard_15_plays.dart';
+import 'package:count_champ/data/models/basic_strategy_charts/bs_hard_hands/hard_16_plays.dart';
+import 'package:count_champ/data/models/basic_strategy_charts/bs_hard_hands/hard_17_plays.dart';
+import 'package:count_champ/data/models/basic_strategy_charts/bs_hard_hands/hard_18_plays.dart';
+import 'package:count_champ/data/models/basic_strategy_charts/bs_hard_hands/hard_7_plays.dart';
+import 'package:count_champ/data/models/basic_strategy_charts/bs_hard_hands/hard_8_plays.dart';
+import 'package:count_champ/data/models/basic_strategy_charts/bs_hard_hands/hard_9_plays.dart';
+import 'package:count_champ/data/models/basic_strategy_charts/bs_pair_hands/pair_12_plays.dart';
+import 'package:count_champ/data/models/basic_strategy_charts/bs_pair_hands/pair_14_plays.dart';
+import 'package:count_champ/data/models/basic_strategy_charts/bs_pair_hands/pair_16_plays.dart';
+import 'package:count_champ/data/models/basic_strategy_charts/bs_pair_hands/pair_18_plays.dart';
+import 'package:count_champ/data/models/basic_strategy_charts/bs_pair_hands/pair_22_plays.dart';
+import 'package:count_champ/data/models/basic_strategy_charts/bs_pair_hands/pair_4_plays.dart';
+import 'package:count_champ/data/models/basic_strategy_charts/bs_pair_hands/pair_6_plays.dart';
+import 'package:count_champ/data/models/basic_strategy_charts/bs_pair_hands/pair_8_plays.dart';
+import 'package:count_champ/data/models/basic_strategy_charts/bs_soft_hands/soft_13_plays.dart';
+import 'package:count_champ/data/models/basic_strategy_charts/bs_soft_hands/soft_14_plays.dart';
+import 'package:count_champ/data/models/basic_strategy_charts/bs_soft_hands/soft_15_16_plays.dart';
+import 'package:count_champ/data/models/basic_strategy_charts/bs_soft_hands/soft_17_plays.dart';
+import 'package:count_champ/data/models/basic_strategy_charts/bs_soft_hands/soft_18_plays.dart';
+import 'package:count_champ/data/models/basic_strategy_charts/bs_soft_hands/soft_19_plays.dart';
+import 'package:count_champ/data/models/basic_strategy_charts/bs_soft_hands/soft_20_plays.dart';
+import 'package:count_champ/logic/cubits/settings/basic_strategy_settings_cubit/basic_strategy_settings_cubit.dart';
 import 'package:equatable/equatable.dart';
 
-import 'package:count_champ/data/models/basic_strategey_charts/bs_deviations/deviation_plays.dart';
-import 'package:count_champ/data/models/basic_strategey_charts/bs_deviations/insurance_plays.dart';
-import 'package:count_champ/data/models/basic_strategey_charts/bs_hard_hands/hard_10_plays.dart';
-import 'package:count_champ/data/models/basic_strategey_charts/bs_hard_hands/hard_11_plays.dart';
-import 'package:count_champ/data/models/basic_strategey_charts/bs_hard_hands/hard_12_plays.dart';
-import 'package:count_champ/data/models/basic_strategey_charts/bs_hard_hands/hard_13_14_plays.dart';
-import 'package:count_champ/data/models/basic_strategey_charts/bs_hard_hands/hard_15_plays.dart';
-import 'package:count_champ/data/models/basic_strategey_charts/bs_hard_hands/hard_16_plays.dart';
-import 'package:count_champ/data/models/basic_strategey_charts/bs_hard_hands/hard_17_plays.dart';
-import 'package:count_champ/data/models/basic_strategey_charts/bs_hard_hands/hard_18_plays.dart';
-import 'package:count_champ/data/models/basic_strategey_charts/bs_hard_hands/hard_7_plays.dart';
-import 'package:count_champ/data/models/basic_strategey_charts/bs_hard_hands/hard_8_plays.dart';
-import 'package:count_champ/data/models/basic_strategey_charts/bs_hard_hands/hard_9_plays.dart';
-import 'package:count_champ/data/models/basic_strategey_charts/bs_pair_hands/pair_12_plays.dart';
-import 'package:count_champ/data/models/basic_strategey_charts/bs_pair_hands/pair_14_plays.dart';
-import 'package:count_champ/data/models/basic_strategey_charts/bs_pair_hands/pair_16_plays.dart';
-import 'package:count_champ/data/models/basic_strategey_charts/bs_pair_hands/pair_18_plays.dart';
-import 'package:count_champ/data/models/basic_strategey_charts/bs_pair_hands/pair_22_plays.dart';
-import 'package:count_champ/data/models/basic_strategey_charts/bs_pair_hands/pair_4_plays.dart';
-import 'package:count_champ/data/models/basic_strategey_charts/bs_pair_hands/pair_6_plays.dart';
-import 'package:count_champ/data/models/basic_strategey_charts/bs_pair_hands/pair_8_plays.dart';
-import 'package:count_champ/data/models/basic_strategey_charts/bs_soft_hands/soft_13_plays.dart';
-import 'package:count_champ/data/models/basic_strategey_charts/bs_soft_hands/soft_14_plays.dart';
-import 'package:count_champ/data/models/basic_strategey_charts/bs_soft_hands/soft_15_16_plays.dart';
-import 'package:count_champ/data/models/basic_strategey_charts/bs_soft_hands/soft_17_plays.dart';
-import 'package:count_champ/data/models/basic_strategey_charts/bs_soft_hands/soft_18_plays.dart';
-import 'package:count_champ/data/models/basic_strategey_charts/bs_soft_hands/soft_19_plays.dart';
-import 'package:count_champ/data/models/basic_strategey_charts/bs_soft_hands/soft_20_plays.dart';
+
 import 'package:count_champ/logic/cubits/deck_cubit/deck_cubit.dart';
-import 'package:count_champ/logic/cubits/settings/basic_strategey_settings_cubit/basic_strategey_settings_cubit.dart';
 
 part 'correct_plays_state.dart';
 
 class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
-  final BasicStrategeySettingsCubit basicStrategeySettingsCubit;
-  late StreamSubscription basicStrategeySettingsStreamSubscription;
+  final BasicStrategySettingsCubit basicStrategySettingsCubit;
+  late StreamSubscription basicStrategySettingsStreamSubscription;
   final DeckCubit deckCubit;
   late StreamSubscription deckStreamSubscription;
   late bool _canDas;
@@ -57,35 +58,35 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
   int count = 0;
 
   CorrectPlaysCubit(
-      {required this.basicStrategeySettingsCubit,
+      {required this.basicStrategySettingsCubit,
       required this.deckCubit,
       deckStreamSubscription,
-      basicStrategeySettingsStreamSubscription})
+      basicStrategySettingsStreamSubscription})
       : super(CorrectPlaysState(
-            playWasCorrect: true, correctPlay: '', hand: '', handType: '')) {
-    _manageLocalRules(basicStrategeySettingsCubit.state);
+            playWasCorrect: true, correctPlay: '', hand: '', handType: '', handRules: const [], playerTotal: 0)) {
+    _manageLocalRules(basicStrategySettingsCubit.state);
     _setHandInfo(deckCubit.state);
-    _monitorBasicStrategeySettingsCubit();
+    _monitorBasicStrategySettingsCubit();
     _monitorDeckCubit();
   }
 
-  StreamSubscription<BasicStrategeySettingsState> _monitorBasicStrategeySettingsCubit() {
-    return basicStrategeySettingsStreamSubscription =
-        basicStrategeySettingsCubit.stream.listen((basisStrategeyGameSettingsState) {
-      _manageLocalRules(basisStrategeyGameSettingsState);
+  StreamSubscription<BasicStrategySettingsState> _monitorBasicStrategySettingsCubit() {
+    return basicStrategySettingsStreamSubscription =
+        basicStrategySettingsCubit.stream.listen((basisStrategyGameSettingsState) {
+      _manageLocalRules(basisStrategyGameSettingsState);
     });
   }
 
-  void _manageLocalRules(basisStrategeyGameSettingsState) {
-    _canDas = basisStrategeyGameSettingsState.canDas;
-    _canDoubleAny2 = basisStrategeyGameSettingsState.canDoubleAny2;
-    _canSplitAces = basisStrategeyGameSettingsState.canSplitAces;
-    _dealerHitsSoft17 = basisStrategeyGameSettingsState.dealerHitsSoft17;
-    _canSurrender = basisStrategeyGameSettingsState.canSurrender;
-    _deckQuantity = basisStrategeyGameSettingsState.deckQuantity;
-    _practiceIllustrious18 = basisStrategeyGameSettingsState.practiceIllustrious18;
-    _practiceFab4 = basisStrategeyGameSettingsState.practiceFab4;
-    _practiceInsurance = basisStrategeyGameSettingsState.practiceInsurance;
+  void _manageLocalRules(basisStrategyGameSettingsState) {
+    _canDas = basisStrategyGameSettingsState.canDas;
+    _canDoubleAny2 = basisStrategyGameSettingsState.canDoubleAny2;
+    _canSplitAces = basisStrategyGameSettingsState.canSplitAces;
+    _dealerHitsSoft17 = basisStrategyGameSettingsState.dealerHitsSoft17;
+    _canSurrender = basisStrategyGameSettingsState.canSurrender;
+    _deckQuantity = basisStrategyGameSettingsState.deckQuantity;
+    _practiceIllustrious18 = basisStrategyGameSettingsState.practiceIllustrious18;
+    _practiceFab4 = basisStrategyGameSettingsState.practiceFab4;
+    _practiceInsurance = basisStrategyGameSettingsState.practiceInsurance;
   }
 
   StreamSubscription<DeckState> _monitorDeckCubit() {
@@ -157,9 +158,9 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
 
     //* Determines if correct play matched users play
     if (correctPlay == chosenPlay) {
-      _emitCorrectPlay(correctPlay, hand, _handType);
+      _emitCorrectPlay(correctPlay, hand, _handType, _playerTotal, handRules);
     } else {
-      _emitIncorrectPlay(correctPlay, hand, _handType);
+      _emitIncorrectPlay(correctPlay, hand, _handType, _playerTotal, handRules);
     }
   }
 
@@ -294,20 +295,25 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
     return _correctPlay;
   }
 
-  void _emitCorrectPlay(correctPlay, hand, _handType) => emit(CorrectPlaysState(
+  void _emitCorrectPlay(correctPlay, hand, _handType,  _playerTotal, handRules) => emit(CorrectPlaysState(
       playWasCorrect: true,
       correctPlay: correctPlay,
       hand: hand,
-      handType: _handType));
-  void _emitIncorrectPlay(correctPlay, hand, _handType) => emit(CorrectPlaysState(
+      handType: _handType,
+      playerTotal: _playerTotal, 
+      handRules: handRules,));
+  void _emitIncorrectPlay(correctPlay, hand, _handType, _playerTotal, handRules) => emit(CorrectPlaysState(
       playWasCorrect: false,
       correctPlay: correctPlay,
       hand: hand,
-      handType: _handType));
+      handType: _handType,
+      playerTotal: _playerTotal, 
+      handRules: handRules,
+    ));
 
   @override
   Future<void> close() {
-    basicStrategeySettingsStreamSubscription.cancel();
+    basicStrategySettingsStreamSubscription.cancel();
     deckStreamSubscription.cancel();
     return super.close();
   }

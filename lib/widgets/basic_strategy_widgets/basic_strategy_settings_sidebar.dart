@@ -1,4 +1,4 @@
-import 'package:count_champ/logic/cubits/settings/basic_strategey_settings_cubit/basic_strategey_settings_cubit.dart';
+import 'package:count_champ/logic/cubits/settings/basic_strategy_settings_cubit/basic_strategy_settings_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,7 +16,7 @@ class _GameSettingsSidebarState extends State<GameSettingsSidebar> {
         body: SingleChildScrollView(
             child: Column(
       children: <Widget>[
-        BlocBuilder<BasicStrategeySettingsCubit, BasicStrategeySettingsState>(
+        BlocBuilder<BasicStrategySettingsCubit, BasicStrategySettingsState>(
             builder: (context, state) {
           return ListTile(
               title: Text('Deck Quantity: ${state.deckQuantity.round()}'),
@@ -28,19 +28,19 @@ class _GameSettingsSidebarState extends State<GameSettingsSidebar> {
                 divisions: 8,
                 label: '${state.deckQuantity.round()}',
                 onChanged: (value) {
-                  context.read<BasicStrategeySettingsCubit>().setDeckQuantity(value);
+                  context.read<BasicStrategySettingsCubit>().setDeckQuantity(value);
                 },
               ));
         }),
         Divider( color: Colors.blue[300], thickness: 2 ),
         ListTile(
             title: const Text("Double After Split"),
-            leading: BlocBuilder<BasicStrategeySettingsCubit, BasicStrategeySettingsState>(
+            leading: BlocBuilder<BasicStrategySettingsCubit, BasicStrategySettingsState>(
                 builder: (context, state) {
               return Switch(
                 value: state.canDas,
                 onChanged: (value) {
-                  context.read<BasicStrategeySettingsCubit>().toggleDas(value);
+                  context.read<BasicStrategySettingsCubit>().toggleDas(value);
                 },
                 activeTrackColor: Colors.lightGreenAccent[700],
                 activeColor: Colors.green,
@@ -49,12 +49,12 @@ class _GameSettingsSidebarState extends State<GameSettingsSidebar> {
         ListTile(
             // TODO Off is Reno rules
             title: const Text("Double Any Two Cards"),
-            leading: BlocBuilder<BasicStrategeySettingsCubit, BasicStrategeySettingsState>(
+            leading: BlocBuilder<BasicStrategySettingsCubit, BasicStrategySettingsState>(
                 builder: (context, state) {
               return Switch(
                 value: state.canDoubleAny2,
                 onChanged: (value) {
-                  context.read<BasicStrategeySettingsCubit>().toggleCanDoubleAny2(value);
+                  context.read<BasicStrategySettingsCubit>().toggleCanDoubleAny2(value);
                 },
                 activeTrackColor: Colors.lightGreenAccent[700],
                 activeColor: Colors.green,
@@ -62,13 +62,13 @@ class _GameSettingsSidebarState extends State<GameSettingsSidebar> {
             })),
         // ListTile( // TODO - Only for GamePlay, not BS
         //     title: const Text("Can Resplit Pairs"),
-        //     leading: BlocBuilder<BasicStrategeySettingsCubit, BasicStrategeySettingsState>(
+        //     leading: BlocBuilder<BasicStrategySettingsCubit, BasicStrategySettingsState>(
         //         builder: (context, state) {
         //       return Switch(
         //         value: state.canResplitPairs,
         //         onChanged: (value) {
         //           context
-        //               .read<BasicStrategeySettingsCubit>()
+        //               .read<BasicStrategySettingsCubit>()
         //               .toggleCanResplitPairs(value);
         //         },
         //         activeTrackColor: Colors.lightGreenAccent[700],
@@ -77,12 +77,12 @@ class _GameSettingsSidebarState extends State<GameSettingsSidebar> {
         //     })),
         ListTile(
             title: const Text("Splitting Aces"),
-            leading: BlocBuilder<BasicStrategeySettingsCubit, BasicStrategeySettingsState>(
+            leading: BlocBuilder<BasicStrategySettingsCubit, BasicStrategySettingsState>(
                 builder: (context, state) {
               return Switch(
                 value: state.canSplitAces,
                 onChanged: (value) {
-                  context.read<BasicStrategeySettingsCubit>().toggleCanSplitAces(value);
+                  context.read<BasicStrategySettingsCubit>().toggleCanSplitAces(value);
                 },
                 activeTrackColor: Colors.lightGreenAccent[700],
                 activeColor: Colors.green,
@@ -90,13 +90,13 @@ class _GameSettingsSidebarState extends State<GameSettingsSidebar> {
             })),
         // ListTile( // TODO - Only for GamePlay, not BS
         //     title: const Text("Can Hit After Splitting Aces"),
-        //     leading: BlocBuilder<BasicStrategeySettingsCubit, BasicStrategeySettingsState>(
+        //     leading: BlocBuilder<BasicStrategySettingsCubit, BasicStrategySettingsState>(
         //         builder: (context, state) {
         //       return Switch(
         //         value: state.canHitAfterSplittingAces,
         //         onChanged: (value) {
         //           context
-        //               .read<BasicStrategeySettingsCubit>()
+        //               .read<BasicStrategySettingsCubit>()
         //               .toggleCanHitAfterSplitingAces(value);
         //         },
         //         activeTrackColor: Colors.lightGreenAccent[700],
@@ -105,13 +105,13 @@ class _GameSettingsSidebarState extends State<GameSettingsSidebar> {
         //     })),
         ListTile(
             title: const Text("Dealer Hits Soft 17"),
-            leading: BlocBuilder<BasicStrategeySettingsCubit, BasicStrategeySettingsState>(
+            leading: BlocBuilder<BasicStrategySettingsCubit, BasicStrategySettingsState>(
                 builder: (context, state) {
               return Switch(
                 value: state.dealerHitsSoft17,
                 onChanged: (value) {
                   context
-                      .read<BasicStrategeySettingsCubit>()
+                      .read<BasicStrategySettingsCubit>()
                       .toggleDealerHitsSoft17(value);
                 },
                 activeTrackColor: Colors.lightGreenAccent[700],
@@ -120,13 +120,13 @@ class _GameSettingsSidebarState extends State<GameSettingsSidebar> {
             })),
         ListTile(
             title: const Text("Surrender Allowed"),
-            leading: BlocBuilder<BasicStrategeySettingsCubit, BasicStrategeySettingsState>(
+            leading: BlocBuilder<BasicStrategySettingsCubit, BasicStrategySettingsState>(
                 builder: (context, state) {
               return Switch(
                 value: state.canSurrender,
                 onChanged: (value) {
                   context
-                      .read<BasicStrategeySettingsCubit>()
+                      .read<BasicStrategySettingsCubit>()
                       .toggleCanSurrender(value);
                 },
                 activeTrackColor: Colors.lightGreenAccent[700],
@@ -135,13 +135,13 @@ class _GameSettingsSidebarState extends State<GameSettingsSidebar> {
             })),
         // ListTile( // TODO - Only for GamePlay, not BS
         //     title: const Text("Early Surrender Allowed"),
-        //     leading: BlocBuilder<BasicStrategeySettingsCubit, BasicStrategeySettingsState>(
+        //     leading: BlocBuilder<BasicStrategySettingsCubit, BasicStrategySettingsState>(
         //         builder: (context, state) {
         //       return Switch(
         //         value: state.canEarlySurrender,
         //         onChanged: (value) {
         //           context
-        //               .read<BasicStrategeySettingsCubit>()
+        //               .read<BasicStrategySettingsCubit>()
         //               .toggleCanEarlySurrender(value);
         //         },
         //         activeTrackColor: Colors.lightGreenAccent[700],
@@ -150,13 +150,13 @@ class _GameSettingsSidebarState extends State<GameSettingsSidebar> {
         //     })),
         // ListTile( // TODO - Only for GamePlay, not BS
         //     title: const Text("Late Surrender Allowed"),
-        //     leading: BlocBuilder<BasicStrategeySettingsCubit, BasicStrategeySettingsState>(
+        //     leading: BlocBuilder<BasicStrategySettingsCubit, BasicStrategySettingsState>(
         //         builder: (context, state) {
         //       return Switch(
         //         value: state.canLateSurrender,
         //         onChanged: (value) {
         //           context
-        //               .read<BasicStrategeySettingsCubit>()
+        //               .read<BasicStrategySettingsCubit>()
         //               .toggleCanLateSurrender(value);
         //         },
         //         activeTrackColor: Colors.lightGreenAccent[700],
@@ -165,18 +165,18 @@ class _GameSettingsSidebarState extends State<GameSettingsSidebar> {
         //     })),
         // ListTile( // TODO - Only for GamePlay, not BS
         //     title: const Text("Dealer Peeks for 21"),
-        //     leading: BlocBuilder<BasicStrategeySettingsCubit, BasicStrategeySettingsState>(
+        //     leading: BlocBuilder<BasicStrategySettingsCubit, BasicStrategySettingsState>(
         //         builder: (context, state) {
         //       return Switch(
         //         value: state.dealerPeeks,
         //         onChanged: (value) {
-        //           context.read<BasicStrategeySettingsCubit>().toggleDealerPeeks(value);
+        //           context.read<BasicStrategySettingsCubit>().toggleDealerPeeks(value);
         //         },
         //         activeTrackColor: Colors.lightGreenAccent[700],
         //         activeColor: Colors.green,
         //       );
         //     })),
-        // BlocBuilder<BasicStrategeySettingsCubit, BasicStrategeySettingsState>(
+        // BlocBuilder<BasicStrategySettingsCubit, BasicStrategySettingsState>(
         //     builder: (context, state) {
         //   return ListTile( // TODO - Only for GamePlay and Counting, not BS
         //       title: Text('Deck Penetration:${state.deckPenetration.round()}%'),
@@ -188,7 +188,7 @@ class _GameSettingsSidebarState extends State<GameSettingsSidebar> {
         //         divisions: 20,
         //         label: '${state.deckPenetration.round()}',
         //         onChanged: (value) {
-        //           context.read<BasicStrategeySettingsCubit>().setDeckPenetration(value);
+        //           context.read<BasicStrategySettingsCubit>().setDeckPenetration(value);
         //         },
         //       ));
         // }),
@@ -196,13 +196,13 @@ class _GameSettingsSidebarState extends State<GameSettingsSidebar> {
         ListTile(
             // TODO BS Settings Only
             title: const Text("Practice All Hands"),
-            leading: BlocBuilder<BasicStrategeySettingsCubit, BasicStrategeySettingsState>(
+            leading: BlocBuilder<BasicStrategySettingsCubit, BasicStrategySettingsState>(
                 builder: (context, state) {
               return Switch(
                 value: state.practiceBsAllHands,
                 onChanged: (value) {
                   context
-                      .read<BasicStrategeySettingsCubit>()
+                      .read<BasicStrategySettingsCubit>()
                       .togglePracticeBsAllHands(value);
                 },
                 activeTrackColor: Colors.lightGreenAccent[700],
@@ -212,13 +212,13 @@ class _GameSettingsSidebarState extends State<GameSettingsSidebar> {
         ListTile(
             // TODO BS Settings Only
             title: const Text("Practice Hard Hands"),
-            leading: BlocBuilder<BasicStrategeySettingsCubit, BasicStrategeySettingsState>(
+            leading: BlocBuilder<BasicStrategySettingsCubit, BasicStrategySettingsState>(
                 builder: (context, state) {
               return Switch(
                 value: state.practiceBsHardHands,
                 onChanged: (value) {
                   context
-                      .read<BasicStrategeySettingsCubit>()
+                      .read<BasicStrategySettingsCubit>()
                       .togglePracticeBsHardHands(value);
                 },
                 activeTrackColor: Colors.lightGreenAccent[700],
@@ -228,13 +228,13 @@ class _GameSettingsSidebarState extends State<GameSettingsSidebar> {
         ListTile(
             // TODO BS Settings Only
             title: const Text("Practice Soft Hands"),
-            leading: BlocBuilder<BasicStrategeySettingsCubit, BasicStrategeySettingsState>(
+            leading: BlocBuilder<BasicStrategySettingsCubit, BasicStrategySettingsState>(
                 builder: (context, state) {
               return Switch(
                 value: state.practiceBsSoftHands,
                 onChanged: (value) {
                   context
-                      .read<BasicStrategeySettingsCubit>()
+                      .read<BasicStrategySettingsCubit>()
                       .togglePracticeBsSoftHands(value);
                 },
                 activeTrackColor: Colors.lightGreenAccent[700],
@@ -244,13 +244,13 @@ class _GameSettingsSidebarState extends State<GameSettingsSidebar> {
         ListTile(
             // TODO BS Settings Only
             title: const Text("Practice Split Hands"),
-            leading: BlocBuilder<BasicStrategeySettingsCubit, BasicStrategeySettingsState>(
+            leading: BlocBuilder<BasicStrategySettingsCubit, BasicStrategySettingsState>(
                 builder: (context, state) {
               return Switch(
                 value: state.practiceBsSplitHands,
                 onChanged: (value) {
                   context
-                      .read<BasicStrategeySettingsCubit>()
+                      .read<BasicStrategySettingsCubit>()
                       .togglePracticeBsSplitHands(value);
                 },
                 activeTrackColor: Colors.lightGreenAccent[700],
@@ -261,12 +261,12 @@ class _GameSettingsSidebarState extends State<GameSettingsSidebar> {
         ListTile(
             // TODO BS and Game Settings Only
             title: const Text("Illustrious 18 Deviations"),
-            leading: BlocBuilder<BasicStrategeySettingsCubit, BasicStrategeySettingsState>(
+            leading: BlocBuilder<BasicStrategySettingsCubit, BasicStrategySettingsState>(
                 builder: (context, state) {
               return Switch(
                 value: state.practiceIllustrious18,
                 onChanged: (value) {
-                  context.read<BasicStrategeySettingsCubit>().toggleIllustrious18(value);
+                  context.read<BasicStrategySettingsCubit>().toggleIllustrious18(value);
                 },
                 activeTrackColor: Colors.lightGreenAccent[700],
                 activeColor: Colors.green,
@@ -275,12 +275,12 @@ class _GameSettingsSidebarState extends State<GameSettingsSidebar> {
         ListTile(
             // TODO BS and Game Settings Only
             title: const Text("Fab 4 Deviations"),
-            leading: BlocBuilder<BasicStrategeySettingsCubit, BasicStrategeySettingsState>(
+            leading: BlocBuilder<BasicStrategySettingsCubit, BasicStrategySettingsState>(
                 builder: (context, state) {
               return Switch(
                 value: state.practiceFab4,
                 onChanged: (value) {
-                  context.read<BasicStrategeySettingsCubit>().toggleFab4(value);
+                  context.read<BasicStrategySettingsCubit>().toggleFab4(value);
                 },
                 activeTrackColor: Colors.lightGreenAccent[700],
                 activeColor: Colors.green,
@@ -289,12 +289,12 @@ class _GameSettingsSidebarState extends State<GameSettingsSidebar> {
         ListTile(
             // TODO BS and Game Settings Only
             title: const Text("Insurance Deviations"),
-            leading: BlocBuilder<BasicStrategeySettingsCubit, BasicStrategeySettingsState>(
+            leading: BlocBuilder<BasicStrategySettingsCubit, BasicStrategySettingsState>(
                 builder: (context, state) {
               return Switch(
                 value: state.practiceInsurance,
                 onChanged: (value) {
-                  context.read<BasicStrategeySettingsCubit>().toggleInsurance(value);
+                  context.read<BasicStrategySettingsCubit>().toggleInsurance(value);
                 },
                 activeTrackColor: Colors.lightGreenAccent[700],
                 activeColor: Colors.green,

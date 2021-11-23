@@ -19,7 +19,7 @@ class CardWidget extends StatelessWidget {
 
     return Image(
       image: AssetImage(imagePath),
-      width: 175, // TODO - Make card image dimensions dynamic based on screen size
+      width: 140, // TODO - Make card image dimensions dynamic based on screen size
     );
   }
 }

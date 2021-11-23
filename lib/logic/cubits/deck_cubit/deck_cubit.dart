@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:math';
 import 'package:bloc/bloc.dart';
 import 'package:count_champ/constants/raw_deck_data.dart';
-import 'package:count_champ/logic/cubits/basic_strategey_cubit/basic_strategey_cubit.dart';
-import 'package:count_champ/logic/cubits/settings/basic_strategey_settings_cubit/basic_strategey_settings_cubit.dart';
+import 'package:count_champ/logic/cubits/basic_strategy_cubit/basic_strategy_cubit.dart';
+import 'package:count_champ/logic/cubits/settings/basic_strategy_settings_cubit/basic_strategy_settings_cubit.dart';
 import 'package:count_champ/utils/services/json_storage_service.dart';
 import 'package:equatable/equatable.dart';
 part 'deck_state.dart';
@@ -17,15 +17,15 @@ class DeckCubit extends Cubit<DeckState> {
   late bool _practiceIllustrious18 = false;
   late bool _practiceFab4 = false;
   late bool _practiceInsurance = false;
-  final BasicStrategeyCubit basicStrategeyCubit;
-  late StreamSubscription basicStrategeyStreamSubscription;
-  final BasicStrategeySettingsCubit basicStrategeySettingsCubit;
+  final BasicStrategyCubit basicStrategyCubit;
+  late StreamSubscription basicStrategyStreamSubscription;
+  final BasicStrategySettingsCubit basicStrategySettingsCubit;
   late StreamSubscription gameSettingsStreamSubscription;
 
   DeckCubit(
-      {required this.basicStrategeyCubit,
-      basicStrategeyStreamSubscription,
-      required this.basicStrategeySettingsCubit,
+      {required this.basicStrategyCubit,
+      basicStrategyStreamSubscription,
+      required this.basicStrategySettingsCubit,
       gameSettingsStreamSubscription})
       : super(DeckState(
             deckRepository: const [],
@@ -37,36 +37,36 @@ class DeckCubit extends Cubit<DeckState> {
             trueCount: 0)) {
     _fetchCardData();
     _shuffleDeck();
-    _monitorBasicStrategeyCubit();
-    _monitorBasicStrategeySettingsCubit();
+    _monitorBasicStrategyCubit();
+    _monitorBasicStrategySettingsCubit();
   }
 
-  StreamSubscription<BasicStrategeyState> _monitorBasicStrategeyCubit() {
+  StreamSubscription<BasicStrategyState> _monitorBasicStrategyCubit() {
     _dealStartingHand(); //* Deals Cards initially on BS trainer screen mount
-    return basicStrategeyStreamSubscription =
-        basicStrategeyCubit.stream.listen((basicStrategeyState) {
-      if (basicStrategeyState.didChoosePlay == true) {
+    return basicStrategyStreamSubscription =
+        basicStrategyCubit.stream.listen((basicStrategyState) {
+      if (basicStrategyState.didChoosePlay == true) {
         _dealStartingHand(); //* Deals cards again each time a BS button action is chosen.
       }
     });
   }
 
-  StreamSubscription<BasicStrategeySettingsState> _monitorBasicStrategeySettingsCubit() {
+  StreamSubscription<BasicStrategySettingsState> _monitorBasicStrategySettingsCubit() {
     // * If the user changes the settings, it will adjust the deck accordingly.
-    return gameSettingsStreamSubscription = basicStrategeySettingsCubit.stream
-        .listen((basicStrategeyGameSettingsState) {
-      _deckQuantity = basicStrategeyGameSettingsState.deckQuantity;
-      _deckPenetration = basicStrategeyGameSettingsState.deckPenetration;
+    return gameSettingsStreamSubscription = basicStrategySettingsCubit.stream
+        .listen((basicStrategyGameSettingsState) {
+      _deckQuantity = basicStrategyGameSettingsState.deckQuantity;
+      _deckPenetration = basicStrategyGameSettingsState.deckPenetration;
       _practiceBsHardHands =
-          basicStrategeyGameSettingsState.practiceBsHardHands;
+          basicStrategyGameSettingsState.practiceBsHardHands;
       _practiceBsSoftHands =
-          basicStrategeyGameSettingsState.practiceBsSoftHands;
+          basicStrategyGameSettingsState.practiceBsSoftHands;
       _practiceBsSplitHands =
-          basicStrategeyGameSettingsState.practiceBsSplitHands;
+          basicStrategyGameSettingsState.practiceBsSplitHands;
       _practiceIllustrious18 =
-          basicStrategeyGameSettingsState.practiceIllustrious18;
-      _practiceFab4 = basicStrategeyGameSettingsState.practiceFab4;
-      _practiceInsurance = basicStrategeyGameSettingsState.practiceInsurance;
+          basicStrategyGameSettingsState.practiceIllustrious18;
+      _practiceFab4 = basicStrategyGameSettingsState.practiceFab4;
+      _practiceInsurance = basicStrategyGameSettingsState.practiceInsurance;
       _shuffleDeck();
       _dealStartingHand();
     });
@@ -126,7 +126,7 @@ class DeckCubit extends Cubit<DeckState> {
     if (state.dealtCards.length > state.cutCardIndex) _shuffleDeck();
     List handsDealt = [];
     int fakeTrueCount = 0;
-    //* Deals custom hand types for Basic Strategey Trainer
+    //* Deals custom hand types for Basic Strategy Trainer
     if (_practiceBsHardHands == true) {
       handsDealt = _dealHardHand();
     } else if (_practiceBsSoftHands == true) {
@@ -498,7 +498,7 @@ class DeckCubit extends Cubit<DeckState> {
 
   @override
   Future<void> close() {
-    basicStrategeyStreamSubscription.cancel();
+    basicStrategyStreamSubscription.cancel();
     gameSettingsStreamSubscription.cancel();
     return super.close();
   }

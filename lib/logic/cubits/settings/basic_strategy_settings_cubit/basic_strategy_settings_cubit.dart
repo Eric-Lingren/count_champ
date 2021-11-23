@@ -1,9 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-part 'basic_strategey_settings_state.dart';
+part 'basic_strategy_settings_state.dart';
 
-class BasicStrategeySettingsCubit extends Cubit<BasicStrategeySettingsState> {
+class BasicStrategySettingsCubit extends Cubit<BasicStrategySettingsState> {
   var bsAllHands;
   var bsHardHands;
   var bsSoftHands;
@@ -11,8 +11,8 @@ class BasicStrategeySettingsCubit extends Cubit<BasicStrategeySettingsState> {
   var bsIllustrious18;
   var bsfab4;
   var bsInsurance;
-  BasicStrategeySettingsCubit()
-      : super(BasicStrategeySettingsState(
+  BasicStrategySettingsCubit()
+      : super(BasicStrategySettingsState(
           // * Initial Default Game Rules:
           canDas: false,
           canDoubleAny2: true,
@@ -33,7 +33,7 @@ class BasicStrategeySettingsCubit extends Cubit<BasicStrategeySettingsState> {
           practiceInsurance: false,
         ));
 
-  void toggleDas(value) => emit(BasicStrategeySettingsState(
+  void toggleDas(value) => emit(BasicStrategySettingsState(
         canDas: value,
         canResplitPairs: state.canResplitPairs,
         canDoubleAny2: state.canDoubleAny2,
@@ -52,7 +52,7 @@ class BasicStrategeySettingsCubit extends Cubit<BasicStrategeySettingsState> {
         practiceFab4: state.practiceFab4,
         practiceInsurance: state.practiceInsurance,
       ));
-  void toggleCanDoubleAny2(value) => emit(BasicStrategeySettingsState(
+  void toggleCanDoubleAny2(value) => emit(BasicStrategySettingsState(
         canDas: state.canDas,
         canResplitPairs: state.canResplitPairs,
         canDoubleAny2: value,
@@ -71,7 +71,7 @@ class BasicStrategeySettingsCubit extends Cubit<BasicStrategeySettingsState> {
         practiceFab4: state.practiceFab4,
         practiceInsurance: state.practiceInsurance,
       ));
-  void toggleCanResplitPairs(value) => emit(BasicStrategeySettingsState(
+  void toggleCanResplitPairs(value) => emit(BasicStrategySettingsState(
         canDas: state.canDas,
         canResplitPairs: value,
         canDoubleAny2: state.canDoubleAny2,
@@ -90,7 +90,7 @@ class BasicStrategeySettingsCubit extends Cubit<BasicStrategeySettingsState> {
         practiceFab4: state.practiceFab4,
         practiceInsurance: state.practiceInsurance,
       ));
-  void toggleCanSplitAces(value) => emit(BasicStrategeySettingsState(
+  void toggleCanSplitAces(value) => emit(BasicStrategySettingsState(
         canDas: state.canDas,
         canResplitPairs: state.canResplitPairs,
         canDoubleAny2: state.canDoubleAny2,
@@ -109,7 +109,7 @@ class BasicStrategeySettingsCubit extends Cubit<BasicStrategeySettingsState> {
         practiceFab4: state.practiceFab4,
         practiceInsurance: state.practiceInsurance,
       ));
-  void toggleCanHitAfterSplitingAces(value) => emit(BasicStrategeySettingsState(
+  void toggleCanHitAfterSplitingAces(value) => emit(BasicStrategySettingsState(
         canDas: state.canDas,
         canResplitPairs: state.canResplitPairs,
         canDoubleAny2: state.canDoubleAny2,
@@ -128,7 +128,7 @@ class BasicStrategeySettingsCubit extends Cubit<BasicStrategeySettingsState> {
         practiceFab4: state.practiceFab4,
         practiceInsurance: state.practiceInsurance,
       ));
-  void toggleDealerHitsSoft17(value) => emit(BasicStrategeySettingsState(
+  void toggleDealerHitsSoft17(value) => emit(BasicStrategySettingsState(
         canDas: state.canDas,
         canResplitPairs: state.canResplitPairs,
         canDoubleAny2: state.canDoubleAny2,
@@ -148,7 +148,7 @@ class BasicStrategeySettingsCubit extends Cubit<BasicStrategeySettingsState> {
         practiceInsurance: state.practiceInsurance,
       ));
   void toggleCanSurrender(value) => {
-        emit(BasicStrategeySettingsState(
+        emit(BasicStrategySettingsState(
           canDas: state.canDas,
           canResplitPairs: state.canResplitPairs,
           canDoubleAny2: state.canDoubleAny2,
@@ -168,7 +168,7 @@ class BasicStrategeySettingsCubit extends Cubit<BasicStrategeySettingsState> {
           practiceInsurance: state.practiceInsurance,
         ))
       };
-  void toggleDealerPeeks(value) => emit(BasicStrategeySettingsState(
+  void toggleDealerPeeks(value) => emit(BasicStrategySettingsState(
         canDas: state.canDas,
         canResplitPairs: state.canResplitPairs,
         canDoubleAny2: state.canDoubleAny2,
@@ -187,7 +187,7 @@ class BasicStrategeySettingsCubit extends Cubit<BasicStrategeySettingsState> {
         practiceFab4: state.practiceFab4,
         practiceInsurance: state.practiceInsurance,
       ));
-  void setDeckQuantity(value) => emit(BasicStrategeySettingsState(
+  void setDeckQuantity(value) => emit(BasicStrategySettingsState(
         canDas: state.canDas,
         canResplitPairs: state.canResplitPairs,
         canDoubleAny2: state.canDoubleAny2,
@@ -206,7 +206,7 @@ class BasicStrategeySettingsCubit extends Cubit<BasicStrategeySettingsState> {
         practiceFab4: state.practiceFab4,
         practiceInsurance: state.practiceInsurance,
       ));
-  void setDeckPenetration(value) => emit(BasicStrategeySettingsState(
+  void setDeckPenetration(value) => emit(BasicStrategySettingsState(
         canDas: state.canDas,
         canResplitPairs: state.canResplitPairs,
         canDoubleAny2: state.canDoubleAny2,
@@ -228,7 +228,7 @@ class BasicStrategeySettingsCubit extends Cubit<BasicStrategeySettingsState> {
   void togglePracticeBsAllHands(value) => {
         if (value)
           {bsHardHands = false, bsSoftHands = false, bsSplitHands = false, bsIllustrious18 = false, bsfab4 = false, bsInsurance = false},
-        emit(BasicStrategeySettingsState(
+        emit(BasicStrategySettingsState(
           canDas: state.canDas,
           canResplitPairs: state.canResplitPairs,
           canDoubleAny2: state.canDoubleAny2,
@@ -250,7 +250,7 @@ class BasicStrategeySettingsCubit extends Cubit<BasicStrategeySettingsState> {
       };
   void togglePracticeBsHardHands(value) => {
         if (value) {bsAllHands = false, bsIllustrious18 = false, bsfab4 = false, bsInsurance = false},
-        emit(BasicStrategeySettingsState(
+        emit(BasicStrategySettingsState(
           canDas: state.canDas,
           canResplitPairs: state.canResplitPairs,
           canDoubleAny2: state.canDoubleAny2,
@@ -272,7 +272,7 @@ class BasicStrategeySettingsCubit extends Cubit<BasicStrategeySettingsState> {
       };
   void togglePracticeBsSoftHands(value) => {
         if (value) {bsAllHands = false, bsIllustrious18 = false, bsfab4 = false, bsInsurance = false},
-        emit(BasicStrategeySettingsState(
+        emit(BasicStrategySettingsState(
           canDas: state.canDas,
           canResplitPairs: state.canResplitPairs,
           canDoubleAny2: state.canDoubleAny2,
@@ -294,7 +294,7 @@ class BasicStrategeySettingsCubit extends Cubit<BasicStrategeySettingsState> {
       };
   void togglePracticeBsSplitHands(value) => {
         if (value) {bsAllHands = false, bsIllustrious18 = false, bsfab4 = false, bsInsurance = false},
-        emit(BasicStrategeySettingsState(
+        emit(BasicStrategySettingsState(
           canDas: state.canDas,
           canResplitPairs: state.canResplitPairs,
           canDoubleAny2: state.canDoubleAny2,
@@ -317,7 +317,7 @@ class BasicStrategeySettingsCubit extends Cubit<BasicStrategeySettingsState> {
   void toggleIllustrious18(value) => {
     if (value)
           {bsAllHands = false, bsHardHands = false, bsSoftHands = false, bsSplitHands = false, bsfab4 = false, bsInsurance = false},
-        emit(BasicStrategeySettingsState(
+        emit(BasicStrategySettingsState(
           canDas: state.canDas,
           canResplitPairs: state.canResplitPairs,
           canDoubleAny2: state.canDoubleAny2,
@@ -340,7 +340,7 @@ class BasicStrategeySettingsCubit extends Cubit<BasicStrategeySettingsState> {
   void toggleFab4(value) => {
     if (value)
           {bsAllHands = false, bsHardHands = false, bsSoftHands = false, bsSplitHands = false, bsIllustrious18 = false, bsInsurance = false},
-        emit(BasicStrategeySettingsState(
+        emit(BasicStrategySettingsState(
           canDas: state.canDas,
           canResplitPairs: state.canResplitPairs,
           canDoubleAny2: state.canDoubleAny2,
@@ -367,7 +367,7 @@ class BasicStrategeySettingsCubit extends Cubit<BasicStrategeySettingsState> {
   void toggleInsurance(value) => {
     if (value)
           {bsAllHands = false, bsHardHands = false, bsSoftHands = false, bsSplitHands = false, bsIllustrious18 = false, bsfab4 = false},
-        emit(BasicStrategeySettingsState(
+        emit(BasicStrategySettingsState(
           canDas: state.canDas,
           canResplitPairs: state.canResplitPairs,
           canDoubleAny2: state.canDoubleAny2,

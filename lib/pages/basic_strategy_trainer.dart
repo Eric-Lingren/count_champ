@@ -1,22 +1,22 @@
 import 'package:count_champ/data/models/card_template.dart';
-import 'package:count_champ/logic/cubits/basic_strategey_cubit/basic_strategey_cubit.dart';
+import 'package:count_champ/logic/cubits/basic_strategy_cubit/basic_strategy_cubit.dart';
 import 'package:count_champ/logic/cubits/correct_plays_cubit/correct_plays_cubit.dart';
-import 'package:count_champ/logic/cubits/settings/basic_strategey_settings_cubit/basic_strategey_settings_cubit.dart';
 import 'package:count_champ/logic/cubits/deck_cubit/deck_cubit.dart';
+import 'package:count_champ/logic/cubits/settings/basic_strategy_settings_cubit/basic_strategy_settings_cubit.dart';
+import 'package:count_champ/widgets/basic_strategy_widgets/basic_strategy_settings_sidebar.dart';
 import 'package:count_champ/widgets/correct_play_widget.dart';
-import 'package:count_champ/widgets/basic_strategey_widgets/basic_strategey_settings_sidebar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
-class BasicStrategeyTrainer extends StatefulWidget {
-  const BasicStrategeyTrainer({Key? key}) : super(key: key);
+class BasicStrategyTrainer extends StatefulWidget {
+  const BasicStrategyTrainer({Key? key}) : super(key: key);
 
   @override
-  _BasicStrategeyTrainerState createState() => _BasicStrategeyTrainerState();
+  _BasicStrategyTrainerState createState() => _BasicStrategyTrainerState();
 }
 
-class _BasicStrategeyTrainerState extends State<BasicStrategeyTrainer> {
+class _BasicStrategyTrainerState extends State<BasicStrategyTrainer> {
   @override
   Widget build(BuildContext context) {
     return (Scaffold(
@@ -31,7 +31,7 @@ class _BasicStrategeyTrainerState extends State<BasicStrategeyTrainer> {
               );
             },
           ),
-          title: const Text('Basic Strategey Trainer'),
+          title: const Text('Basic Strategy Trainer'),
           foregroundColor: Colors.white,
         ),
         endDrawer: const Drawer(
@@ -47,7 +47,10 @@ class _BasicStrategeyTrainerState extends State<BasicStrategeyTrainer> {
               return CorrectPlayWidget(
                   playWasCorrect: state.playWasCorrect,
                   correctPlay: state.correctPlay,
-                  hand: state.hand);
+                  hand: state.hand,
+                  playerTotal: state.playerTotal,
+                  bsPlays: state.handRules
+                  );
             }),
             BlocBuilder<DeckCubit, DeckState>(builder: (context, state) {
               if (state.dealerHand.isNotEmpty) {
@@ -80,45 +83,45 @@ class _BasicStrategeyTrainerState extends State<BasicStrategeyTrainer> {
               ElevatedButton(
                   onPressed: () {
                     context.read<CorrectPlaysCubit>().checkPlay('hit');
-                    context.read<BasicStrategeyCubit>().initNextHand();
+                    context.read<BasicStrategyCubit>().initNextHand();
                   },
                   child: const Text('Hit')),
               ElevatedButton(
                   onPressed: () {
                     context.read<CorrectPlaysCubit>().checkPlay('stand');
-                    context.read<BasicStrategeyCubit>().initNextHand();
+                    context.read<BasicStrategyCubit>().initNextHand();
                   },
                   child: const Text('Stand')),
               ElevatedButton(
                   onPressed: () {
                     context.read<CorrectPlaysCubit>().checkPlay('double');
-                    context.read<BasicStrategeyCubit>().initNextHand();
+                    context.read<BasicStrategyCubit>().initNextHand();
                   },
                   child: const Text('Double')),
               ElevatedButton(
                   onPressed: () {
                     context.read<CorrectPlaysCubit>().checkPlay('split');
-                    context.read<BasicStrategeyCubit>().initNextHand();
+                    context.read<BasicStrategyCubit>().initNextHand();
                   },
                   child: const Text('Split')),
             ]),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-              BlocBuilder<BasicStrategeySettingsCubit,
-                  BasicStrategeySettingsState>(builder: (context, state) {
+              BlocBuilder<BasicStrategySettingsCubit,
+                  BasicStrategySettingsState>(builder: (context, state) {
                 if (state.practiceInsurance == true) {
                   return ElevatedButton(
                       onPressed: () {
                         context
                             .read<CorrectPlaysCubit>()
                             .checkPlay('insurance');
-                        context.read<BasicStrategeyCubit>().initNextHand();
+                        context.read<BasicStrategyCubit>().initNextHand();
                       },
                       child: const Text('Insurance'));
                 }
                 return const SizedBox.shrink();
               }),
-              BlocBuilder<BasicStrategeySettingsCubit,
-                  BasicStrategeySettingsState>(builder: (context, state) {
+              BlocBuilder<BasicStrategySettingsCubit,
+                  BasicStrategySettingsState>(builder: (context, state) {
                 if (state.practiceFab4 == true ||
                     state.practiceIllustrious18 == true ||
                     state.practiceInsurance == true) {
@@ -134,15 +137,15 @@ class _BasicStrategeyTrainerState extends State<BasicStrategeyTrainer> {
                 }
                 return const SizedBox.shrink();
               }),
-              BlocBuilder<BasicStrategeySettingsCubit,
-                  BasicStrategeySettingsState>(builder: (context, state) {
+              BlocBuilder<BasicStrategySettingsCubit,
+                  BasicStrategySettingsState>(builder: (context, state) {
                 if (state.canSurrender == true) {
                   return ElevatedButton(
                       onPressed: () {
                         context
                             .read<CorrectPlaysCubit>()
                             .checkPlay('surrender');
-                        context.read<BasicStrategeyCubit>().initNextHand();
+                        context.read<BasicStrategyCubit>().initNextHand();
                       },
                       child: const Text('Surrender'));
                 }
