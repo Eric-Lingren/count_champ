@@ -20,6 +20,11 @@ class _HomeState extends State<Home> {
               Navigator.pushNamed(context, '/basic_strategy_trainer');
             },
             child: const Text('Basic Strategy')),
+        ElevatedButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/running_count_trainer');
+            },
+            child: const Text('Count Trainer')),
       ],
     ))));
   }

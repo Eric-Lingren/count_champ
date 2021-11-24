@@ -8,6 +8,7 @@ class DeckState extends Equatable {
   int cutCardIndex;
   List shuffledDeck;
   int trueCount;
+  double runningCount;
 
   DeckState({
     required this.deckRepository,
@@ -17,7 +18,8 @@ class DeckState extends Equatable {
     required this.playerHand,
     required this.trueCount,
     List? cutCards,
-    required this.cutCardIndex});
+    required this.cutCardIndex,
+    required this.runningCount});
 
   @override
   List<Object?> get props => [
@@ -26,7 +28,8 @@ class DeckState extends Equatable {
     dealerHand, 
     playerHand, 
     dealtCards,
-    trueCount
+    trueCount,
+    runningCount
   ];
 
 }

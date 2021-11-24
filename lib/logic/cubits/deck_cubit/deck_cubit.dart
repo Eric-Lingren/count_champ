@@ -2,8 +2,18 @@ import 'dart:async';
 import 'dart:math';
 import 'package:bloc/bloc.dart';
 import 'package:count_champ/constants/raw_deck_data.dart';
+import 'package:count_champ/data/models/counting_systems/halves_count_generator.dart';
+import 'package:count_champ/data/models/counting_systems/hilo_count_generator.dart';
+import 'package:count_champ/data/models/counting_systems/hiopt1_count_generator.dart';
+import 'package:count_champ/data/models/counting_systems/hiopt2_count_generator.dart';
+import 'package:count_champ/data/models/counting_systems/ko_count_generator.dart';
+import 'package:count_champ/data/models/counting_systems/omega2_count_generator.dart';
+import 'package:count_champ/data/models/counting_systems/red7_count_generator.dart';
+import 'package:count_champ/data/models/counting_systems/zen_count_generator.dart';
 import 'package:count_champ/logic/cubits/basic_strategy_cubit/basic_strategy_cubit.dart';
+import 'package:count_champ/logic/cubits/count_cubit/count_cubit.dart';
 import 'package:count_champ/logic/cubits/settings/basic_strategy_settings_cubit/basic_strategy_settings_cubit.dart';
+import 'package:count_champ/logic/cubits/settings/count_settings_cubit/count_settings_cubit.dart';
 import 'package:count_champ/utils/services/json_storage_service.dart';
 import 'package:equatable/equatable.dart';
 part 'deck_state.dart';
@@ -11,38 +21,59 @@ part 'deck_state.dart';
 class DeckCubit extends Cubit<DeckState> {
   double _deckQuantity = 8.0;
   double _deckPenetration = 80.0;
+  double _runningCountOffest = 0.0;
   late bool _practiceBsHardHands = false;
   late bool _practiceBsSoftHands = false;
   late bool _practiceBsSplitHands = false;
   late bool _practiceIllustrious18 = false;
   late bool _practiceFab4 = false;
   late bool _practiceInsurance = false;
+  late bool _isShowingCount = true; // ToDo - get the default another way
+  late bool _hiLoEnabled = true; // ToDo - get the default another way
+  late bool _hiOpt1Enabled = false;
+  late bool _hiOpt2Enabled = false;
+  late bool _halvesEnabled = false;
+  late bool _koEnabled = false;
+  late bool _red7Enabled = false;
+  late bool _zenEnabled = false;
+  late bool _omegaEnabled = false;
   final BasicStrategyCubit basicStrategyCubit;
   late StreamSubscription basicStrategyStreamSubscription;
   final BasicStrategySettingsCubit basicStrategySettingsCubit;
   late StreamSubscription gameSettingsStreamSubscription;
+  final CountCubit countCubit;
+  late StreamSubscription countStreamSubscription;
+  final CountSettingsCubit countSettingsCubit;
+  late StreamSubscription countSettingsStreamSubscription;
 
-  DeckCubit(
-      {required this.basicStrategyCubit,
-      basicStrategyStreamSubscription,
-      required this.basicStrategySettingsCubit,
-      gameSettingsStreamSubscription})
-      : super(DeckState(
+  DeckCubit({
+    required this.basicStrategyCubit,
+    basicStrategyStreamSubscription,
+    required this.basicStrategySettingsCubit,
+    gameSettingsStreamSubscription,
+    required this.countCubit,
+    countStreamSubscription,
+    required this.countSettingsCubit,
+    countSettingsStreamSubscription,
+  }) : super(DeckState(
             deckRepository: const [],
             shuffledDeck: const [],
             cutCardIndex: 0,
             dealtCards: const [],
             dealerHand: const [],
             playerHand: const [],
-            trueCount: 0)) {
+            trueCount: 0,
+            runningCount: 0)) {
     _fetchCardData();
-    _shuffleDeck();
+    shuffleDeck();
     _monitorBasicStrategyCubit();
     _monitorBasicStrategySettingsCubit();
+    _monitorCountCubit();
+    _monitorCountSettingsCubit();
   }
 
   StreamSubscription<BasicStrategyState> _monitorBasicStrategyCubit() {
-    _dealStartingHand(); //* Deals Cards initially on BS trainer screen mount
+    // _dealStartingHand(); //* Deals Cards initially on BS trainer screen mount
     return basicStrategyStreamSubscription =
         basicStrategyCubit.stream.listen((basicStrategyState) {
       if (basicStrategyState.didChoosePlay == true) {
@@ -51,24 +82,66 @@ class DeckCubit extends Cubit<DeckState> {
     });
   }
 
-  StreamSubscription<BasicStrategySettingsState> _monitorBasicStrategySettingsCubit() {
+  StreamSubscription<BasicStrategySettingsState>
+      _monitorBasicStrategySettingsCubit() {
     // * If the user changes the settings, it will adjust the deck accordingly.
     return gameSettingsStreamSubscription = basicStrategySettingsCubit.stream
         .listen((basicStrategyGameSettingsState) {
       _deckQuantity = basicStrategyGameSettingsState.deckQuantity;
       _deckPenetration = basicStrategyGameSettingsState.deckPenetration;
-      _practiceBsHardHands =
-          basicStrategyGameSettingsState.practiceBsHardHands;
-      _practiceBsSoftHands =
-          basicStrategyGameSettingsState.practiceBsSoftHands;
+      _practiceBsHardHands = basicStrategyGameSettingsState.practiceBsHardHands;
+      _practiceBsSoftHands = basicStrategyGameSettingsState.practiceBsSoftHands;
       _practiceBsSplitHands =
           basicStrategyGameSettingsState.practiceBsSplitHands;
       _practiceIllustrious18 =
           basicStrategyGameSettingsState.practiceIllustrious18;
       _practiceFab4 = basicStrategyGameSettingsState.practiceFab4;
       _practiceInsurance = basicStrategyGameSettingsState.practiceInsurance;
-      _shuffleDeck();
+      shuffleDeck();
       _dealStartingHand();
+    });
+  }
+
+  StreamSubscription<CountState> _monitorCountCubit() {
+    // _dealOneCard('player'); //* Deals one card initially on count trainer mount
+    return countStreamSubscription = countCubit.stream.listen((countState) {
+      if (countState.didDeal == true) {
+        _dealOneCard('player'); //* Deals one card to selected person.
+      }
+    });
+  }
+
+  StreamSubscription<CountSettingsState> _monitorCountSettingsCubit() {
+    return countSettingsStreamSubscription =
+        countSettingsCubit.stream.listen((countSettingsState) {
+      _deckQuantity = countSettingsState.deckQuantity;
+      _hiLoEnabled = countSettingsState.hiLoEnabled;
+      _hiOpt1Enabled = countSettingsState.hiOpt1Enabled;
+      _hiOpt2Enabled = countSettingsState.hiOpt2Enabled;
+      _halvesEnabled = countSettingsState.halvesEnabled;
+      _koEnabled = countSettingsState.koEnabled;
+      _red7Enabled = countSettingsState.red7Enabled;
+      _zenEnabled = countSettingsState.zenEnabled;
+      _omegaEnabled = countSettingsState.omega2Enabled;
+
+      if (_red7Enabled == true) {
+        //* Set the Running Count offset required
+        int roundedDeckQuantity = _deckQuantity.round();
+        if (roundedDeckQuantity == 1) _runningCountOffest = -2.0;
+        if (roundedDeckQuantity == 2) _runningCountOffest = -4.0;
+        if (roundedDeckQuantity >= 3 && roundedDeckQuantity <= 4) {
+          _runningCountOffest = -8.0;
+        }
+        if (roundedDeckQuantity > 4 && roundedDeckQuantity < 8) {
+          _runningCountOffest = -12.0;
+        }
+        if (roundedDeckQuantity >= 8) _runningCountOffest = -16.0;
+      }
+      if (_isShowingCount == countSettingsState.showCount) {
+        //* Dont shuffle the deck if no settings changed other than show count
+        shuffleDeck();
+      }
+      _isShowingCount = countSettingsState.showCount;
     });
   }
 
@@ -86,10 +159,11 @@ class DeckCubit extends Cubit<DeckState> {
         dealerHand: const [],
         playerHand: const [],
         cutCardIndex: 0,
-        trueCount: state.trueCount,
+        trueCount: 0,
+        runningCount: 0,
       ));
 
-  void _shuffleDeck() {
+  void shuffleDeck() {
     int counter = 0;
     List tempDeck = [];
     while (counter < _deckQuantity.round()) {
@@ -119,11 +193,12 @@ class DeckCubit extends Cubit<DeckState> {
         cutCardIndex: cutCardIndex,
         dealerHand: const [],
         playerHand: const [],
-        trueCount: state.trueCount,
+        trueCount: 0,
+        runningCount: _runningCountOffest,
       ));
 
   _dealStartingHand() {
-    if (state.dealtCards.length > state.cutCardIndex) _shuffleDeck();
+    if (state.dealtCards.length > state.cutCardIndex) shuffleDeck();
     List handsDealt = [];
     int fakeTrueCount = 0;
     //* Deals custom hand types for Basic Strategy Trainer
@@ -153,7 +228,40 @@ class DeckCubit extends Cubit<DeckState> {
       dealerHand: handsDealt[0],
       playerHand: handsDealt[1],
       dealtCards: [...state.dealtCards, ...handsDealt[2]],
-      trueCount: fakeTrueCount,
+      trueCount:
+          fakeTrueCount, // Todo figure out how to use fake and true (bs vs game)
+      runningCount: 0, // TODO Connect Running count here
+    ));
+  }
+
+  _dealOneCard(toWhom) {
+    var tempRemainingCards = state.shuffledDeck;
+    var dealtCards = [];
+    var tempDealerHand = [];
+    var tempPlayerHand = [];
+    if (toWhom == 'player') {
+      tempPlayerHand.add(tempRemainingCards[0]);
+      tempDealerHand = state.dealerHand;
+    }
+    if (toWhom == 'dealer') {
+      tempDealerHand.add(tempRemainingCards[0]);
+      tempPlayerHand = state.playerHand;
+    }
+    dealtCards.add(tempRemainingCards[0]);
+    double runningCountValue =
+        _calculateRunningCount(tempRemainingCards[0]);
+    tempRemainingCards.removeRange(0, 1);
+    double newRunningCount = state.runningCount + runningCountValue;
+
+    emit(DeckState(
+      deckRepository: state.deckRepository,
+      shuffledDeck: state.shuffledDeck,
+      cutCardIndex: state.cutCardIndex,
+      dealerHand: tempDealerHand,
+      playerHand: tempPlayerHand,
+      dealtCards: [...state.dealtCards, ...dealtCards],
+      trueCount: 0, // Todo set this count for real
+      runningCount: newRunningCount,
     ));
   }
 
@@ -224,7 +332,7 @@ class DeckCubit extends Cubit<DeckState> {
     var matchedIndex = tempRemainingCards.indexOf(playerSecondCard);
     tempRemainingCards.remove(matchedIndex);
     tempPlayerHand.add(playerSecondCard);
-    tempPlayerHand .shuffle(); //* Randomize the the ace location on the screen
+    tempPlayerHand.shuffle(); //* Randomize the the ace location on the screen
     dealtCards.add(playerSecondCard);
     return [tempDealerHand, tempPlayerHand, dealtCards];
   }
@@ -496,10 +604,42 @@ class DeckCubit extends Cubit<DeckState> {
     return min + random.nextInt(max - min);
   }
 
+  _calculateRunningCount(card) {
+    double countValue = 0.0;
+
+    if (_hiLoEnabled) {
+      countValue = HiloCountGenerator(card.value).fetchCountValue();
+    }
+    if (_hiOpt1Enabled) {
+      countValue = Hiopt1CountGenerator(card.value).fetchCountValue();
+    }
+    if (_hiOpt2Enabled) {
+      countValue = Hiopt2CountGenerator(card.value).fetchCountValue();
+    }
+    if (_halvesEnabled) {
+      countValue = HalvesCountGenerator(card.value).fetchCountValue();
+    }
+    if (_koEnabled) {
+      countValue = KoCountGenerator(card.value).fetchCountValue();
+    }
+    if (_red7Enabled) {
+      countValue = Red7CountGenerator(card.value, card.suit).fetchCountValue();
+    }
+    if (_zenEnabled) {
+      countValue = ZenCountGenerator(card.value).fetchCountValue();
+    }
+    if (_omegaEnabled) {
+      countValue = Omega2CountGenerator(card.value).fetchCountValue();
+    }
+
+    return countValue;
+  }
+
   @override
   Future<void> close() {
     basicStrategyStreamSubscription.cancel();
     gameSettingsStreamSubscription.cancel();
+    countStreamSubscription.cancel();
     return super.close();
   }
 }

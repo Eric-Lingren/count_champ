@@ -2,14 +2,14 @@ import 'package:count_champ/logic/cubits/settings/basic_strategy_settings_cubit/
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class GameSettingsSidebar extends StatefulWidget {
-  const GameSettingsSidebar({Key? key}) : super(key: key);
+class BasicStrategySettingsSidebar extends StatefulWidget {
+  const BasicStrategySettingsSidebar({Key? key}) : super(key: key);
 
   @override
-  _GameSettingsSidebarState createState() => _GameSettingsSidebarState();
+  _BasicStrategySettingsSidebarState createState() => _BasicStrategySettingsSidebarState();
 }
 
-class _GameSettingsSidebarState extends State<GameSettingsSidebar> {
+class _BasicStrategySettingsSidebarState extends State<BasicStrategySettingsSidebar> {
   @override
   Widget build(BuildContext context) {
     return (Scaffold(
@@ -25,7 +25,7 @@ class _GameSettingsSidebarState extends State<GameSettingsSidebar> {
                 min: 1.0,
                 max: 8.0,
                 value: state.deckQuantity,
-                divisions: 8,
+                divisions: 7,
                 label: '${state.deckQuantity.round()}',
                 onChanged: (value) {
                   context.read<BasicStrategySettingsCubit>().setDeckQuantity(value);

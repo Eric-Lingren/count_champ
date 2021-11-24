@@ -2,8 +2,10 @@ import 'package:count_champ/logic/cubits/basic_strategy_cubit/basic_strategy_cub
 import 'package:count_champ/logic/cubits/basic_strategy_stats_cubit/alltime/basic_strategy_alltime_stats_cubit.dart';
 import 'package:count_champ/logic/cubits/basic_strategy_stats_cubit/session/basic_strategy_session_stats_cubit.dart';
 import 'package:count_champ/logic/cubits/correct_plays_cubit/correct_plays_cubit.dart';
+import 'package:count_champ/logic/cubits/count_cubit/count_cubit.dart';
 import 'package:count_champ/logic/cubits/deck_cubit/deck_cubit.dart';
 import 'package:count_champ/logic/cubits/settings/basic_strategy_settings_cubit/basic_strategy_settings_cubit.dart';
+import 'package:count_champ/logic/cubits/settings/count_settings_cubit/count_settings_cubit.dart';
 import 'package:count_champ/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -49,10 +51,16 @@ class _MyAppState extends State<MyApp> {
       providers: [
         BlocProvider<BasicStrategySettingsCubit>(
             create: (context) => BasicStrategySettingsCubit()),
+        BlocProvider<CountSettingsCubit>(
+            create: (context) => CountSettingsCubit()),
         BlocProvider<BasicStrategyCubit>(
             create: (context) => BasicStrategyCubit()),
+        BlocProvider<CountCubit>(
+            create: (context) => CountCubit()),
         BlocProvider<DeckCubit>(
             create: (context) => DeckCubit(
+                countCubit: context.read<CountCubit>(),
+                countSettingsCubit: context.read<CountSettingsCubit>(),
                 basicStrategyCubit: context.read<BasicStrategyCubit>(),
                 basicStrategySettingsCubit:
                     context.read<BasicStrategySettingsCubit>())),
@@ -70,7 +78,8 @@ class _MyAppState extends State<MyApp> {
       ],
       child: MaterialApp(
         title: 'Count Champ',
-        initialRoute: '/basic_strategy_trainer',
+        initialRoute: '/running_count_trainer',
+        // initialRoute: '/basic_strategy_trainer',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),

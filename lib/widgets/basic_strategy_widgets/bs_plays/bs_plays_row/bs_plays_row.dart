@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class BsPlaysGridviewRow extends StatelessWidget {
+class BsPlaysRow extends StatelessWidget {
   // final int playerTotal;
   // final List bsPlays;
   // final List bsPlays = [];
@@ -15,19 +15,15 @@ class BsPlaysGridviewRow extends StatelessWidget {
   final Color? splitColor = Colors.greenAccent[400];
   final Color surrenderColor = Colors.white;
 
-  var playerTotal;
-
   var bsPlays;
 
-  BsPlaysGridviewRow({
+  BsPlaysRow({
     Key? key,
-    required this.playerTotal,
     required this.bsPlays,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     List outputPlays = [];
     for (int i = 0; i < bsPlays.length; i++) {
       List tempSubList = [];
@@ -40,54 +36,15 @@ class BsPlaysGridviewRow extends StatelessWidget {
     }
 
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Container(
-          color: Colors.white,
-          padding: const EdgeInsets.fromLTRB(2, 0, 4, 0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text('Dealer:'),
-              Text('Player: ' + playerTotal.toString()),
-            ],
-          ),
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: dealerList
-                    .map<Widget>((dealerCard) => Container(
-                      decoration: const BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(width: 1.0, color: Colors.black),
-                        ),
-                      color: Colors.white,
-                      ),
-                        width: 20,
-                        padding: const EdgeInsets.fromLTRB(1, 0, 1, 0),
-                        child: Text(
-                          dealerCard,
-                          textAlign: TextAlign.center,
-                        )))
-                    .toList()),
-            Row(
-                children: outputPlays
-                    .map<Widget>((card) => Container(
-                        color: card[1],
-                        width: 20,
-                        padding: const EdgeInsets.fromLTRB(1, 0, 1, 0),
-                        child: Text(
-                          card[0],
-                          textAlign: TextAlign.center,
-                        )))
-                    .toList())
-          ],
-        ),
-      ],
-    );
+        children: outputPlays
+            .map<Widget>((card) => Container(
+                color: card[1],
+                width: 20,
+                padding: const EdgeInsets.fromLTRB(1, 0, 1, 0),
+                child: Text(
+                  card[0],
+                  textAlign: TextAlign.center,
+                )))
+            .toList());
   }
 }

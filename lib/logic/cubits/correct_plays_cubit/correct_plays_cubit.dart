@@ -32,7 +32,6 @@ import 'package:count_champ/data/models/basic_strategy_charts/bs_soft_hands/soft
 import 'package:count_champ/logic/cubits/settings/basic_strategy_settings_cubit/basic_strategy_settings_cubit.dart';
 import 'package:equatable/equatable.dart';
 
-
 import 'package:count_champ/logic/cubits/deck_cubit/deck_cubit.dart';
 
 part 'correct_plays_state.dart';
@@ -63,16 +62,23 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
       deckStreamSubscription,
       basicStrategySettingsStreamSubscription})
       : super(CorrectPlaysState(
-            playWasCorrect: true, correctPlay: '', hand: '', handType: '', handRules: const [], playerTotal: 0)) {
+            playWasCorrect: true,
+            correctPlay: '',
+            hand: '',
+            handType: '',
+            handRules: const [],
+            playerTotal: 0)) {
     _manageLocalRules(basicStrategySettingsCubit.state);
-    _setHandInfo(deckCubit.state);
+    // _setHandInfo(deckCubit.state);
     _monitorBasicStrategySettingsCubit();
     _monitorDeckCubit();
   }
 
-  StreamSubscription<BasicStrategySettingsState> _monitorBasicStrategySettingsCubit() {
-    return basicStrategySettingsStreamSubscription =
-        basicStrategySettingsCubit.stream.listen((basisStrategyGameSettingsState) {
+  StreamSubscription<BasicStrategySettingsState>
+      _monitorBasicStrategySettingsCubit() {
+    return basicStrategySettingsStreamSubscription = basicStrategySettingsCubit
+        .stream
+        .listen((basisStrategyGameSettingsState) {
       _manageLocalRules(basisStrategyGameSettingsState);
     });
   }
@@ -84,14 +90,15 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
     _dealerHitsSoft17 = basisStrategyGameSettingsState.dealerHitsSoft17;
     _canSurrender = basisStrategyGameSettingsState.canSurrender;
     _deckQuantity = basisStrategyGameSettingsState.deckQuantity;
-    _practiceIllustrious18 = basisStrategyGameSettingsState.practiceIllustrious18;
+    _practiceIllustrious18 =
+        basisStrategyGameSettingsState.practiceIllustrious18;
     _practiceFab4 = basisStrategyGameSettingsState.practiceFab4;
     _practiceInsurance = basisStrategyGameSettingsState.practiceInsurance;
   }
 
   StreamSubscription<DeckState> _monitorDeckCubit() {
     return deckStreamSubscription = deckCubit.stream.listen((deckState) {
-      if (deckState.playerHand.isNotEmpty) _setHandInfo(deckState);
+      if (deckState.playerHand.length > 2) _setHandInfo(deckState);
     });
   }
 
@@ -118,19 +125,20 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
     bool foundDeviationMatch = false;
 
     //* Checks Insurance Gameplay Rules for the correct play
-    if(_practiceInsurance){
+    if (_practiceInsurance) {
       correctPlay = _findInsuranceBsRules();
       if (correctPlay != 'none') foundInsuranceMatch = true;
     }
 
     //* Checks Deviation Gameplay Rules for the corerct play
-    if (!foundInsuranceMatch && (_practiceFab4 == true || _practiceIllustrious18 == true)) {
+    if (!foundInsuranceMatch &&
+        (_practiceFab4 == true || _practiceIllustrious18 == true)) {
       correctPlay = _findDeviationBsRules();
       if (correctPlay != 'none') foundDeviationMatch = true;
     }
-    
+
     //* Checks Standard Gameplay Rules for all hand options
-    if(!foundInsuranceMatch && !foundDeviationMatch ) {
+    if (!foundInsuranceMatch && !foundDeviationMatch) {
       if (_handType == 'hard') handRules = _findHardBsRules();
       if (_handType == 'soft') handRules = _findSoftBsRules();
       if (_handType == 'pair') {
@@ -150,11 +158,11 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
     //* Resets a pair of 10's to a hard hand of 20 for convention in reporting
     if (_playerTotal == 20) _handType = 'hard';
     //* Set hand type for reporting
-    if(_practiceIllustrious18) _handType = 'illustrious18';
+    if (_practiceIllustrious18) _handType = 'illustrious18';
     //* Set hand type for reporting
-    if(_practiceFab4) _handType = 'fab4';
+    if (_practiceFab4) _handType = 'fab4';
     //* Set hand type for reporting
-    if(_practiceInsurance) _handType = 'insurance';
+    if (_practiceInsurance) _handType = 'insurance';
 
     //* Determines if correct play matched users play
     if (correctPlay == chosenPlay) {
@@ -192,19 +200,16 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
       _handRules = Hard1314Plays().fetch();
     }
     if (_playerTotal == 15) {
-      _handRules = Hard15Plays(_dealerHitsSoft17, _deckQuantity,
-              _canSurrender)
-          .fetch();
+      _handRules =
+          Hard15Plays(_dealerHitsSoft17, _deckQuantity, _canSurrender).fetch();
     }
     if (_playerTotal == 16) {
-      _handRules = Hard16Plays(_dealerHitsSoft17, _deckQuantity,
-              _canSurrender)
-          .fetch();
+      _handRules =
+          Hard16Plays(_dealerHitsSoft17, _deckQuantity, _canSurrender).fetch();
     }
     if (_playerTotal == 17) {
-      _handRules = Hard17Plays(_dealerHitsSoft17, _deckQuantity,
-              _canSurrender)
-          .fetch();
+      _handRules =
+          Hard17Plays(_dealerHitsSoft17, _deckQuantity, _canSurrender).fetch();
     }
     if (_playerTotal >= 18) {
       _handRules = Hard18Plays().fetch();
@@ -256,12 +261,13 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
       _handRules = Pair12Plays(_canDas, _deckQuantity).fetch();
     }
     if (_playerTotal == 14) {
-      _handRules = Pair14Plays(_canDas, _dealerHitsSoft17, _canSurrender, _deckQuantity)
-          .fetch();
+      _handRules =
+          Pair14Plays(_canDas, _dealerHitsSoft17, _canSurrender, _deckQuantity)
+              .fetch();
     }
     if (_playerTotal == 16) {
-      _handRules = Pair16Plays(_dealerHitsSoft17, _canSurrender, _deckQuantity)
-          .fetch();
+      _handRules =
+          Pair16Plays(_dealerHitsSoft17, _canSurrender, _deckQuantity).fetch();
     }
     if (_playerTotal == 18) {
       _handRules =
@@ -273,9 +279,11 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
     return _handRules;
   }
 
-  _findInsuranceBsRules(){
+  _findInsuranceBsRules() {
     String _correctPlay = '';
-    _correctPlay = InsurancePlays(_trueCount, _dealerFaceTotal, _deckQuantity, _practiceInsurance).fetch();
+    _correctPlay = InsurancePlays(
+            _trueCount, _dealerFaceTotal, _deckQuantity, _practiceInsurance)
+        .fetch();
     return _correctPlay;
   }
 
@@ -289,27 +297,32 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
             _canSurrender,
             _canDoubleAny2,
             _deckQuantity,
-            _practiceInsurance, 
+            _practiceInsurance,
             _handType)
         .fetch();
     return _correctPlay;
   }
 
-  void _emitCorrectPlay(correctPlay, hand, _handType,  _playerTotal, handRules) => emit(CorrectPlaysState(
-      playWasCorrect: true,
-      correctPlay: correctPlay,
-      hand: hand,
-      handType: _handType,
-      playerTotal: _playerTotal, 
-      handRules: handRules,));
-  void _emitIncorrectPlay(correctPlay, hand, _handType, _playerTotal, handRules) => emit(CorrectPlaysState(
-      playWasCorrect: false,
-      correctPlay: correctPlay,
-      hand: hand,
-      handType: _handType,
-      playerTotal: _playerTotal, 
-      handRules: handRules,
-    ));
+  void _emitCorrectPlay(
+          correctPlay, hand, _handType, _playerTotal, handRules) =>
+      emit(CorrectPlaysState(
+        playWasCorrect: true,
+        correctPlay: correctPlay,
+        hand: hand,
+        handType: _handType,
+        playerTotal: _playerTotal,
+        handRules: handRules,
+      ));
+  void _emitIncorrectPlay(
+          correctPlay, hand, _handType, _playerTotal, handRules) =>
+      emit(CorrectPlaysState(
+        playWasCorrect: false,
+        correctPlay: correctPlay,
+        hand: hand,
+        handType: _handType,
+        playerTotal: _playerTotal,
+        handRules: handRules,
+      ));
 
   @override
   Future<void> close() {

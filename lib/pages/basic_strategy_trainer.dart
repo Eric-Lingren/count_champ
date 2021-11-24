@@ -26,6 +26,7 @@ class _BasicStrategyTrainerState extends State<BasicStrategyTrainer> {
               return IconButton(
                 icon: const Icon(Icons.arrow_back),
                 onPressed: () {
+                  context.read<DeckCubit>().shuffleDeck();
                   Navigator.pop(context);
                 },
               );
@@ -37,7 +38,7 @@ class _BasicStrategyTrainerState extends State<BasicStrategyTrainer> {
         endDrawer: const Drawer(
             elevation: 16.0,
             child: SafeArea(
-              child: GameSettingsSidebar(),
+              child: BasicStrategySettingsSidebar(),
             )),
         body: SafeArea(
             child: Column(
@@ -152,7 +153,21 @@ class _BasicStrategyTrainerState extends State<BasicStrategyTrainer> {
                 return const SizedBox.shrink();
               }),
             ]),
-          ],
+
+            Row(
+              children: [
+                BlocBuilder<DeckCubit, DeckState>(builder: (context, state) {
+                  if (state.playerHand.isEmpty) {
+                    return ElevatedButton(
+                      onPressed: () {
+                        context.read<BasicStrategyCubit>().initNextHand();
+                      },
+                      child: const Text('Start'));
+                  }
+                  return const SizedBox.shrink();
+                })
+              ],
+            )],
         ))));
   }
 }
