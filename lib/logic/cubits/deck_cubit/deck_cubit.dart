@@ -115,6 +115,7 @@ class DeckCubit extends Cubit<DeckState> {
     return countSettingsStreamSubscription =
         countSettingsCubit.stream.listen((countSettingsState) {
       _deckQuantity = countSettingsState.deckQuantity;
+      _deckPenetration = countSettingsState.deckPenetration;
       _hiLoEnabled = countSettingsState.hiLoEnabled;
       _hiOpt1Enabled = countSettingsState.hiOpt1Enabled;
       _hiOpt2Enabled = countSettingsState.hiOpt2Enabled;
@@ -248,8 +249,7 @@ class DeckCubit extends Cubit<DeckState> {
       tempPlayerHand = state.playerHand;
     }
     dealtCards.add(tempRemainingCards[0]);
-    double runningCountValue =
-        _calculateRunningCount(tempRemainingCards[0]);
+    double runningCountValue = _calculateRunningCount(tempRemainingCards[0]);
     tempRemainingCards.removeRange(0, 1);
     double newRunningCount = state.runningCount + runningCountValue;
 

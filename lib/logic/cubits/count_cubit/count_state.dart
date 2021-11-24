@@ -1,13 +1,12 @@
 part of 'count_cubit.dart';
 
 class CountState extends Equatable {
-  // String chosenPlay;
   bool didDeal;
+  bool didCheckResult;
+  bool wasPlayerCountCorrect;
 
-  // CountState({required this.chosenPlay, this.didDeal = false});
-  CountState({this.didDeal = false});
+  CountState({this.didDeal = false, required this.didCheckResult, required this.wasPlayerCountCorrect});
 
   @override
-  List<Object> get props => [didDeal];
-  // List<Object> get props => [chosenPlay, didChoosePlay];
+  List<Object> get props => [didDeal, didCheckResult, wasPlayerCountCorrect];
 }

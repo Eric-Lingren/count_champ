@@ -2,6 +2,7 @@ part of 'count_settings_cubit.dart';
 
 class CountSettingsState extends Equatable {
   double deckQuantity;
+  double deckPenetration;
   bool showCount;
   bool speedCountEnabled;
   double cardsPerSecond;
@@ -17,6 +18,7 @@ class CountSettingsState extends Equatable {
 
   CountSettingsState({
     required this.deckQuantity,
+    required this.deckPenetration,
     required this.showCount,
     required this.speedCountEnabled,
     required this.cardsPerSecond,
@@ -34,6 +36,7 @@ class CountSettingsState extends Equatable {
   @override
   List<Object?> get props => [
         deckQuantity,
+        deckPenetration,
         showCount,
         speedCountEnabled,
         cardsPerSecond,

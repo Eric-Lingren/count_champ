@@ -8,7 +8,8 @@ class CountSettingsCubit extends Cubit<CountSettingsState> {
   CountSettingsCubit()
       : super(CountSettingsState(
           // * Initial Default Game Rules:
-          deckQuantity: 8,
+          deckQuantity: 8.0,
+          deckPenetration: 80.0,
           showCount: true,
           speedCountEnabled: false,
           cardsPerSecond: 1,
@@ -25,10 +26,28 @@ class CountSettingsCubit extends Cubit<CountSettingsState> {
 
   void setDeckQuantity(value) => emit(CountSettingsState(
         deckQuantity: value,
+        deckPenetration: state.deckPenetration,
         showCount: state.showCount,
         speedCountEnabled: state.speedCountEnabled,
         cardsPerSecond: state.cardsPerSecond,
-        isSpeedCountRunning: state.isSpeedCountRunning,
+        isSpeedCountRunning: false,
+        hiLoEnabled: state.hiLoEnabled,
+        hiOpt1Enabled: state.hiOpt1Enabled,
+        hiOpt2Enabled: state.hiOpt2Enabled,
+        halvesEnabled: state.halvesEnabled,
+        koEnabled: state.koEnabled,
+        red7Enabled: state.red7Enabled,
+        zenEnabled: state.zenEnabled,
+        omega2Enabled: state.omega2Enabled,
+      ));
+
+  void setDeckPenetration(value) => emit(CountSettingsState(
+        deckQuantity: state.deckQuantity,
+        deckPenetration: value,
+        showCount: state.showCount,
+        speedCountEnabled: state.speedCountEnabled,
+        cardsPerSecond: state.cardsPerSecond,
+        isSpeedCountRunning: false,
         hiLoEnabled: state.hiLoEnabled,
         hiOpt1Enabled: state.hiOpt1Enabled,
         hiOpt2Enabled: state.hiOpt2Enabled,
@@ -41,10 +60,11 @@ class CountSettingsCubit extends Cubit<CountSettingsState> {
 
   void toggleShowCount(value) => emit(CountSettingsState(
         deckQuantity: state.deckQuantity,
+        deckPenetration: state.deckPenetration,
         showCount: value,
         speedCountEnabled: state.speedCountEnabled,
         cardsPerSecond: state.cardsPerSecond,
-        isSpeedCountRunning: state.isSpeedCountRunning,
+        isSpeedCountRunning: false,
         hiLoEnabled: state.hiLoEnabled,
         hiOpt1Enabled: state.hiOpt1Enabled,
         hiOpt2Enabled: state.hiOpt2Enabled,
@@ -57,10 +77,11 @@ class CountSettingsCubit extends Cubit<CountSettingsState> {
 
   void toggleSpeedCount(value) => emit(CountSettingsState(
         deckQuantity: state.deckQuantity,
+        deckPenetration: state.deckPenetration,
         showCount: state.showCount,
         speedCountEnabled: value,
         cardsPerSecond: state.cardsPerSecond,
-        isSpeedCountRunning: state.isSpeedCountRunning,
+        isSpeedCountRunning: false,
         hiLoEnabled: state.hiLoEnabled,
         hiOpt1Enabled: state.hiOpt1Enabled,
         hiOpt2Enabled: state.hiOpt2Enabled,
@@ -73,10 +94,11 @@ class CountSettingsCubit extends Cubit<CountSettingsState> {
 
   void setCardsPerSecond(value) => emit(CountSettingsState(
         deckQuantity: state.deckQuantity,
+        deckPenetration: state.deckPenetration,
         showCount: state.showCount,
         speedCountEnabled: state.speedCountEnabled,
         cardsPerSecond: value,
-        isSpeedCountRunning: state.isSpeedCountRunning,
+        isSpeedCountRunning: false,
         hiLoEnabled: state.hiLoEnabled,
         hiOpt1Enabled: state.hiOpt1Enabled,
         hiOpt2Enabled: state.hiOpt2Enabled,
@@ -89,6 +111,7 @@ class CountSettingsCubit extends Cubit<CountSettingsState> {
 
   void startingSpeedCount(value) => emit(CountSettingsState(
         deckQuantity: state.deckQuantity,
+        deckPenetration: state.deckPenetration,
         showCount: state.showCount,
         speedCountEnabled: state.speedCountEnabled,
         cardsPerSecond: state.cardsPerSecond,
@@ -106,10 +129,11 @@ class CountSettingsCubit extends Cubit<CountSettingsState> {
   void toggleHiLo(value) => 
     emit(CountSettingsState(
         deckQuantity: state.deckQuantity,
+        deckPenetration: state.deckPenetration,
         showCount: state.showCount,
         speedCountEnabled: state.speedCountEnabled,
         cardsPerSecond: state.cardsPerSecond,
-        isSpeedCountRunning: state.isSpeedCountRunning,
+        isSpeedCountRunning: false,
         hiLoEnabled: value,
         hiOpt1Enabled: false,
         hiOpt2Enabled: false,
@@ -122,10 +146,11 @@ class CountSettingsCubit extends Cubit<CountSettingsState> {
 
   void toggleHiOpt1(value) => emit(CountSettingsState(
         deckQuantity: state.deckQuantity,
+        deckPenetration: state.deckPenetration,
         showCount: state.showCount,
         speedCountEnabled: state.speedCountEnabled,
         cardsPerSecond: state.cardsPerSecond,
-        isSpeedCountRunning: state.isSpeedCountRunning,
+        isSpeedCountRunning: false,
         hiLoEnabled: false,
         hiOpt1Enabled: value,
         hiOpt2Enabled: false,
@@ -138,10 +163,11 @@ class CountSettingsCubit extends Cubit<CountSettingsState> {
 
   void toggleHiOpt2(value) => emit(CountSettingsState(
         deckQuantity: state.deckQuantity,
+        deckPenetration: state.deckPenetration,
         showCount: state.showCount,
         speedCountEnabled: state.speedCountEnabled,
         cardsPerSecond: state.cardsPerSecond,
-        isSpeedCountRunning: state.isSpeedCountRunning,
+        isSpeedCountRunning: false,
         hiLoEnabled: false,
         hiOpt1Enabled: false,
         hiOpt2Enabled: value,
@@ -154,10 +180,11 @@ class CountSettingsCubit extends Cubit<CountSettingsState> {
 
   void toggleHalves(value) => emit(CountSettingsState(
         deckQuantity: state.deckQuantity,
+        deckPenetration: state.deckPenetration,
         showCount: state.showCount,
         speedCountEnabled: state.speedCountEnabled,
         cardsPerSecond: state.cardsPerSecond,
-        isSpeedCountRunning: state.isSpeedCountRunning,
+        isSpeedCountRunning: false,
         hiLoEnabled: false,
         hiOpt1Enabled: false,
         hiOpt2Enabled: false,
@@ -170,10 +197,11 @@ class CountSettingsCubit extends Cubit<CountSettingsState> {
 
   void toggleKo(value) => emit(CountSettingsState(
         deckQuantity: state.deckQuantity,
+        deckPenetration: state.deckPenetration,
         showCount: state.showCount,
         speedCountEnabled: state.speedCountEnabled,
         cardsPerSecond: state.cardsPerSecond,
-        isSpeedCountRunning: state.isSpeedCountRunning,
+        isSpeedCountRunning: false,
         hiLoEnabled: false,
         hiOpt1Enabled: false,
         hiOpt2Enabled: false,
@@ -186,10 +214,11 @@ class CountSettingsCubit extends Cubit<CountSettingsState> {
       
   void toggleRed7(value) => emit(CountSettingsState(
         deckQuantity: state.deckQuantity,
+        deckPenetration: state.deckPenetration,
         showCount: state.showCount,
         speedCountEnabled: state.speedCountEnabled,
         cardsPerSecond: state.cardsPerSecond,
-        isSpeedCountRunning: state.isSpeedCountRunning,
+        isSpeedCountRunning: false,
         hiLoEnabled: false,
         hiOpt1Enabled: false,
         hiOpt2Enabled: false,
@@ -202,10 +231,11 @@ class CountSettingsCubit extends Cubit<CountSettingsState> {
       
   void toggleZen(value) => emit(CountSettingsState(
         deckQuantity: state.deckQuantity,
+        deckPenetration: state.deckPenetration,
         showCount: state.showCount,
         speedCountEnabled: state.speedCountEnabled,
         cardsPerSecond: state.cardsPerSecond,
-        isSpeedCountRunning: state.isSpeedCountRunning,
+        isSpeedCountRunning: false,
         hiLoEnabled: false,
         hiOpt1Enabled: false,
         hiOpt2Enabled: false,
@@ -218,10 +248,11 @@ class CountSettingsCubit extends Cubit<CountSettingsState> {
 
   void toggleOmega2(value) => emit(CountSettingsState(
         deckQuantity: state.deckQuantity,
+        deckPenetration: state.deckPenetration,
         showCount: state.showCount,
         speedCountEnabled: state.speedCountEnabled,
         cardsPerSecond: state.cardsPerSecond,
-        isSpeedCountRunning: state.isSpeedCountRunning,
+        isSpeedCountRunning: false,
         hiLoEnabled: false,
         hiOpt1Enabled: false,
         hiOpt2Enabled: false,

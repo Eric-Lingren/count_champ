@@ -1,14 +1,9 @@
-import 'dart:async';
-
 import 'package:count_champ/data/models/card_template.dart';
-import 'package:count_champ/logic/cubits/basic_strategy_cubit/basic_strategy_cubit.dart';
-import 'package:count_champ/logic/cubits/correct_plays_cubit/correct_plays_cubit.dart';
 import 'package:count_champ/logic/cubits/count_cubit/count_cubit.dart';
 import 'package:count_champ/logic/cubits/deck_cubit/deck_cubit.dart';
-import 'package:count_champ/logic/cubits/settings/basic_strategy_settings_cubit/basic_strategy_settings_cubit.dart';
 import 'package:count_champ/logic/cubits/settings/count_settings_cubit/count_settings_cubit.dart';
-import 'package:count_champ/widgets/basic_strategy_widgets/basic_strategy_settings_sidebar.dart';
-import 'package:count_champ/widgets/correct_play_widget.dart';
+import 'package:count_champ/utils/helpers/format_running_count.dart';
+import 'package:count_champ/widgets/count_widgets/check_count_form.dart';
 import 'package:count_champ/widgets/count_widgets/count_settings_sidebar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,6 +17,14 @@ class RunningCountTrainer extends StatefulWidget {
 }
 
 class _RunningCountTrainerState extends State<RunningCountTrainer> {
+  String correctPlayText = '';
+  String formattedCount = '';
+  bool isPlayingHalves = false;
+  double _cardsPerSecond = 1.0;
+  // int _cutCardIndex = 0;
+  // int _dealtCardsQuantity = 0;
+  // double _runningCount = 0;
+
   @override
   Widget build(BuildContext context) {
     return (Scaffold(
@@ -48,8 +51,12 @@ class _RunningCountTrainerState extends State<RunningCountTrainer> {
         body: SafeArea(
             child: Column(
           children: <Widget>[
+            //* Renders the Cards Dealt
             BlocBuilder<DeckCubit, DeckState>(builder: (context, state) {
               if (state.playerHand.isNotEmpty) {
+                // _cutCardIndex = state.cutCardIndex;
+                // _dealtCardsQuantity = state.playerHand.length;
+                // _runningCount = state.runningCount;
                 return Row(
                     children: state.playerHand
                         .map<Widget>((card) => CardTemplate(
@@ -61,53 +68,124 @@ class _RunningCountTrainerState extends State<RunningCountTrainer> {
               }
               return const SizedBox.shrink();
             }),
+
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               BlocBuilder<CountSettingsCubit, CountSettingsState>(
-                  builder: (context, state) {
-                if (state.speedCountEnabled == true &&
-                    state.isSpeedCountRunning == false) {
+                  builder: (context, countSettingsState) {
+                if (countSettingsState.speedCountEnabled == true &&
+                    countSettingsState.isSpeedCountRunning == false) {
+                  _cardsPerSecond = countSettingsState.cardsPerSecond;
                   return ElevatedButton(
                       onPressed: () {
                         context
                             .read<CountCubit>()
-                            .beginSpeedCount(state.cardsPerSecond);
+                            .beginSpeedCount(_cardsPerSecond);
                         context
                             .read<CountSettingsCubit>()
                             .startingSpeedCount(true);
                       },
                       child: const Text('Start'));
-                } else if (state.speedCountEnabled == true &&
-                    state.isSpeedCountRunning == true) {
-                  return BlocBuilder<CountCubit, CountState>(
-                      builder: (context, state) {
-                    return ElevatedButton(
-                        onPressed: () {
-                          context.read<CountCubit>().stopSpeedCount();
-                          context
-                              .read<CountSettingsCubit>()
-                              .startingSpeedCount(false);
-                        },
-                        child: const Text('Stop'));
+                } else if (countSettingsState.speedCountEnabled == true &&
+                    countSettingsState.isSpeedCountRunning == true) {
+                  return BlocBuilder<DeckCubit, DeckState>(
+                      builder: (context, deckState) {
+                    if (deckState.cutCardIndex <= deckState.dealtCards.length) {
+                      context.read<CountCubit>().stopSpeedCount();
+                      return BlocBuilder<CountCubit, CountState>(
+                          builder: (context, state) {
+                        if (state.didCheckResult == false) {
+                          return CheckCountForm(
+                              runningCount: deckState.runningCount);
+                        } else {
+                          formattedCount = FormatRunningCount(
+                                  deckState.runningCount, isPlayingHalves)
+                              .format();
+                          if (state.wasPlayerCountCorrect) {
+                            correctPlayText = 'Congratulations!';
+                          } else {
+                            correctPlayText = 'The count was $formattedCount';
+                          }
+                          return Column(
+                            children: [
+                              Text(
+                                correctPlayText,
+                                style: const TextStyle(
+                                    fontSize: 18.0, color: Colors.black),
+                              ),
+                              ElevatedButton(
+                                  onPressed: () {
+                                    context.read<DeckCubit>().shuffleDeck();
+                                    context
+                                        .read<CountCubit>()
+                                        .resetCheckRunningCount();
+                                    context
+                                        .read<CountCubit>()
+                                        .beginSpeedCount(_cardsPerSecond);
+                                    context
+                                        .read<CountSettingsCubit>()
+                                        .startingSpeedCount(true);
+                                  },
+                                  child: const Text('Play Again')),
+                            ],
+                          );
+                        }
+                      });
+                    }
+                    return const SizedBox.shrink();
+                  });
+                } else {
+                  return BlocBuilder<DeckCubit, DeckState>(
+                      builder: (context, deckState) {
+                    if (deckState.cutCardIndex <= deckState.dealtCards.length) {
+                      return BlocBuilder<CountCubit, CountState>(
+                          builder: (context, state) {
+                        if (state.didCheckResult == false) {
+                          return CheckCountForm(
+                              runningCount: deckState.runningCount);
+                        } else {
+                          formattedCount = FormatRunningCount(
+                                  deckState.runningCount, isPlayingHalves)
+                              .format();
+                          if (state.wasPlayerCountCorrect) {
+                            correctPlayText = 'Congratulations!';
+                          } else {
+                            correctPlayText = 'The count was $formattedCount';
+                          }
+                          return Column(
+                            children: [
+                              Text(
+                                correctPlayText,
+                                style: const TextStyle(
+                                    fontSize: 18.0, color: Colors.black),
+                              ),
+                              ElevatedButton(
+                                  onPressed: () {
+                                    context.read<DeckCubit>().shuffleDeck();
+                                    context
+                                        .read<CountCubit>()
+                                        .resetCheckRunningCount();
+                                  },
+                                  child: const Text('Play Again')),
+                            ],
+                          );
+                        }
+                      });
+                    } else {
+                      return ElevatedButton(
+                          onPressed: () {
+                            context.read<CountCubit>().initNextCard();
+                          },
+                          child: const Text('Deal'));
+                    }
                   });
                 }
-                //* Default return:
-                return ElevatedButton(
-                    onPressed: () {
-                      context.read<CountCubit>().initNextCard();
-                    },
-                    child: const Text('Deal'));
               }),
             ]),
-            const SizedBox(height: 30),
-
+            const SizedBox(),
             BlocBuilder<CountSettingsCubit, CountSettingsState>(
                 builder: (context, state) {
               if (state.showCount == true) {
-                String _runningCountType = 'int';
-                if (state.halvesEnabled == true) {
-                  //* Sets the type in int to display
-                  _runningCountType = 'double';
-                }
+                if (state.halvesEnabled == true) isPlayingHalves = true;
                 return Column(
                   children: [
                     Row(
@@ -127,16 +205,11 @@ class _RunningCountTrainerState extends State<RunningCountTrainer> {
                       children: [
                         BlocBuilder<DeckCubit, DeckState>(
                             builder: (context, state) {
-                          String leadingSymbol = '';
-                          if (state.runningCount > 0) leadingSymbol = '+';
-                          String _countValue = '';
-                          if (_runningCountType == 'int') {
-                            _countValue = state.runningCount.toInt().toString();
-                          } else{
-                            _countValue = state.runningCount.toString();
-                          }
+                          formattedCount = FormatRunningCount(
+                                  state.runningCount, isPlayingHalves)
+                              .format();
                           return Text(
-                            leadingSymbol + _countValue,
+                            formattedCount,
                             style: const TextStyle(
                                 fontSize: 28.0,
                                 color: Colors.black,
@@ -151,34 +224,6 @@ class _RunningCountTrainerState extends State<RunningCountTrainer> {
               //* Default return:
               return const SizedBox.shrink();
             }),
-
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: const [
-            //     Text(
-            //         'Running Count:',
-            //             style: TextStyle(
-            //             fontSize: 20.0,
-            //           ),
-            //         ),
-            //   ],
-            // ),
-            // const SizedBox(height: 10),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: [
-            //     BlocBuilder<DeckCubit, DeckState>(builder: (context, state) {
-            //       return Text(
-            //         state.runningCount.toString(),
-            //           style: const TextStyle(
-            //             fontSize: 28.0,
-            //             color: Colors.black,
-            //             fontWeight: FontWeight.bold
-            //           ),
-            //         );
-            //     }),
-            //   ],
-            // )
           ],
         ))));
   }

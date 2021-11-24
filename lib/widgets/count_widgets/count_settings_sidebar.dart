@@ -34,6 +34,22 @@ class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
                 },
               ));
         }),
+        BlocBuilder<CountSettingsCubit, CountSettingsState>(
+            builder: (context, state) {
+          return ListTile( // TODO - Only for GamePlay and Counting, not BS
+              title: Text('Deck Penetration:${state.deckPenetration.round()}%'),
+              isThreeLine: true,
+              subtitle: Slider(
+                min: 0.0,
+                max: 100.0,
+                value: state.deckPenetration,
+                divisions: 20,
+                label: '${state.deckPenetration.round()}',
+                onChanged: (value) {
+                  context.read<CountSettingsCubit>().setDeckPenetration(value);
+                },
+              ));
+        }),
         Divider( color: Colors.blue[300], thickness: 2 ),
         ListTile(
             title: const Text("Show Count"),
@@ -65,14 +81,14 @@ class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
             builder: (context, state) {
               if(state.speedCountEnabled == true){
                 return ListTile(
-                    title: Text('Cards Per Second: ${state.cardsPerSecond}'),
+                    title: Text('Cards Per Second: ${state.cardsPerSecond.toStringAsFixed(1)}'),
                     isThreeLine: true,
                     subtitle: Slider(
                       min: 0.5,
                       max: 5.0,
                       value: state.cardsPerSecond,
-                      divisions: 10,
-                      label: '${state.cardsPerSecond}',
+                      divisions: 9,
+                      label: state.cardsPerSecond.toStringAsFixed(1),
                       onChanged: (value) {
                         context.read<CountSettingsCubit>().setCardsPerSecond(value);
                       },
