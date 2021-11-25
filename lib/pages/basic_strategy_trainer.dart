@@ -41,157 +41,148 @@ class _BasicStrategyTrainerState extends State<BasicStrategyTrainer> {
               child: BasicStrategySettingsSidebar(),
             )),
         body: SafeArea(
-            child: Column(
-          children: <Widget>[
-            BlocBuilder<CorrectPlaysCubit, CorrectPlaysState>(
-                builder: (context, state) {
-              return CorrectPlayWidget(
-                  playWasCorrect: state.playWasCorrect,
-                  correctPlay: state.correctPlay,
-                  hand: state.hand,
-                  playerTotal: state.playerTotal,
-                  bsPlays: state.handRules
-                  );
-            }),
-            BlocBuilder<DeckCubit, DeckState>(builder: (context, state) {
-              if (state.dealerHand.isNotEmpty) {
-                bool isHoleCard = false;
-                return Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: state.dealerHand
-                        .map<Widget>((card) => CardTemplate(
-                                cardCode: card.code,
-                                value: card.value,
-                                isHoleCard: card.isHoleCard)
-                            .getWidget())
-                        .toList());
-              }
-              return const SizedBox.shrink();
-            }),
-            BlocBuilder<DeckCubit, DeckState>(builder: (context, state) {
-              if (state.playerHand.isNotEmpty) {
-                return Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: state.playerHand
-                        .map<Widget>((card) => CardTemplate(
-                                cardCode: card.code,
-                                value: card.value,
-                                isHoleCard: card.isHoleCard)
-                            .getWidget())
-                        .toList());
-              }
-              return const SizedBox.shrink();
-            }),
-            BlocBuilder<DeckCubit, DeckState>(builder: (context, state) {
-                  if (state.playerHand.isEmpty) {
-                    return ElevatedButton(
-                      onPressed: () {
-                        context.read<BasicStrategyCubit>().initNextHand();
-                      },
-                      child: const Text('Start'));
-                  }
-                //   return const SizedBox.shrink();
-                // })
-                else{
-
-                
-
-            return Column(
-              children: [
-                Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-                  ElevatedButton(
-                      onPressed: () {
-                        context.read<CorrectPlaysCubit>().checkPlay('hit');
-                        context.read<BasicStrategyCubit>().initNextHand();
-                      },
-                      child: const Text('Hit')),
-                  ElevatedButton(
-                      onPressed: () {
-                        context.read<CorrectPlaysCubit>().checkPlay('stand');
-                        context.read<BasicStrategyCubit>().initNextHand();
-                      },
-                      child: const Text('Stand')),
-                  ElevatedButton(
-                      onPressed: () {
-                        context.read<CorrectPlaysCubit>().checkPlay('double');
-                        context.read<BasicStrategyCubit>().initNextHand();
-                      },
-                      child: const Text('Double')),
-                  ElevatedButton(
-                      onPressed: () {
-                        context.read<CorrectPlaysCubit>().checkPlay('split');
-                        context.read<BasicStrategyCubit>().initNextHand();
-                      },
-                      child: const Text('Split')),
-                ]),
-
-            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-              BlocBuilder<BasicStrategySettingsCubit,
-                  BasicStrategySettingsState>(builder: (context, state) {
-                if (state.practiceInsurance == true) {
-                  return ElevatedButton(
-                      onPressed: () {
-                        context
-                            .read<CorrectPlaysCubit>()
-                            .checkPlay('insurance');
-                        context.read<BasicStrategyCubit>().initNextHand();
-                      },
-                      child: const Text('Insurance'));
-                }
-                return const SizedBox.shrink();
-              }),
-              BlocBuilder<BasicStrategySettingsCubit,
-                  BasicStrategySettingsState>(builder: (context, state) {
-                if (state.practiceFab4 == true ||
-                    state.practiceIllustrious18 == true ||
-                    state.practiceInsurance == true) {
-                  return Column(
-                    children: [
-                      const Text('True Count:'),
-                      BlocBuilder<DeckCubit, DeckState>(
-                          builder: (context, state) {
-                        return Text(state.trueCount.toString());
-                      }),
-                    ],
-                  );
-                }
-                return const SizedBox.shrink();
-              }),
-              BlocBuilder<BasicStrategySettingsCubit,
-                  BasicStrategySettingsState>(builder: (context, state) {
-                if (state.canSurrender == true) {
-                  return ElevatedButton(
-                      onPressed: () {
-                        context
-                            .read<CorrectPlaysCubit>()
-                            .checkPlay('surrender');
-                        context.read<BasicStrategyCubit>().initNextHand();
-                      },
-                      child: const Text('Surrender'));
-                }
-                return const SizedBox.shrink();
-              }),
-            ]),
-            ]
-            );
+            child: Column(children: <Widget>[
+          BlocBuilder<CorrectPlaysCubit, CorrectPlaysState>(
+              builder: (context, state) {
+            return CorrectPlayWidget(
+                playWasCorrect: state.playWasCorrect,
+                correctPlay: state.correctPlay,
+                hand: state.hand,
+                playerTotal: state.playerTotal,
+                bsPlays: state.handRules);
+          }),
+          BlocBuilder<DeckCubit, DeckState>(builder: (context, state) {
+            if (state.dealerHand.isNotEmpty) {
+              bool isHoleCard = false;
+              return Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: state.dealerHand
+                      .map<Widget>((card) => CardTemplate(
+                              cardCode: card.code,
+                              value: card.value,
+                              isHoleCard: card.isHoleCard)
+                          .getWidget())
+                      .toList());
             }
-                })
-
-            // Row(
-            //   children: [
-            //     BlocBuilder<DeckCubit, DeckState>(builder: (context, state) {
-            //       if (state.playerHand.isEmpty) {
-            //         return ElevatedButton(
-            //           onPressed: () {
-            //             context.read<BasicStrategyCubit>().initNextHand();
-            //           },
-            //           child: const Text('Start'));
-            //       }
-            //       return const SizedBox.shrink();
-            //     })
-            //   ],
-            // )],
-          ]
-        ))));
+            return const SizedBox.shrink();
+          }),
+          BlocBuilder<DeckCubit, DeckState>(builder: (context, state) {
+            if (state.playerHand.isNotEmpty) {
+              return Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: state.playerHand
+                      .map<Widget>((card) => CardTemplate(
+                              cardCode: card.code,
+                              value: card.value,
+                              isHoleCard: card.isHoleCard)
+                          .getWidget())
+                      .toList());
+            }
+            return const SizedBox.shrink();
+          }),
+          BlocBuilder<DeckCubit, DeckState>(builder: (context, state) {
+            if (state.playerHand.isEmpty) {
+              return ElevatedButton(
+                  onPressed: () {
+                    context.read<BasicStrategyCubit>().initNextHand();
+                  },
+                  child: const Text('Start'));
+            }
+            else {
+              return Column(children: [
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ElevatedButton(
+                          onPressed: () {
+                            context.read<CorrectPlaysCubit>().checkPlay('hit');
+                            context.read<BasicStrategyCubit>().initNextHand();
+                          },
+                          child: const Text('Hit')),
+                      ElevatedButton(
+                          onPressed: () {
+                            context
+                                .read<CorrectPlaysCubit>()
+                                .checkPlay('stand');
+                            context.read<BasicStrategyCubit>().initNextHand();
+                          },
+                          child: const Text('Stand')),
+                      ElevatedButton(
+                          onPressed: () {
+                            context
+                                .read<CorrectPlaysCubit>()
+                                .checkPlay('double');
+                            context.read<BasicStrategyCubit>().initNextHand();
+                          },
+                          child: const Text('Double')),
+                      ElevatedButton(
+                          onPressed: () {
+                            context
+                                .read<CorrectPlaysCubit>()
+                                .checkPlay('split');
+                            context.read<BasicStrategyCubit>().initNextHand();
+                          },
+                          child: const Text('Split')),
+                    ]),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      BlocBuilder<BasicStrategySettingsCubit,
+                              BasicStrategySettingsState>(
+                          builder: (context, state) {
+                        if (state.practiceInsurance == true) {
+                          return ElevatedButton(
+                              onPressed: () {
+                                context
+                                    .read<CorrectPlaysCubit>()
+                                    .checkPlay('insurance');
+                                context
+                                    .read<BasicStrategyCubit>()
+                                    .initNextHand();
+                              },
+                              child: const Text('Insurance'));
+                        }
+                        return const SizedBox.shrink();
+                      }),
+                      BlocBuilder<BasicStrategySettingsCubit,
+                              BasicStrategySettingsState>(
+                          builder: (context, state) {
+                        if (state.practiceFab4 == true ||
+                            state.practiceIllustrious18 == true ||
+                            state.practiceInsurance == true) {
+                          return Column(
+                            children: [
+                              const Text('True Count:'),
+                              BlocBuilder<DeckCubit, DeckState>(
+                                  builder: (context, state) {
+                                return Text(state.trueCount.toString());
+                              }),
+                            ],
+                          );
+                        }
+                        return const SizedBox.shrink();
+                      }),
+                      BlocBuilder<BasicStrategySettingsCubit,
+                              BasicStrategySettingsState>(
+                          builder: (context, state) {
+                        if (state.canSurrender == true) {
+                          return ElevatedButton(
+                              onPressed: () {
+                                context
+                                    .read<CorrectPlaysCubit>()
+                                    .checkPlay('surrender');
+                                context
+                                    .read<BasicStrategyCubit>()
+                                    .initNextHand();
+                              },
+                              child: const Text('Surrender'));
+                        }
+                        return const SizedBox.shrink();
+                      }),
+                    ]),
+              ]);
+            }
+          })
+        ]))));
   }
 }
