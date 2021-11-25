@@ -1,242 +1,525 @@
 import 'dart:async';
-import 'dart:convert';
-
-import 'package:bloc/bloc.dart';
+import 'package:count_champ/logic/cubits/count_cubit/count_cubit.dart';
+import 'package:count_champ/logic/cubits/settings/count_settings_cubit/count_settings_cubit.dart';
 import 'package:equatable/equatable.dart';
 
-import 'package:count_champ/logic/cubits/correct_plays_cubit/correct_plays_cubit.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 part 'running_count_alltime_stats_state.dart';
 
 class RunningCountAlltimeStatsCubit
     extends HydratedCubit<RunningCountAlltimeStatsState> {
-  // final CorrectPlaysCubit correctPlaysCubit;
-  // late StreamSubscription correctPlaysStreamSubscription;
-  int _hardHandsPlayed = 0;
-  int _hardHandsCorrect = 0;
-  int _hardHandsIncorrect = 0;
-  int _softHandsPlayed = 0;
-  int _softHandsCorrect = 0;
-  int _softHandsIncorrect = 0;
-  int _pairHandsPlayed = 0;
-  int _pairHandsCorrect = 0;
-  int _pairHandsIncorrect = 0;
+  final CountCubit countCubit;
+  late StreamSubscription countStreamSubscription;
+  final CountSettingsCubit countSettingsCubit;
+  late StreamSubscription countSettingsStreamSubscription;
+  String _countingSystem = 'hilo';
 
-  int _illustrious18HandsPlayed = 0;
-  int _illustrious18HandsCorrect = 0;
-  int _illustrious18HandsIncorrect = 0;
-  int _fab4HandsPlayed = 0;
-  int _fab4HandsCorrect = 0;
-  int _fab4HandsIncorrect = 0;
-  int _insuranceHandsPlayed = 0;
-  int _insuranceHandsCorrect = 0;
-  int _insuranceHandsIncorrect = 0;
-
-  RunningCountAlltimeStatsCubit(
-  //   {
-  //   required this.correctPlaysCubit,
-  //   correctPlaysStreamSubscription,
-  // }
-  ) : super(RunningCountAlltimeStatsState(
-          currentStreak: 0,
-          handsPlayed: 0,
-          correctHandsPlayed: 0,
-          incorrectHandsPlayed: 0,
-          hardHandsPlayed: 0,
-          hardHandsCorrect: 0,
-          hardHandsIncorrect: 0,
-          softHandsPlayed: 0,
-          softHandsCorrect: 0,
-          softHandsIncorrect: 0,
-          pairHandsPlayed: 0,
-          pairHandsCorrect: 0,
-          pairHandsIncorrect: 0,
-          illustrious18HandsPlayed: 0,
-          illustrious18HandsCorrect: 0,
-          illustrious18HandsIncorrect: 0,
-          fab4HandsPlayed: 0,
-          fab4HandsCorrect: 0,
-          fab4HandsIncorrect: 0,
-          insuranceHandsPlayed: 0,
-          insuranceHandsCorrect: 0,
-          insuranceHandsIncorrect: 0,
+  RunningCountAlltimeStatsCubit({
+    required this.countCubit,
+    countStreamSubscription,
+    required this.countSettingsCubit,
+    countSettingsStreamSubscription,
+  }) : super(RunningCountAlltimeStatsState(
+          streak: 0,
+          totalRuns: 0,
+          correctRuns: 0,
+          incorrectRuns: 0,
+          hiloPlayed: 0,
+          hiloCorrect: 0,
+          hiloIncorrect: 0,
+          hiopt1Played: 0,
+          hiopt1Correct: 0,
+          hiopt1Incorrect: 0,
+          hiopt2Played: 0,
+          hiopt2Correct: 0,
+          hiopt2Incorrect: 0,
+          halvesPlayed: 0,
+          halvesCorrect: 0,
+          halvesIncorrect: 0,
+          koPlayed: 0,
+          koCorrect: 0,
+          koIncorrect: 0,
+          red7Played: 0,
+          red7Correct: 0,
+          red7Incorrect: 0,
+          zenPlayed: 0,
+          zenCorrect: 0,
+          zenIncorrect: 0,
+          omega2Played: 0,
+          omega2Correct: 0,
+          omega2Incorrect: 0,
         )) {
-    // _monitorDeckCubit();
+      monitorCountSettingsCubit();
+      _monitorCountCubit();
   }
 
-  // StreamSubscription<CorrectPlaysState> _monitorDeckCubit() {
-  //   return correctPlaysStreamSubscription =
-  //       correctPlaysCubit.stream.listen((correctPlaysState) {
-  //     if (correctPlaysState.handType == 'hard')
-  //       _incrementHardHandPlayed(correctPlaysState.playWasCorrect);
-  //     if (correctPlaysState.handType == 'soft')
-  //       _incrementSoftHandPlayed(correctPlaysState.playWasCorrect);
-  //     if (correctPlaysState.handType == 'pair')
-  //       _incrementPairHandPlayed(correctPlaysState.playWasCorrect);
-  //     if (correctPlaysState.handType == 'illustrious18')
-  //       _incrementIllustrious18HandPlayed(correctPlaysState.playWasCorrect);
-  //     if (correctPlaysState.handType == 'fab4')
-  //       _incrementFab4HandPlayed(correctPlaysState.playWasCorrect);
-  //     if (correctPlaysState.handType == 'insurance')
-  //       _incrementInsuranceHandPlayed(correctPlaysState.playWasCorrect);
-  //   });
-  // }
+  StreamSubscription<CountSettingsState> monitorCountSettingsCubit() {
+    return countSettingsStreamSubscription =
+        countSettingsCubit.stream.listen((countSettingsState) {
+      if (countSettingsState.hiLoEnabled == true) _countingSystem = 'hilo';
+      if (countSettingsState.hiOpt1Enabled == true) _countingSystem = 'hiopt1';
+      if (countSettingsState.hiOpt2Enabled == true) _countingSystem = 'hiop2';
+      if (countSettingsState.halvesEnabled == true) _countingSystem = 'halves';
+      if (countSettingsState.koEnabled == true) _countingSystem = 'ko';
+      if (countSettingsState.red7Enabled == true) _countingSystem = 'red7';
+      if (countSettingsState.zenEnabled == true) _countingSystem = 'zen';
+      if (countSettingsState.omega2Enabled == true) _countingSystem = 'omega2';
+    });
+  }
 
-  void _incrementCorrectHandPlayed() {
+  StreamSubscription<CountState> _monitorCountCubit() {
+    return countStreamSubscription = countCubit.stream.listen((countState) {
+      if (countState.didCheckResult == true) {
+        if (countState.wasPlayerCountCorrect == true) {
+          _incrementCorrectCount();
+        } else {
+          _incrementIncorrectCount();
+        }
+
+        switch (_countingSystem) {
+          case 'hilo':
+            return _setHiloStats(countState.wasPlayerCountCorrect);
+          case 'hiopt1':
+            return _setHiopt1Stats(countState.wasPlayerCountCorrect);
+          case 'hiop2':
+            return _setHiopt2Stats(countState.wasPlayerCountCorrect);
+          case 'halves':
+            return _setHalvesStats(countState.wasPlayerCountCorrect);
+          case 'ko':
+            return _setKoStats(countState.wasPlayerCountCorrect);
+          case 'red7':
+            return _setRed7Stats(countState.wasPlayerCountCorrect);
+          case 'zen':
+            return _setZenStats(countState.wasPlayerCountCorrect);
+          case 'omega2':
+            return _setOmega2Stats(countState.wasPlayerCountCorrect);
+          default:
+            return null;
+        }
+      }
+    });
+  }
+
+  void _incrementCorrectCount() {
     emit(RunningCountAlltimeStatsState(
-      currentStreak: state.currentStreak + 1,
-      handsPlayed: state.handsPlayed + 1,
-      correctHandsPlayed: state.correctHandsPlayed + 1,
-      incorrectHandsPlayed: state.incorrectHandsPlayed,
-      hardHandsPlayed: _hardHandsPlayed,
-      hardHandsCorrect: _hardHandsCorrect,
-      hardHandsIncorrect: _hardHandsIncorrect,
-      softHandsPlayed: _softHandsPlayed,
-      softHandsCorrect: _softHandsCorrect,
-      softHandsIncorrect: _softHandsIncorrect,
-      pairHandsPlayed: _pairHandsPlayed,
-      pairHandsCorrect: _pairHandsCorrect,
-      pairHandsIncorrect: _pairHandsIncorrect,
-      illustrious18HandsPlayed: _illustrious18HandsPlayed,
-      illustrious18HandsCorrect: _illustrious18HandsCorrect,
-      illustrious18HandsIncorrect: _illustrious18HandsIncorrect,
-      fab4HandsPlayed: _fab4HandsPlayed,
-      fab4HandsCorrect: _fab4HandsCorrect,
-      fab4HandsIncorrect: _fab4HandsIncorrect,
-      insuranceHandsPlayed: _insuranceHandsPlayed,
-      insuranceHandsCorrect: _insuranceHandsCorrect,
-      insuranceHandsIncorrect: _insuranceHandsIncorrect,
+      streak: state.streak + 1,
+      totalRuns: state.totalRuns + 1,
+      correctRuns: state.correctRuns + 1,
+      incorrectRuns: state.incorrectRuns,
+      hiloPlayed: state.hiloPlayed,
+      hiloCorrect: state.hiloCorrect,
+      hiloIncorrect: state.hiloIncorrect,
+      hiopt1Played: state.hiopt1Played,
+      hiopt1Correct: state.hiopt1Correct,
+      hiopt1Incorrect: state.hiopt1Incorrect,
+      hiopt2Played: state.hiopt2Played,
+      hiopt2Correct: state.hiopt2Correct,
+      hiopt2Incorrect: state.hiopt2Incorrect,
+      halvesPlayed: state.halvesPlayed,
+      halvesCorrect: state.halvesCorrect,
+      halvesIncorrect: state.halvesIncorrect,
+      koPlayed: state.koPlayed,
+      koCorrect: state.koCorrect,
+      koIncorrect: state.koIncorrect,
+      red7Played: state.red7Played,
+      red7Correct: state.red7Correct,
+      red7Incorrect: state.red7Incorrect,
+      zenPlayed: state.zenPlayed,
+      zenCorrect: state.zenCorrect,
+      zenIncorrect: state.zenIncorrect,
+      omega2Played: state.omega2Played,
+      omega2Correct: state.omega2Correct,
+      omega2Incorrect: state.omega2Incorrect,
     ));
   }
 
-  void _incrementIncorrectHandPlayed() {
+  void _incrementIncorrectCount() {
     emit(RunningCountAlltimeStatsState(
-      currentStreak: 0,
-      handsPlayed: state.handsPlayed + 1,
-      correctHandsPlayed: state.correctHandsPlayed,
-      incorrectHandsPlayed: state.incorrectHandsPlayed + 1,
-      hardHandsPlayed: _hardHandsPlayed,
-      hardHandsCorrect: _hardHandsCorrect,
-      hardHandsIncorrect: _hardHandsIncorrect,
-      softHandsPlayed: _softHandsPlayed,
-      softHandsCorrect: _softHandsCorrect,
-      softHandsIncorrect: _softHandsIncorrect,
-      pairHandsPlayed: _pairHandsPlayed,
-      pairHandsCorrect: _pairHandsCorrect,
-      pairHandsIncorrect: _pairHandsIncorrect,
-      illustrious18HandsPlayed: _illustrious18HandsPlayed,
-      illustrious18HandsCorrect: _illustrious18HandsCorrect,
-      illustrious18HandsIncorrect: _illustrious18HandsIncorrect,
-      fab4HandsPlayed: _fab4HandsPlayed,
-      fab4HandsCorrect: _fab4HandsCorrect,
-      fab4HandsIncorrect: _fab4HandsIncorrect,
-      insuranceHandsPlayed: _insuranceHandsPlayed,
-      insuranceHandsCorrect: _insuranceHandsCorrect,
-      insuranceHandsIncorrect: _insuranceHandsIncorrect,
+      streak: 0,
+      totalRuns: state.totalRuns + 1,
+      correctRuns: state.correctRuns,
+      incorrectRuns: state.incorrectRuns + 1,
+      hiloPlayed: state.hiloPlayed,
+      hiloCorrect: state.hiloCorrect,
+      hiloIncorrect: state.hiloIncorrect,
+      hiopt1Played: state.hiopt1Played,
+      hiopt1Correct: state.hiopt1Correct,
+      hiopt1Incorrect: state.hiopt1Incorrect,
+      hiopt2Played: state.hiopt2Played,
+      hiopt2Correct: state.hiopt2Correct,
+      hiopt2Incorrect: state.hiopt2Incorrect,
+      halvesPlayed: state.halvesPlayed,
+      halvesCorrect: state.halvesCorrect,
+      halvesIncorrect: state.halvesIncorrect,
+      koPlayed: state.koPlayed,
+      koCorrect: state.koCorrect,
+      koIncorrect: state.koIncorrect,
+      red7Played: state.red7Played,
+      red7Correct: state.red7Correct,
+      red7Incorrect: state.red7Incorrect,
+      zenPlayed: state.zenPlayed,
+      zenCorrect: state.zenCorrect,
+      zenIncorrect: state.zenIncorrect,
+      omega2Played: state.omega2Played,
+      omega2Correct: state.omega2Correct,
+      omega2Incorrect: state.omega2Incorrect,
     ));
   }
 
-  void _incrementHardHandPlayed(playWasCorrect) {
-    _hardHandsPlayed = _hardHandsPlayed + 1;
-    if (playWasCorrect == true) {
-      _hardHandsCorrect = _hardHandsCorrect + 1;
-      _incrementCorrectHandPlayed();
+  void _setHiloStats(wasCorrect) {
+    int correctValue = 0;
+    int incorrectValue = 0;
+    if (wasCorrect == true) {
+      correctValue = 1;
+    } else {
+      incorrectValue = 1;
     }
-    if (playWasCorrect == false) {
-      _hardHandsIncorrect = _hardHandsIncorrect + 1;
-      _incrementIncorrectHandPlayed();
-    }
+    emit(RunningCountAlltimeStatsState(
+      streak: state.streak,
+      totalRuns: state.totalRuns,
+      correctRuns: state.correctRuns,
+      incorrectRuns: state.incorrectRuns,
+      hiloPlayed: state.hiloPlayed + 1,
+      hiloCorrect: state.hiloCorrect + correctValue,
+      hiloIncorrect: state.hiloIncorrect + incorrectValue,
+      hiopt1Played: state.hiopt1Played,
+      hiopt1Correct: state.hiopt1Correct,
+      hiopt1Incorrect: state.hiopt1Incorrect,
+      hiopt2Played: state.hiopt2Played,
+      hiopt2Correct: state.hiopt2Correct,
+      hiopt2Incorrect: state.hiopt2Incorrect,
+      halvesPlayed: state.halvesPlayed,
+      halvesCorrect: state.halvesCorrect,
+      halvesIncorrect: state.halvesIncorrect,
+      koPlayed: state.koPlayed,
+      koCorrect: state.koCorrect,
+      koIncorrect: state.koIncorrect,
+      red7Played: state.red7Played,
+      red7Correct: state.red7Correct,
+      red7Incorrect: state.red7Incorrect,
+      zenPlayed: state.zenPlayed,
+      zenCorrect: state.zenCorrect,
+      zenIncorrect: state.zenIncorrect,
+      omega2Played: state.omega2Played,
+      omega2Correct: state.omega2Correct,
+      omega2Incorrect: state.omega2Incorrect,
+    ));
   }
 
-  void _incrementSoftHandPlayed(playWasCorrect) {
-    _softHandsPlayed = _softHandsPlayed + 1;
-    if (playWasCorrect == true) {
-      _softHandsCorrect = _softHandsCorrect + 1;
-      _incrementCorrectHandPlayed();
+  void _setHiopt1Stats(wasCorrect) {
+    int correctValue = 0;
+    int incorrectValue = 0;
+    if (wasCorrect == true) {
+      correctValue = 1;
+    } else {
+      incorrectValue = 1;
     }
-    if (playWasCorrect == false) {
-      _softHandsIncorrect = _softHandsIncorrect + 1;
-      _incrementIncorrectHandPlayed();
-    }
+    emit(RunningCountAlltimeStatsState(
+      streak: state.streak,
+      totalRuns: state.totalRuns,
+      correctRuns: state.correctRuns,
+      incorrectRuns: state.incorrectRuns,
+      hiloPlayed: state.hiloPlayed,
+      hiloCorrect: state.hiloCorrect,
+      hiloIncorrect: state.hiloIncorrect,
+      hiopt1Played: state.hiopt1Played + 1,
+      hiopt1Correct: state.hiopt1Correct + correctValue,
+      hiopt1Incorrect: state.hiopt1Incorrect + incorrectValue,
+      hiopt2Played: state.hiopt2Played,
+      hiopt2Correct: state.hiopt2Correct,
+      hiopt2Incorrect: state.hiopt2Incorrect,
+      halvesPlayed: state.halvesPlayed,
+      halvesCorrect: state.halvesCorrect,
+      halvesIncorrect: state.halvesIncorrect,
+      koPlayed: state.koPlayed,
+      koCorrect: state.koCorrect,
+      koIncorrect: state.koIncorrect,
+      red7Played: state.red7Played,
+      red7Correct: state.red7Correct,
+      red7Incorrect: state.red7Incorrect,
+      zenPlayed: state.zenPlayed,
+      zenCorrect: state.zenCorrect,
+      zenIncorrect: state.zenIncorrect,
+      omega2Played: state.omega2Played,
+      omega2Correct: state.omega2Correct,
+      omega2Incorrect: state.omega2Incorrect,
+    ));
   }
 
-  void _incrementPairHandPlayed(playWasCorrect) {
-    _pairHandsPlayed = _pairHandsPlayed + 1;
-    if (playWasCorrect == true) {
-      _pairHandsCorrect = _pairHandsCorrect + 1;
-      _incrementCorrectHandPlayed();
+  void _setHiopt2Stats(wasCorrect) {
+    int correctValue = 0;
+    int incorrectValue = 0;
+    if (wasCorrect == true) {
+      correctValue = 1;
+    } else {
+      incorrectValue = 1;
     }
-    if (playWasCorrect == false) {
-      _pairHandsIncorrect = _pairHandsIncorrect + 1;
-      _incrementIncorrectHandPlayed();
-    }
+    emit(RunningCountAlltimeStatsState(
+      streak: state.streak,
+      totalRuns: state.totalRuns,
+      correctRuns: state.correctRuns,
+      incorrectRuns: state.incorrectRuns,
+      hiloPlayed: state.hiloPlayed,
+      hiloCorrect: state.hiloCorrect,
+      hiloIncorrect: state.hiloIncorrect,
+      hiopt1Played: state.hiopt1Played,
+      hiopt1Correct: state.hiopt1Correct,
+      hiopt1Incorrect: state.hiopt1Incorrect,
+      hiopt2Played: state.hiopt2Played + 1,
+      hiopt2Correct: state.hiopt2Correct + correctValue,
+      hiopt2Incorrect: state.hiopt2Incorrect + incorrectValue,
+      halvesPlayed: state.halvesPlayed,
+      halvesCorrect: state.halvesCorrect,
+      halvesIncorrect: state.halvesIncorrect,
+      koPlayed: state.koPlayed,
+      koCorrect: state.koCorrect,
+      koIncorrect: state.koIncorrect,
+      red7Played: state.red7Played,
+      red7Correct: state.red7Correct,
+      red7Incorrect: state.red7Incorrect,
+      zenPlayed: state.zenPlayed,
+      zenCorrect: state.zenCorrect,
+      zenIncorrect: state.zenIncorrect,
+      omega2Played: state.omega2Played,
+      omega2Correct: state.omega2Correct,
+      omega2Incorrect: state.omega2Incorrect,
+    ));
   }
 
-  void _incrementIllustrious18HandPlayed(playWasCorrect) {
-    _illustrious18HandsPlayed = _illustrious18HandsPlayed + 1;
-    if (playWasCorrect == true) {
-      _illustrious18HandsCorrect = _illustrious18HandsCorrect + 1;
-      _incrementCorrectHandPlayed();
+  void _setHalvesStats(wasCorrect) {
+    int correctValue = 0;
+    int incorrectValue = 0;
+    if (wasCorrect == true) {
+      correctValue = 1;
+    } else {
+      incorrectValue = 1;
     }
-    if (playWasCorrect == false) {
-      _illustrious18HandsIncorrect = _illustrious18HandsIncorrect + 1;
-      _incrementIncorrectHandPlayed();
-    }
+    emit(RunningCountAlltimeStatsState(
+      streak: state.streak,
+      totalRuns: state.totalRuns,
+      correctRuns: state.correctRuns,
+      incorrectRuns: state.incorrectRuns,
+      hiloPlayed: state.hiloPlayed,
+      hiloCorrect: state.hiloCorrect,
+      hiloIncorrect: state.hiloIncorrect,
+      hiopt1Played: state.hiopt1Played,
+      hiopt1Correct: state.hiopt1Correct,
+      hiopt1Incorrect: state.hiopt1Incorrect,
+      hiopt2Played: state.hiopt2Played,
+      hiopt2Correct: state.hiopt2Correct,
+      hiopt2Incorrect: state.hiopt2Incorrect,
+      halvesPlayed: state.halvesPlayed + 1,
+      halvesCorrect: state.halvesCorrect + correctValue,
+      halvesIncorrect: state.halvesIncorrect + incorrectValue,
+      koPlayed: state.koPlayed,
+      koCorrect: state.koCorrect,
+      koIncorrect: state.koIncorrect,
+      red7Played: state.red7Played,
+      red7Correct: state.red7Correct,
+      red7Incorrect: state.red7Incorrect,
+      zenPlayed: state.zenPlayed,
+      zenCorrect: state.zenCorrect,
+      zenIncorrect: state.zenIncorrect,
+      omega2Played: state.omega2Played,
+      omega2Correct: state.omega2Correct,
+      omega2Incorrect: state.omega2Incorrect,
+    ));
   }
 
-  void _incrementFab4HandPlayed(playWasCorrect) {
-    _fab4HandsPlayed = _fab4HandsPlayed + 1;
-    if (playWasCorrect == true) {
-      _fab4HandsCorrect = _fab4HandsCorrect + 1;
-      _incrementCorrectHandPlayed();
+  void _setKoStats(wasCorrect) {
+    int correctValue = 0;
+    int incorrectValue = 0;
+    if (wasCorrect == true) {
+      correctValue = 1;
+    } else {
+      incorrectValue = 1;
     }
-    if (playWasCorrect == false) {
-      _fab4HandsIncorrect = _fab4HandsIncorrect + 1;
-      _incrementIncorrectHandPlayed();
-    }
+    emit(RunningCountAlltimeStatsState(
+      streak: state.streak,
+      totalRuns: state.totalRuns,
+      correctRuns: state.correctRuns,
+      incorrectRuns: state.incorrectRuns,
+      hiloPlayed: state.hiloPlayed,
+      hiloCorrect: state.hiloCorrect,
+      hiloIncorrect: state.hiloIncorrect,
+      hiopt1Played: state.hiopt1Played,
+      hiopt1Correct: state.hiopt1Correct,
+      hiopt1Incorrect: state.hiopt1Incorrect,
+      hiopt2Played: state.hiopt2Played,
+      hiopt2Correct: state.hiopt2Correct,
+      hiopt2Incorrect: state.hiopt2Incorrect,
+      halvesPlayed: state.halvesPlayed,
+      halvesCorrect: state.halvesCorrect,
+      halvesIncorrect: state.halvesIncorrect,
+      koPlayed: state.koPlayed + 1,
+      koCorrect: state.koCorrect + correctValue,
+      koIncorrect: state.koIncorrect + incorrectValue,
+      red7Played: state.red7Played,
+      red7Correct: state.red7Correct,
+      red7Incorrect: state.red7Incorrect,
+      zenPlayed: state.zenPlayed,
+      zenCorrect: state.zenCorrect,
+      zenIncorrect: state.zenIncorrect,
+      omega2Played: state.omega2Played,
+      omega2Correct: state.omega2Correct,
+      omega2Incorrect: state.omega2Incorrect,
+    ));
   }
 
-  void _incrementInsuranceHandPlayed(playWasCorrect) {
-    _insuranceHandsPlayed = _insuranceHandsPlayed + 1;
-    if (playWasCorrect == true) {
-      _insuranceHandsCorrect = _insuranceHandsCorrect + 1;
-      _incrementCorrectHandPlayed();
+  void _setRed7Stats(wasCorrect) {
+    int correctValue = 0;
+    int incorrectValue = 0;
+    if (wasCorrect == true) {
+      correctValue = 1;
+    } else {
+      incorrectValue = 1;
     }
-    if (playWasCorrect == false) {
-      _insuranceHandsIncorrect = _insuranceHandsIncorrect + 1;
-      _incrementIncorrectHandPlayed();
-    }
+    emit(RunningCountAlltimeStatsState(
+      streak: state.streak,
+      totalRuns: state.totalRuns,
+      correctRuns: state.correctRuns,
+      incorrectRuns: state.incorrectRuns,
+      hiloPlayed: state.hiloPlayed,
+      hiloCorrect: state.hiloCorrect,
+      hiloIncorrect: state.hiloIncorrect,
+      hiopt1Played: state.hiopt1Played,
+      hiopt1Correct: state.hiopt1Correct,
+      hiopt1Incorrect: state.hiopt1Incorrect,
+      hiopt2Played: state.hiopt2Played,
+      hiopt2Correct: state.hiopt2Correct,
+      hiopt2Incorrect: state.hiopt2Incorrect,
+      halvesPlayed: state.halvesPlayed,
+      halvesCorrect: state.halvesCorrect,
+      halvesIncorrect: state.halvesIncorrect,
+      koPlayed: state.koPlayed,
+      koCorrect: state.koCorrect,
+      koIncorrect: state.koIncorrect,
+      red7Played: state.red7Played + 1,
+      red7Correct: state.red7Correct + correctValue,
+      red7Incorrect: state.red7Incorrect + incorrectValue,
+      zenPlayed: state.zenPlayed,
+      zenCorrect: state.zenCorrect,
+      zenIncorrect: state.zenIncorrect,
+      omega2Played: state.omega2Played,
+      omega2Correct: state.omega2Correct,
+      omega2Incorrect: state.omega2Incorrect,
+    ));
   }
+
+  void _setZenStats(wasCorrect) {
+    int correctValue = 0;
+    int incorrectValue = 0;
+    if (wasCorrect == true) {
+      correctValue = 1;
+    } else {
+      incorrectValue = 1;
+    }
+    emit(RunningCountAlltimeStatsState(
+      streak: state.streak,
+      totalRuns: state.totalRuns,
+      correctRuns: state.correctRuns,
+      incorrectRuns: state.incorrectRuns,
+      hiloPlayed: state.hiloPlayed,
+      hiloCorrect: state.hiloCorrect,
+      hiloIncorrect: state.hiloIncorrect,
+      hiopt1Played: state.hiopt1Played,
+      hiopt1Correct: state.hiopt1Correct,
+      hiopt1Incorrect: state.hiopt1Incorrect,
+      hiopt2Played: state.hiopt2Played,
+      hiopt2Correct: state.hiopt2Correct,
+      hiopt2Incorrect: state.hiopt2Incorrect,
+      halvesPlayed: state.halvesPlayed,
+      halvesCorrect: state.halvesCorrect,
+      halvesIncorrect: state.halvesIncorrect,
+      koPlayed: state.koPlayed,
+      koCorrect: state.koCorrect,
+      koIncorrect: state.koIncorrect,
+      red7Played: state.red7Played,
+      red7Correct: state.red7Correct,
+      red7Incorrect: state.red7Incorrect,
+      zenPlayed: state.zenPlayed + 1,
+      zenCorrect: state.zenCorrect + correctValue,
+      zenIncorrect: state.zenIncorrect + incorrectValue,
+      omega2Played: state.omega2Played,
+      omega2Correct: state.omega2Correct,
+      omega2Incorrect: state.omega2Incorrect,
+    ));
+  }
+
+  void _setOmega2Stats(wasCorrect) {
+    int correctValue = 0;
+    int incorrectValue = 0;
+    if (wasCorrect == true) {
+      correctValue = 1;
+    } else {
+      incorrectValue = 1;
+    }
+    emit(RunningCountAlltimeStatsState(
+      streak: state.streak,
+      totalRuns: state.totalRuns,
+      correctRuns: state.correctRuns,
+      incorrectRuns: state.incorrectRuns,
+      hiloPlayed: state.hiloPlayed,
+      hiloCorrect: state.hiloCorrect,
+      hiloIncorrect: state.hiloIncorrect,
+      hiopt1Played: state.hiopt1Played,
+      hiopt1Correct: state.hiopt1Correct,
+      hiopt1Incorrect: state.hiopt1Incorrect,
+      hiopt2Played: state.hiopt2Played,
+      hiopt2Correct: state.hiopt2Correct,
+      hiopt2Incorrect: state.hiopt2Incorrect,
+      halvesPlayed: state.halvesPlayed,
+      halvesCorrect: state.halvesCorrect,
+      halvesIncorrect: state.halvesIncorrect,
+      koPlayed: state.koPlayed,
+      koCorrect: state.koCorrect,
+      koIncorrect: state.koIncorrect,
+      red7Played: state.red7Played,
+      red7Correct: state.red7Correct,
+      red7Incorrect: state.red7Incorrect,
+      zenPlayed: state.zenPlayed,
+      zenCorrect: state.zenCorrect,
+      zenIncorrect: state.zenIncorrect,
+      omega2Played: state.omega2Played + 1,
+      omega2Correct: state.omega2Correct + correctValue,
+      omega2Incorrect: state.omega2Incorrect + incorrectValue,
+    ));
+  }
+
 
   void clearAlltimeStats() { // TODO - Connect this function to an ad play
     emit(RunningCountAlltimeStatsState(
-      currentStreak: 0,
-      handsPlayed: 0,
-      correctHandsPlayed: 0,
-      incorrectHandsPlayed: 0,
-      hardHandsPlayed: 0,
-      hardHandsCorrect: 0,
-      hardHandsIncorrect: 0,
-      softHandsPlayed: 0,
-      softHandsCorrect: 0,
-      softHandsIncorrect: 0,
-      pairHandsPlayed: 0,
-      pairHandsCorrect: 0,
-      pairHandsIncorrect: 0,
-      illustrious18HandsPlayed: 0,
-      illustrious18HandsCorrect: 0,
-      illustrious18HandsIncorrect: 0,
-      fab4HandsPlayed: 0,
-      fab4HandsCorrect: 0,
-      fab4HandsIncorrect: 0,
-      insuranceHandsPlayed: 0,
-      insuranceHandsCorrect: 0,
-      insuranceHandsIncorrect: 0,
+      streak: 0,
+      totalRuns: 0,
+      correctRuns: 0,
+      incorrectRuns: 0,
+      hiloPlayed: 0,
+      hiloCorrect: 0,
+      hiloIncorrect: 0,
+      hiopt1Played: 0,
+      hiopt1Correct: 0,
+      hiopt1Incorrect: 0,
+      hiopt2Played: 0,
+      hiopt2Correct: 0,
+      hiopt2Incorrect: 0,
+      halvesPlayed: 0,
+      halvesCorrect: 0,
+      halvesIncorrect: 0,
+      koPlayed: 0,
+      koCorrect: 0,
+      koIncorrect: 0,
+      red7Played: 0,
+      red7Correct: 0,
+      red7Incorrect: 0,
+      zenPlayed: 0,
+      zenCorrect: 0,
+      zenIncorrect: 0,
+      omega2Played: 0,
+      omega2Correct: 0,
+      omega2Incorrect: 0,
     ));
   }
-
-
 
   @override
   RunningCountAlltimeStatsState? fromJson(Map<String, dynamic> json) {

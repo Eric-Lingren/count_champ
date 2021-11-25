@@ -29,9 +29,6 @@ void main() async {
     )),
     storage: storage,
   );
-  // runApp(MyApp(
-  //   appRouter: AppRouter(),
-  // ));
 }
 
 class MyApp extends StatefulWidget {
@@ -55,8 +52,6 @@ class _MyAppState extends State<MyApp> {
             create: (context) => BasicStrategySettingsCubit()),
         BlocProvider<CountSettingsCubit>(
             create: (context) => CountSettingsCubit()),
-        BlocProvider<RunningCountAlltimeStatsCubit>(
-            create: (context) => RunningCountAlltimeStatsCubit()),
         BlocProvider<BasicStrategyCubit>(
             create: (context) => BasicStrategyCubit()),
         BlocProvider<CountCubit>(
@@ -67,6 +62,11 @@ class _MyAppState extends State<MyApp> {
             create: (context) => RunningCountSessionStatsCubit(
               countSettingsCubit: context.read<CountSettingsCubit>(),
               countCubit: context.read<CountCubit>())),
+        BlocProvider<RunningCountAlltimeStatsCubit>(
+            create: (context) => RunningCountAlltimeStatsCubit(
+              countSettingsCubit: context.read<CountSettingsCubit>(),
+              countCubit: context.read<CountCubit>()
+            )),
         BlocProvider<DeckCubit>(
             create: (context) => DeckCubit(
                 countCubit: context.read<CountCubit>(),
