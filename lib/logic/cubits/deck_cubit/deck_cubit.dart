@@ -19,8 +19,8 @@ import 'package:equatable/equatable.dart';
 part 'deck_state.dart';
 
 class DeckCubit extends Cubit<DeckState> {
-  double _deckQuantity = 8.0;
-  double _deckPenetration = 80.0;
+  double _deckQuantity = 1.0;
+  double _deckPenetration = 5.0;
   double _runningCountOffest = 0.0;
   late bool _practiceBsHardHands = false;
   late bool _practiceBsSoftHands = false;
@@ -137,6 +137,9 @@ class DeckCubit extends Cubit<DeckState> {
           _runningCountOffest = -12.0;
         }
         if (roundedDeckQuantity >= 8) _runningCountOffest = -16.0;
+      }
+      if (_red7Enabled == false) {
+        _runningCountOffest = 0.0;
       }
       if (_isShowingCount == countSettingsState.showCount) {
         //* Dont shuffle the deck if no settings changed other than show count

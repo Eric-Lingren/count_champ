@@ -36,39 +36,39 @@ class RunningCountSessionStats extends StatelessWidget {
                   const SizedBox(height:10),
                   BlocBuilder<RunningCountSessionStatsCubit, RunningCountSessionStatsState>(
                       builder: (context, state) {
-                    return Text(state.handsPlayed.toString());
+                    return Text(state.totalRuns.toString());
                   }),
                   BlocBuilder<RunningCountSessionStatsCubit, RunningCountSessionStatsState>(
                       builder: (context, state) {
-                    return Text(state.hardHandsPlayed.toString());
+                    return Text(state.hiloPlayed.toString());
                   }),
                   BlocBuilder<RunningCountSessionStatsCubit, RunningCountSessionStatsState>(
                       builder: (context, state) {
-                    return Text(state.softHandsPlayed.toString());
+                    return Text(state.hiopt1Played.toString());
                   }),
                   BlocBuilder<RunningCountSessionStatsCubit, RunningCountSessionStatsState>(
                       builder: (context, state) {
-                    return Text(state.pairHandsPlayed.toString());
+                    return Text(state.hiopt2Played.toString());
                   }),
                   BlocBuilder<RunningCountSessionStatsCubit, RunningCountSessionStatsState>(
                       builder: (context, state) {
-                    return Text(state.illustrious18HandsPlayed.toString());
+                    return Text(state.halvesPlayed.toString());
                   }),
                   BlocBuilder<RunningCountSessionStatsCubit, RunningCountSessionStatsState>(
                       builder: (context, state) {
-                    return Text(state.fab4HandsPlayed.toString());
+                    return Text(state.koPlayed.toString());
                   }),
                   BlocBuilder<RunningCountSessionStatsCubit, RunningCountSessionStatsState>(
                       builder: (context, state) {
-                    return Text(state.insuranceHandsPlayed.toString());
+                    return Text(state.red7Played.toString());
                   }),
                   BlocBuilder<RunningCountSessionStatsCubit, RunningCountSessionStatsState>(
                       builder: (context, state) {
-                    return Text(state.insuranceHandsPlayed.toString());
+                    return Text(state.zenPlayed.toString());
                   }),
                   BlocBuilder<RunningCountSessionStatsCubit, RunningCountSessionStatsState>(
                       builder: (context, state) {
-                    return Text(state.insuranceHandsPlayed.toString());
+                    return Text(state.omega2Played.toString());
                   }),
                 ],
               ),
@@ -78,39 +78,39 @@ class RunningCountSessionStats extends StatelessWidget {
                   const SizedBox(height:10),
                   BlocBuilder<RunningCountSessionStatsCubit, RunningCountSessionStatsState>(
                       builder: (context, state) {
-                    return Text(state.correctHandsPlayed.toString());
+                    return Text(state.correctRuns.toString());
                   }),
                   BlocBuilder<RunningCountSessionStatsCubit, RunningCountSessionStatsState>(
                       builder: (context, state) {
-                    return Text(state.hardHandsCorrect.toString());
+                    return Text(state.hiloCorrect.toString());
                   }),
                   BlocBuilder<RunningCountSessionStatsCubit, RunningCountSessionStatsState>(
                       builder: (context, state) {
-                    return Text(state.softHandsCorrect.toString());
+                    return Text(state.hiopt1Correct.toString());
                   }),
                   BlocBuilder<RunningCountSessionStatsCubit, RunningCountSessionStatsState>(
                       builder: (context, state) {
-                    return Text(state.pairHandsCorrect.toString());
+                    return Text(state.hiopt2Correct.toString());
                   }),
                   BlocBuilder<RunningCountSessionStatsCubit, RunningCountSessionStatsState>(
                       builder: (context, state) {
-                    return Text(state.illustrious18HandsCorrect.toString());
+                    return Text(state.halvesCorrect.toString());
                   }),
                   BlocBuilder<RunningCountSessionStatsCubit, RunningCountSessionStatsState>(
                       builder: (context, state) {
-                    return Text(state.fab4HandsCorrect.toString());
+                    return Text(state.koCorrect.toString());
                   }),
                   BlocBuilder<RunningCountSessionStatsCubit, RunningCountSessionStatsState>(
                       builder: (context, state) {
-                    return Text(state.insuranceHandsCorrect.toString());
+                    return Text(state.red7Correct.toString());
                   }),
                   BlocBuilder<RunningCountSessionStatsCubit, RunningCountSessionStatsState>(
                       builder: (context, state) {
-                    return Text(state.insuranceHandsCorrect.toString());
+                    return Text(state.zenCorrect.toString());
                   }),
                   BlocBuilder<RunningCountSessionStatsCubit, RunningCountSessionStatsState>(
                       builder: (context, state) {
-                    return Text(state.insuranceHandsCorrect.toString());
+                    return Text(state.omega2Correct.toString());
                   }),
                 ],
               ),
@@ -120,39 +120,39 @@ class RunningCountSessionStats extends StatelessWidget {
                   const SizedBox(height:10),
                   BlocBuilder<RunningCountSessionStatsCubit, RunningCountSessionStatsState>(
                       builder: (context, state) {
-                    return Text(state.incorrectHandsPlayed.toString());
+                    return Text(state.incorrectRuns.toString());
                   }),
                   BlocBuilder<RunningCountSessionStatsCubit, RunningCountSessionStatsState>(
                       builder: (context, state) {
-                    return Text(state.hardHandsIncorrect.toString());
+                    return Text(state.hiloIncorrect.toString());
                   }),
                   BlocBuilder<RunningCountSessionStatsCubit, RunningCountSessionStatsState>(
                       builder: (context, state) {
-                    return Text(state.softHandsIncorrect.toString());
+                    return Text(state.hiopt1Incorrect.toString());
                   }),
                   BlocBuilder<RunningCountSessionStatsCubit, RunningCountSessionStatsState>(
                       builder: (context, state) {
-                    return Text(state.pairHandsIncorrect.toString());
+                    return Text(state.hiopt2Incorrect.toString());
                   }),
                   BlocBuilder<RunningCountSessionStatsCubit, RunningCountSessionStatsState>(
                       builder: (context, state) {
-                    return Text(state.illustrious18HandsIncorrect.toString());
+                    return Text(state.halvesIncorrect.toString());
                   }),
                   BlocBuilder<RunningCountSessionStatsCubit, RunningCountSessionStatsState>(
                       builder: (context, state) {
-                    return Text(state.fab4HandsIncorrect.toString());
+                    return Text(state.koIncorrect.toString());
                   }),
                   BlocBuilder<RunningCountSessionStatsCubit, RunningCountSessionStatsState>(
                       builder: (context, state) {
-                    return Text(state.insuranceHandsIncorrect.toString());
+                    return Text(state.red7Incorrect.toString());
                   }),
                   BlocBuilder<RunningCountSessionStatsCubit, RunningCountSessionStatsState>(
                       builder: (context, state) {
-                    return Text(state.insuranceHandsIncorrect.toString());
+                    return Text(state.zenIncorrect.toString());
                   }),
                   BlocBuilder<RunningCountSessionStatsCubit, RunningCountSessionStatsState>(
                       builder: (context, state) {
-                    return Text(state.insuranceHandsIncorrect.toString());
+                    return Text(state.omega2Incorrect.toString());
                   }),
                 ],
               ),
@@ -163,63 +163,63 @@ class RunningCountSessionStats extends StatelessWidget {
                   BlocBuilder<RunningCountSessionStatsCubit, RunningCountSessionStatsState>(
                       builder: (context, state) {
                     double percentage =
-                        (state.correctHandsPlayed / state.handsPlayed) * 100;
+                        (state.correctRuns / state.totalRuns) * 100;
                     if (percentage.isNaN) percentage = 0;
                     return Text(percentage.toStringAsFixed(2) + '%');
                   }),
                   BlocBuilder<RunningCountSessionStatsCubit, RunningCountSessionStatsState>(
                       builder: (context, state) {
                     double percentage =
-                        (state.hardHandsCorrect /state.hardHandsPlayed) * 100;
+                        (state.hiloCorrect /state.hiloPlayed) * 100;
                     if (percentage.isNaN) percentage = 0;
                     return Text(percentage.toStringAsFixed(2) + '%');
                   }),
                   BlocBuilder<RunningCountSessionStatsCubit, RunningCountSessionStatsState>(
                       builder: (context, state) {
                     double percentage =
-                        (state.softHandsCorrect / state.softHandsPlayed) * 100;
+                        (state.hiopt1Correct / state.hiopt1Played) * 100;
                     if (percentage.isNaN) percentage = 0;
                     return Text(percentage.toStringAsFixed(2) + '%');
                   }),
                   BlocBuilder<RunningCountSessionStatsCubit, RunningCountSessionStatsState>(
                       builder: (context, state) {
                     double percentage =
-                        (state.pairHandsCorrect / state.pairHandsPlayed) * 100;
+                        (state.hiopt2Correct / state.hiopt2Played) * 100;
                     if (percentage.isNaN) percentage = 0;
                     return Text(percentage.toStringAsFixed(2) + '%');
                   }),
                   BlocBuilder<RunningCountSessionStatsCubit, RunningCountSessionStatsState>(
                       builder: (context, state) {
                     double percentage =
-                        (state.illustrious18HandsCorrect / state.illustrious18HandsPlayed) * 100;
+                        (state.halvesCorrect / state.halvesPlayed) * 100;
                     if (percentage.isNaN) percentage = 0;
                     return Text(percentage.toStringAsFixed(2) + '%');
                   }),
                   BlocBuilder<RunningCountSessionStatsCubit, RunningCountSessionStatsState>(
                       builder: (context, state) {
                     double percentage =
-                        (state.fab4HandsCorrect / state.fab4HandsPlayed) * 100;
+                        (state.koCorrect / state.koPlayed) * 100;
                     if (percentage.isNaN) percentage = 0;
                     return Text(percentage.toStringAsFixed(2) + '%');
                   }),
                   BlocBuilder<RunningCountSessionStatsCubit, RunningCountSessionStatsState>(
                       builder: (context, state) {
                     double percentage =
-                        (state.insuranceHandsCorrect / state.insuranceHandsPlayed) * 100;
+                        (state.red7Correct / state.red7Played) * 100;
                     if (percentage.isNaN) percentage = 0;
                     return Text(percentage.toStringAsFixed(2) + '%');
                   }),
                   BlocBuilder<RunningCountSessionStatsCubit, RunningCountSessionStatsState>(
                       builder: (context, state) {
                     double percentage =
-                        (state.insuranceHandsCorrect / state.insuranceHandsPlayed) * 100;
+                        (state.zenCorrect / state.zenPlayed) * 100;
                     if (percentage.isNaN) percentage = 0;
                     return Text(percentage.toStringAsFixed(2) + '%');
                   }),
                   BlocBuilder<RunningCountSessionStatsCubit, RunningCountSessionStatsState>(
                       builder: (context, state) {
                     double percentage =
-                        (state.insuranceHandsCorrect / state.insuranceHandsPlayed) * 100;
+                        (state.omega2Correct / state.omega2Played) * 100;
                     if (percentage.isNaN) percentage = 0;
                     return Text(percentage.toStringAsFixed(2) + '%');
                   }),
