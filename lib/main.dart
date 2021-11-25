@@ -4,6 +4,8 @@ import 'package:count_champ/logic/cubits/basic_strategy_stats_cubit/session/basi
 import 'package:count_champ/logic/cubits/correct_plays_cubit/correct_plays_cubit.dart';
 import 'package:count_champ/logic/cubits/count_cubit/count_cubit.dart';
 import 'package:count_champ/logic/cubits/deck_cubit/deck_cubit.dart';
+import 'package:count_champ/logic/cubits/running_count_stats_cubit/alltime/running_count_alltime_stats_cubit.dart';
+import 'package:count_champ/logic/cubits/running_count_stats_cubit/session/running_count_session_stats_cubit.dart';
 import 'package:count_champ/logic/cubits/settings/basic_strategy_settings_cubit/basic_strategy_settings_cubit.dart';
 import 'package:count_champ/logic/cubits/settings/count_settings_cubit/count_settings_cubit.dart';
 import 'package:count_champ/router/app_router.dart';
@@ -53,6 +55,10 @@ class _MyAppState extends State<MyApp> {
             create: (context) => BasicStrategySettingsCubit()),
         BlocProvider<CountSettingsCubit>(
             create: (context) => CountSettingsCubit()),
+        BlocProvider<RunningCountSessionStatsCubit>(
+            create: (context) => RunningCountSessionStatsCubit()),
+        BlocProvider<RunningCountAlltimeStatsCubit>(
+            create: (context) => RunningCountAlltimeStatsCubit()),
         BlocProvider<BasicStrategyCubit>(
             create: (context) => BasicStrategyCubit()),
         BlocProvider<CountCubit>(

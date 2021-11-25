@@ -49,8 +49,25 @@ class _RunningCountTrainerState extends State<RunningCountTrainer> {
               child: CountSettingsSidebar(),
             )),
         body: SafeArea(
-            child: Column(
+          child: Column(
           children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                        margin: const EdgeInsets.only(right: 10.0),
+                        child: Column(children: [
+                          IconButton(
+                            icon: const Icon(Icons.show_chart_outlined,
+                                color: Colors.black, size: 36.0),
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/running_count_stats');
+                            },
+                          ),
+                        ]),
+                      ),
+              ],
+            ),
             //* Renders the Cards Dealt
             BlocBuilder<DeckCubit, DeckState>(builder: (context, state) {
               if (state.playerHand.isNotEmpty) {
@@ -58,6 +75,7 @@ class _RunningCountTrainerState extends State<RunningCountTrainer> {
                 // _dealtCardsQuantity = state.playerHand.length;
                 // _runningCount = state.runningCount;
                 return Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                     children: state.playerHand
                         .map<Widget>((card) => CardTemplate(
                                 cardCode: card.code,
@@ -69,7 +87,9 @@ class _RunningCountTrainerState extends State<RunningCountTrainer> {
               return const SizedBox.shrink();
             }),
 
-            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly, 
+              children: [
               BlocBuilder<CountSettingsCubit, CountSettingsState>(
                   builder: (context, countSettingsState) {
                 if (countSettingsState.speedCountEnabled == true &&
