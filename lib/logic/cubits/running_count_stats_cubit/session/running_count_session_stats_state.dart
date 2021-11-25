@@ -2,6 +2,7 @@ part of 'running_count_session_stats_cubit.dart';
 
 class RunningCountSessionStatsState extends Equatable {
 
+  int streak;
   int totalRuns;
   int correctRuns;
   int incorrectRuns;
@@ -31,6 +32,7 @@ class RunningCountSessionStatsState extends Equatable {
   int omega2Incorrect;
 
   RunningCountSessionStatsState({
+    required this.streak,
     required this.totalRuns,
     required this.correctRuns,
     required this.incorrectRuns,
@@ -62,6 +64,7 @@ class RunningCountSessionStatsState extends Equatable {
 
   @override
   List<Object> get props => [
+    streak,
     totalRuns, 
     correctRuns, 
     incorrectRuns, 

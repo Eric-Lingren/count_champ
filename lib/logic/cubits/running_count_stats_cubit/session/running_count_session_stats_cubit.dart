@@ -12,32 +12,6 @@ class RunningCountSessionStatsCubit
   late StreamSubscription countStreamSubscription;
   final CountSettingsCubit countSettingsCubit;
   late StreamSubscription countSettingsStreamSubscription;
-
-  // int _hiloPlayed = 0;
-  // int _hiloCorrect = 0;
-  // int _hiloIncorrect = 0;
-  // int _hiopt1Played = 0;
-  // int _hiopt1Correct = 0;
-  // int _hiopt1Incorrect = 0;
-  // int _hiopt2Played = 0;
-  // int _hiopt2Correct = 0;
-  // int _hiopt2Incorrect = 0;
-  // int _halvesPlayed = 0;
-  // int _halvesCorrect = 0;
-  // int _halvesIncorrect = 0;
-  // int _koPlayed = 0;
-  // int _koCorrect = 0;
-  // int _koIncorrect = 0;
-  // int _red7Played = 0;
-  // int _red7Correct = 0;
-  // int _red7Incorrect = 0;
-  // int _zenPlayed = 0;
-  // int _zenCorrect = 0;
-  // int _zenIncorrect = 0;
-  // int _omega2Played = 0;
-  // int _omega2Correct = 0;
-  // int _omega2Incorrect = 0;
-
   String _countingSystem = 'hilo';
 
   RunningCountSessionStatsCubit({
@@ -46,6 +20,7 @@ class RunningCountSessionStatsCubit
     required this.countSettingsCubit,
     countSettingsStreamSubscription,
   }) : super(RunningCountSessionStatsState(
+          streak: 0,
           totalRuns: 0,
           correctRuns: 0,
           incorrectRuns: 0,
@@ -127,6 +102,7 @@ class RunningCountSessionStatsCubit
 
   void _incrementCorrectCount() {
     emit(RunningCountSessionStatsState(
+      streak: state.streak + 1,
       totalRuns: state.totalRuns + 1,
       correctRuns: state.correctRuns + 1,
       incorrectRuns: state.incorrectRuns,
@@ -159,6 +135,7 @@ class RunningCountSessionStatsCubit
 
   void _incrementIncorrectCount() {
     emit(RunningCountSessionStatsState(
+      streak: 0,
       totalRuns: state.totalRuns + 1,
       correctRuns: state.correctRuns,
       incorrectRuns: state.incorrectRuns + 1,
@@ -198,6 +175,7 @@ class RunningCountSessionStatsCubit
       incorrectValue = 1;
     }
     emit(RunningCountSessionStatsState(
+      streak: state.streak,
       totalRuns: state.totalRuns,
       correctRuns: state.correctRuns,
       incorrectRuns: state.incorrectRuns,
@@ -237,6 +215,7 @@ class RunningCountSessionStatsCubit
       incorrectValue = 1;
     }
     emit(RunningCountSessionStatsState(
+      streak: state.streak,
       totalRuns: state.totalRuns,
       correctRuns: state.correctRuns,
       incorrectRuns: state.incorrectRuns,
@@ -276,6 +255,7 @@ class RunningCountSessionStatsCubit
       incorrectValue = 1;
     }
     emit(RunningCountSessionStatsState(
+      streak: state.streak,
       totalRuns: state.totalRuns,
       correctRuns: state.correctRuns,
       incorrectRuns: state.incorrectRuns,
@@ -315,6 +295,7 @@ class RunningCountSessionStatsCubit
       incorrectValue = 1;
     }
     emit(RunningCountSessionStatsState(
+      streak: state.streak,
       totalRuns: state.totalRuns,
       correctRuns: state.correctRuns,
       incorrectRuns: state.incorrectRuns,
@@ -354,6 +335,7 @@ class RunningCountSessionStatsCubit
       incorrectValue = 1;
     }
     emit(RunningCountSessionStatsState(
+      streak: state.streak,
       totalRuns: state.totalRuns,
       correctRuns: state.correctRuns,
       incorrectRuns: state.incorrectRuns,
@@ -393,6 +375,7 @@ class RunningCountSessionStatsCubit
       incorrectValue = 1;
     }
     emit(RunningCountSessionStatsState(
+      streak: state.streak,
       totalRuns: state.totalRuns,
       correctRuns: state.correctRuns,
       incorrectRuns: state.incorrectRuns,
@@ -432,6 +415,7 @@ class RunningCountSessionStatsCubit
       incorrectValue = 1;
     }
     emit(RunningCountSessionStatsState(
+      streak: state.streak,
       totalRuns: state.totalRuns,
       correctRuns: state.correctRuns,
       incorrectRuns: state.incorrectRuns,
@@ -471,6 +455,7 @@ class RunningCountSessionStatsCubit
       incorrectValue = 1;
     }
     emit(RunningCountSessionStatsState(
+      streak: state.streak,
       totalRuns: state.totalRuns,
       correctRuns: state.correctRuns,
       incorrectRuns: state.incorrectRuns,

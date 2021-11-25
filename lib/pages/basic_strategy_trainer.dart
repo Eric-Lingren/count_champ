@@ -57,6 +57,7 @@ class _BasicStrategyTrainerState extends State<BasicStrategyTrainer> {
               if (state.dealerHand.isNotEmpty) {
                 bool isHoleCard = false;
                 return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: state.dealerHand
                         .map<Widget>((card) => CardTemplate(
                                 cardCode: card.code,
@@ -70,6 +71,7 @@ class _BasicStrategyTrainerState extends State<BasicStrategyTrainer> {
             BlocBuilder<DeckCubit, DeckState>(builder: (context, state) {
               if (state.playerHand.isNotEmpty) {
                 return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: state.playerHand
                         .map<Widget>((card) => CardTemplate(
                                 cardCode: card.code,
@@ -80,32 +82,49 @@ class _BasicStrategyTrainerState extends State<BasicStrategyTrainer> {
               }
               return const SizedBox.shrink();
             }),
-            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-              ElevatedButton(
-                  onPressed: () {
-                    context.read<CorrectPlaysCubit>().checkPlay('hit');
-                    context.read<BasicStrategyCubit>().initNextHand();
-                  },
-                  child: const Text('Hit')),
-              ElevatedButton(
-                  onPressed: () {
-                    context.read<CorrectPlaysCubit>().checkPlay('stand');
-                    context.read<BasicStrategyCubit>().initNextHand();
-                  },
-                  child: const Text('Stand')),
-              ElevatedButton(
-                  onPressed: () {
-                    context.read<CorrectPlaysCubit>().checkPlay('double');
-                    context.read<BasicStrategyCubit>().initNextHand();
-                  },
-                  child: const Text('Double')),
-              ElevatedButton(
-                  onPressed: () {
-                    context.read<CorrectPlaysCubit>().checkPlay('split');
-                    context.read<BasicStrategyCubit>().initNextHand();
-                  },
-                  child: const Text('Split')),
-            ]),
+            BlocBuilder<DeckCubit, DeckState>(builder: (context, state) {
+                  if (state.playerHand.isEmpty) {
+                    return ElevatedButton(
+                      onPressed: () {
+                        context.read<BasicStrategyCubit>().initNextHand();
+                      },
+                      child: const Text('Start'));
+                  }
+                //   return const SizedBox.shrink();
+                // })
+                else{
+
+                
+
+            return Column(
+              children: [
+                Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                  ElevatedButton(
+                      onPressed: () {
+                        context.read<CorrectPlaysCubit>().checkPlay('hit');
+                        context.read<BasicStrategyCubit>().initNextHand();
+                      },
+                      child: const Text('Hit')),
+                  ElevatedButton(
+                      onPressed: () {
+                        context.read<CorrectPlaysCubit>().checkPlay('stand');
+                        context.read<BasicStrategyCubit>().initNextHand();
+                      },
+                      child: const Text('Stand')),
+                  ElevatedButton(
+                      onPressed: () {
+                        context.read<CorrectPlaysCubit>().checkPlay('double');
+                        context.read<BasicStrategyCubit>().initNextHand();
+                      },
+                      child: const Text('Double')),
+                  ElevatedButton(
+                      onPressed: () {
+                        context.read<CorrectPlaysCubit>().checkPlay('split');
+                        context.read<BasicStrategyCubit>().initNextHand();
+                      },
+                      child: const Text('Split')),
+                ]),
+
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               BlocBuilder<BasicStrategySettingsCubit,
                   BasicStrategySettingsState>(builder: (context, state) {
@@ -153,21 +172,26 @@ class _BasicStrategyTrainerState extends State<BasicStrategyTrainer> {
                 return const SizedBox.shrink();
               }),
             ]),
-
-            Row(
-              children: [
-                BlocBuilder<DeckCubit, DeckState>(builder: (context, state) {
-                  if (state.playerHand.isEmpty) {
-                    return ElevatedButton(
-                      onPressed: () {
-                        context.read<BasicStrategyCubit>().initNextHand();
-                      },
-                      child: const Text('Start'));
-                  }
-                  return const SizedBox.shrink();
+            ]
+            );
+            }
                 })
-              ],
-            )],
+
+            // Row(
+            //   children: [
+            //     BlocBuilder<DeckCubit, DeckState>(builder: (context, state) {
+            //       if (state.playerHand.isEmpty) {
+            //         return ElevatedButton(
+            //           onPressed: () {
+            //             context.read<BasicStrategyCubit>().initNextHand();
+            //           },
+            //           child: const Text('Start'));
+            //       }
+            //       return const SizedBox.shrink();
+            //     })
+            //   ],
+            // )],
+          ]
         ))));
   }
 }

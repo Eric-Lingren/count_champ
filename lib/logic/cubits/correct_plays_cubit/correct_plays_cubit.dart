@@ -98,7 +98,7 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
 
   StreamSubscription<DeckState> _monitorDeckCubit() {
     return deckStreamSubscription = deckCubit.stream.listen((deckState) {
-      if (deckState.playerHand.length > 2) _setHandInfo(deckState);
+      if (deckState.playerHand.length >= 2) _setHandInfo(deckState);
     });
   }
 

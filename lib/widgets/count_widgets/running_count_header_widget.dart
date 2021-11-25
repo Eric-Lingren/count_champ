@@ -23,7 +23,7 @@ class RunningCountHeaderWidget extends StatelessWidget {
                   BlocBuilder<RunningCountSessionStatsCubit, RunningCountSessionStatsState>(
                     builder: (context, state) {
                       return Text(
-                        'Streak: ' + state.correctRuns.toString()
+                        'Streak: ' + state.streak.toString()
                       );
                     }),
 

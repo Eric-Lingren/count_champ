@@ -19,8 +19,8 @@ import 'package:equatable/equatable.dart';
 part 'deck_state.dart';
 
 class DeckCubit extends Cubit<DeckState> {
-  double _deckQuantity = 1.0;
-  double _deckPenetration = 5.0;
+  double _deckQuantity = 8.0;
+  double _deckPenetration = 80.0;
   double _runningCountOffest = 0.0;
   late bool _practiceBsHardHands = false;
   late bool _practiceBsSoftHands = false;
