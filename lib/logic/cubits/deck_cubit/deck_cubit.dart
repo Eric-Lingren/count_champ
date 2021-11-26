@@ -45,6 +45,7 @@ class DeckCubit extends Cubit<DeckState> {
   late StreamSubscription countStreamSubscription;
   final CountSettingsCubit countSettingsCubit;
   late StreamSubscription countSettingsStreamSubscription;
+  
 
   DeckCubit({
     required this.basicStrategyCubit,
@@ -643,6 +644,7 @@ class DeckCubit extends Cubit<DeckState> {
     basicStrategyStreamSubscription.cancel();
     gameSettingsStreamSubscription.cancel();
     countStreamSubscription.cancel();
+    countSettingsStreamSubscription.cancel();
     return super.close();
   }
 }

@@ -1,3 +1,5 @@
+import 'package:count_champ/logic/cubits/achievements_cubit/achievements_cubit.dart';
+import 'package:count_champ/logic/cubits/achievements_cubit/bs_achievements_cubit/bs_achievements_cubit.dart';
 import 'package:count_champ/logic/cubits/basic_strategy_cubit/basic_strategy_cubit.dart';
 import 'package:count_champ/logic/cubits/basic_strategy_stats_cubit/alltime/basic_strategy_alltime_stats_cubit.dart';
 import 'package:count_champ/logic/cubits/basic_strategy_stats_cubit/session/basic_strategy_session_stats_cubit.dart';
@@ -85,10 +87,17 @@ class _MyAppState extends State<MyApp> {
         BlocProvider<BasicStrategyAlltimeStatsCubit>(
             create: (context) => BasicStrategyAlltimeStatsCubit(
                 correctPlaysCubit: context.read<CorrectPlaysCubit>())),
+        BlocProvider<BsAchievementsCubit>(
+            create: (context) => BsAchievementsCubit(
+              basicStratgeyAlltimeStatsCubit: context.read<BasicStrategyAlltimeStatsCubit>())),
+                      BlocProvider<AchievementsCubit>(
+            create: (context) => AchievementsCubit(
+              bsAchievementsCubit: context.read<BsAchievementsCubit>()
+            )),
       ],
       child: MaterialApp(
         title: 'Count Champ',
-        initialRoute: '/running_count_trainer',
+        initialRoute: '/',
         // initialRoute: '/basic_strategy_trainer',
         theme: ThemeData(
           primarySwatch: Colors.blue,

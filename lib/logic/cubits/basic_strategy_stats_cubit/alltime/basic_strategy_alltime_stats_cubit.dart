@@ -22,7 +22,6 @@ class BasicStrategyAlltimeStatsCubit
   int _pairHandsPlayed = 0;
   int _pairHandsCorrect = 0;
   int _pairHandsIncorrect = 0;
-
   int _illustrious18HandsPlayed = 0;
   int _illustrious18HandsCorrect = 0;
   int _illustrious18HandsIncorrect = 0;
@@ -66,18 +65,24 @@ class BasicStrategyAlltimeStatsCubit
   StreamSubscription<CorrectPlaysState> _monitorDeckCubit() {
     return correctPlaysStreamSubscription =
         correctPlaysCubit.stream.listen((correctPlaysState) {
-      if (correctPlaysState.handType == 'hard')
+      if (correctPlaysState.handType == 'hard') {
         _incrementHardHandPlayed(correctPlaysState.playWasCorrect);
-      if (correctPlaysState.handType == 'soft')
+      }
+      if (correctPlaysState.handType == 'soft') {
         _incrementSoftHandPlayed(correctPlaysState.playWasCorrect);
-      if (correctPlaysState.handType == 'pair')
+      }
+      if (correctPlaysState.handType == 'pair') {
         _incrementPairHandPlayed(correctPlaysState.playWasCorrect);
-      if (correctPlaysState.handType == 'illustrious18')
+      }
+      if (correctPlaysState.handType == 'illustrious18') {
         _incrementIllustrious18HandPlayed(correctPlaysState.playWasCorrect);
-      if (correctPlaysState.handType == 'fab4')
+      }
+      if (correctPlaysState.handType == 'fab4') {
         _incrementFab4HandPlayed(correctPlaysState.playWasCorrect);
-      if (correctPlaysState.handType == 'insurance')
+      }
+      if (correctPlaysState.handType == 'insurance') {
         _incrementInsuranceHandPlayed(correctPlaysState.playWasCorrect);
+      }
     });
   }
 
@@ -207,7 +212,8 @@ class BasicStrategyAlltimeStatsCubit
     }
   }
 
-  void clearAlltimeStats() { // TODO - Connect this function to an ad play
+  void clearAlltimeStats() {
+    // TODO - Connect this function to an ad play
     emit(BasicStrategyAlltimeStatsState(
       currentStreak: 0,
       handsPlayed: 0,
@@ -234,8 +240,6 @@ class BasicStrategyAlltimeStatsCubit
     ));
   }
 
-
-
   @override
   BasicStrategyAlltimeStatsState? fromJson(Map<String, dynamic> json) {
     return BasicStrategyAlltimeStatsState.fromMap(json);
@@ -244,5 +248,11 @@ class BasicStrategyAlltimeStatsCubit
   @override
   Map<String, dynamic>? toJson(BasicStrategyAlltimeStatsState state) {
     return state.toMap();
+  }
+
+  @override
+  Future<void> close() {
+    correctPlaysStreamSubscription.cancel();
+    return super.close();
   }
 }

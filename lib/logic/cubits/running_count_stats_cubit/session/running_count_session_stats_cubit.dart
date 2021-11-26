@@ -485,4 +485,11 @@ class RunningCountSessionStatsCubit
       omega2Incorrect: state.omega2Incorrect + incorrectValue,
     ));
   }
+
+  @override
+  Future<void> close() {
+    countStreamSubscription.cancel();
+    countSettingsStreamSubscription.cancel();
+    return super.close();
+  }
 }

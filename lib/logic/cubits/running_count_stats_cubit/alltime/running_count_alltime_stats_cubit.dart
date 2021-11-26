@@ -530,4 +530,11 @@ class RunningCountAlltimeStatsCubit
   Map<String, dynamic>? toJson(RunningCountAlltimeStatsState state) {
     return state.toMap();
   }
+
+  @override
+  Future<void> close() {
+    countStreamSubscription.cancel();
+    countSettingsStreamSubscription.cancel();
+    return super.close();
+  }
 }

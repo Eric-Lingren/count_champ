@@ -81,4 +81,10 @@ class CountCubit extends Cubit<CountState> {
   void resetCheckRunningCount() {
     emit(CountState(didCheckResult: false, wasPlayerCountCorrect: false));
   }
+
+  @override
+  Future<void> close() {
+    countSettingsStreamSubscription.cancel();
+    return super.close();
+  }
 }

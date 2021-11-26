@@ -1,3 +1,5 @@
+import 'package:count_champ/logic/cubits/achievements_cubit/bs_achievements_cubit/bs_achievements_cubit.dart';
+import 'package:count_champ/logic/cubits/basic_strategy_stats_cubit/alltime/basic_strategy_alltime_stats_cubit.dart';
 import 'package:count_champ/logic/cubits/basic_strategy_stats_cubit/session/basic_strategy_session_stats_cubit.dart';
 import 'package:count_champ/logic/cubits/correct_plays_cubit/correct_plays_cubit.dart';
 import 'package:count_champ/widgets/basic_strategy_widgets/bs_plays/bs_plays_row/bs_plays_dealer_row.dart';
@@ -64,8 +66,16 @@ class CorrectPlayWidget extends StatelessWidget {
                       const Text('Streak:'),
                       BlocBuilder<BasicStrategySessionStatsCubit,
                               BasicStrategySessionStatsState>(
-                          builder: (context, state) {
-                        return Text(state.currentStreak.toString());
+                          builder: (context, bsSessionStatsState) {
+                        return BlocBuilder<BasicStrategyAlltimeStatsCubit,
+                                BasicStrategyAlltimeStatsState>(
+                            builder: (context, bsAlltimeStatsState) {
+                          return BlocBuilder<BsAchievementsCubit,
+                                BsAchievementsState>(
+                            builder: (context, bsAchievementsState) {
+                          return Text(bsSessionStatsState.currentStreak.toString());
+                        });
+                        });
                       }),
                     ],
                   ),
@@ -82,32 +92,34 @@ class CorrectPlayWidget extends StatelessWidget {
                     ]),
                   )
                 ]),
-                if(showingBsPlaysRow == true) Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      color: Colors.white,
-                      padding: const EdgeInsets.fromLTRB(2, 0, 4, 0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text('Dealer:'),
-                          BlocBuilder<CorrectPlaysCubit, CorrectPlaysState>(
-                              builder: (context, state) {
-                            return Text('Player: ' + state.playerTotal.toString());
-                          }),
-                        ],
-                      ),
-                    ),
-                    Column(
+            if (showingBsPlaysRow == true)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    color: Colors.white,
+                    padding: const EdgeInsets.fromLTRB(2, 0, 4, 0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        BsPlaysDealerRow(),
-                        BsPlaysRow(bsPlays: bsPlays),
+                        const Text('Dealer:'),
+                        BlocBuilder<CorrectPlaysCubit, CorrectPlaysState>(
+                            builder: (context, state) {
+                          return Text(
+                              'Player: ' + state.playerTotal.toString());
+                        }),
                       ],
                     ),
-                  ],
-                ),
+                  ),
+                  Column(
+                    children: [
+                      BsPlaysDealerRow(),
+                      BsPlaysRow(bsPlays: bsPlays),
+                    ],
+                  ),
+                ],
+              ),
           ],
         ));
   }

@@ -1,3 +1,4 @@
+import 'package:count_champ/pages/achievements_page.dart';
 import 'package:count_champ/pages/basic_strategy_stats.dart';
 import 'package:count_champ/pages/basic_strategy_trainer.dart';
 import 'package:count_champ/pages/running_count_stats.dart';
@@ -14,6 +15,8 @@ class AppRouter {
     switch (routeSettings.name) {
       case '/':
         return MaterialPageRoute(builder: (_) => const Home());
+      case '/achievements':
+        return MaterialPageRoute(builder: (_) => const AchievementsPage());
       case '/basic_strategy_trainer':
         return MaterialPageRoute(builder: (_) => const BasicStrategyTrainer());
       case '/basic_strategy_stats':
