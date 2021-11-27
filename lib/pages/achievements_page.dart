@@ -1,4 +1,5 @@
 import 'package:count_champ/logic/cubits/achievements_cubit/achievements_cubit.dart';
+import 'package:count_champ/widgets/achievements/achievements_chip_row.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,17 +29,24 @@ class AchievementsPage extends StatelessWidget {
           margin: const EdgeInsets.only(top: 10.0),
           child: Column(
             children: [
-              const Text('Achievements'),
-              const Text('1 Hand Played Achievement'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    padding: EdgeInsets.fromLTRB(20, 0, 0, 10),
+                    child: const Text(
+                      'Basic Strategy Hands Played',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                ],
+              ),
+
               BlocBuilder<AchievementsCubit, AchievementsState>(
                   builder: (context, state) {
-                return Text(state.bsTotalPlayedAchievement.toString() );
+                return AchievementsChipRow(achievements: state.bsTotalPlayedAchievement);
               }),
-              const Text('5 Hand Played Achievement'),
-              // BlocBuilder<AchievementsCubit, AchievementsState>(
-              //     builder: (context, state) {
-              //   return Text(state.reached5HandsPlayed.toString() );
-              // }),
+
             ],
           ),
         )));
