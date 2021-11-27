@@ -29,14 +29,14 @@ class BsAchievementsCubit extends Cubit<BsAchievementsState> {
   void _checkAchievementToEmit(basicStratgeyAlltimeStatsState) {
     int handsPlayed = basicStratgeyAlltimeStatsState.handsPlayed;
     if (handsPlayed == 1) reached1HandsPlayedAchievement();
-    if (handsPlayed == 2) reached2HandsPlayedAchievement();
-    if (handsPlayed == 3) reached3HandsPlayedAchievement();
-    if (handsPlayed == 4) reached4HandsPlayedAchievement();
     if (handsPlayed == 5) reached5HandsPlayedAchievement();
-    if (handsPlayed == 6) reached6HandsPlayedAchievement();
-    if (handsPlayed == 7) reached7HandsPlayedAchievement();
-    if (handsPlayed == 8) reached8HandsPlayedAchievement();
-    if (handsPlayed == 9) reached9HandsPlayedAchievement();
+    if (handsPlayed == 10) reached10HandsPlayedAchievement();
+    if (handsPlayed == 15) reached15HandsPlayedAchievement();
+    if (handsPlayed == 20) reached20HandsPlayedAchievement();
+    if (handsPlayed == 25) reached25HandsPlayedAchievement();
+    if (handsPlayed == 30) reached30HandsPlayedAchievement();
+    if (handsPlayed == 35) reached35HandsPlayedAchievement();
+    if (handsPlayed == 40) reached40HandsPlayedAchievement();
   }
 
   void reached1HandsPlayedAchievement() {
@@ -47,65 +47,65 @@ class BsAchievementsCubit extends Cubit<BsAchievementsState> {
     ));
   }
 
-  void reached2HandsPlayedAchievement() {
-    emit(BsAchievementsState(
-      bsTotalPlayedAchievement: 2,
-      bsAchievementText: '2 Basic Strategy Hands Played',
-      bsAchievementImagePath: 'assets/images/chips/5_red.png',
-    ));
-  }
-
-  void reached3HandsPlayedAchievement() {
-    emit(BsAchievementsState(
-      bsTotalPlayedAchievement: 3,
-      bsAchievementText: '3 Basic Strategy Hands Played',
-      bsAchievementImagePath: 'assets/images/chips/25_green.png',
-    ));
-  }
-
-  void reached4HandsPlayedAchievement() {
-    emit(BsAchievementsState(
-      bsTotalPlayedAchievement: 4,
-      bsAchievementText: '4 Basic Strategy Hands Played',
-      bsAchievementImagePath: 'assets/images/chips/100_black.png',
-    ));
-  }
-
   void reached5HandsPlayedAchievement() {
     emit(BsAchievementsState(
       bsTotalPlayedAchievement: 5,
       bsAchievementText: '5 Basic Strategy Hands Played',
+      bsAchievementImagePath: 'assets/images/chips/5_red.png',
+    ));
+  }
+
+  void reached10HandsPlayedAchievement() {
+    emit(BsAchievementsState(
+      bsTotalPlayedAchievement: 10,
+      bsAchievementText: '10 Basic Strategy Hands Played',
+      bsAchievementImagePath: 'assets/images/chips/25_green.png',
+    ));
+  }
+
+  void reached15HandsPlayedAchievement() {
+    emit(BsAchievementsState(
+      bsTotalPlayedAchievement: 15,
+      bsAchievementText: '15 Basic Strategy Hands Played',
+      bsAchievementImagePath: 'assets/images/chips/100_black.png',
+    ));
+  }
+
+  void reached20HandsPlayedAchievement() {
+    emit(BsAchievementsState(
+      bsTotalPlayedAchievement: 20,
+      bsAchievementText: '20 Basic Strategy Hands Played',
       bsAchievementImagePath: 'assets/images/chips/500_purple.png',
     ));
   }
 
-  void reached6HandsPlayedAchievement() {
+  void reached25HandsPlayedAchievement() {
     emit(BsAchievementsState(
-      bsTotalPlayedAchievement: 6,
-      bsAchievementText: '6 Basic Strategy Hands Played',
+      bsTotalPlayedAchievement: 25,
+      bsAchievementText: '25 Basic Strategy Hands Played',
       bsAchievementImagePath: 'assets/images/chips/1000_orange.png',
     ));
   }
 
 
-  void reached7HandsPlayedAchievement() {
+  void reached30HandsPlayedAchievement() {
     emit(BsAchievementsState(
-      bsTotalPlayedAchievement: 7,
-      bsAchievementText: '7 Basic Strategy Hands Played',
+      bsTotalPlayedAchievement: 30,
+      bsAchievementText: '30 Basic Strategy Hands Played',
       bsAchievementImagePath: 'assets/images/chips/brown.png',
     ));
   }
-  void reached8HandsPlayedAchievement() {
+  void reached35HandsPlayedAchievement() {
     emit(BsAchievementsState(
-      bsTotalPlayedAchievement: 8,
-      bsAchievementText: '8 Basic Strategy Hands Played',
+      bsTotalPlayedAchievement: 35,
+      bsAchievementText: '35 Basic Strategy Hands Played',
       bsAchievementImagePath: 'assets/images/chips/yellow.png',
     ));
   }
-  void reached9HandsPlayedAchievement() {
+  void reached40HandsPlayedAchievement() {
     emit(BsAchievementsState(
-      bsTotalPlayedAchievement: 9,
-      bsAchievementText: '9 Basic Strategy Hands Played',
+      bsTotalPlayedAchievement: 40,
+      bsAchievementText: '40 Basic Strategy Hands Played',
       bsAchievementImagePath: 'assets/images/chips/blue.png',
     ));
   }
