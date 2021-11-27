@@ -1,12 +1,14 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:count_champ/logic/cubits/achievements_cubit/bs_achievements_cubit/bs_achievements_cubit.dart';
 import 'package:equatable/equatable.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 part 'achievements_state.dart';
 
-class AchievementsCubit extends Cubit<AchievementsState> {
+class AchievementsCubit extends HydratedCubit<AchievementsState> {
   final BsAchievementsCubit bsAchievementsCubit;
   late StreamSubscription bsAchievementsStreamSubscription;
 
@@ -46,6 +48,16 @@ class AchievementsCubit extends Cubit<AchievementsState> {
       achievementImagePath: '',
       bsTotalPlayedAchievement: state.bsTotalPlayedAchievement,
     ));
+  }
+
+    @override
+  AchievementsState? fromJson(Map<String, dynamic> json) {
+    return AchievementsState.fromMap(json);
+  }
+
+  @override
+  Map<String, dynamic>? toJson(AchievementsState state) {
+    return state.toMap();
   }
 
   @override

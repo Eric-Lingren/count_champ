@@ -46,18 +46,7 @@ class AchievementsPage extends StatelessWidget {
                   builder: (context, state) {
                 return AchievementsChipRow(achievements: state.bsTotalPlayedAchievement, type: 'bs');
               }),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.start,
-              //   children: [
-              //     Container(
-              //       padding: EdgeInsets.fromLTRB(20, 0, 0, 10),
-              //       child: const Text(
-              //         'Next Level',
-              //         style: TextStyle(fontSize: 12),
-              //       ),
-              //     ),
-              //   ],
-              // ),
+
             ],
           ),
         )));
