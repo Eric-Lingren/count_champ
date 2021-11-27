@@ -1,6 +1,8 @@
 part of 'bs_achievements_cubit.dart';
 
 class BsAchievementsState extends Equatable {
+  String bsAchievementText;
+  String bsAchievementImagePath;
   int bsTotalPlayedAchievement;
   // bool reached1HandsPlayed;
   // bool reached5HandsPlayed;
@@ -44,13 +46,17 @@ class BsAchievementsState extends Equatable {
   BsAchievementsState({
     // this.reached1HandsPlayed = false,
     // this.reached5HandsPlayed = false,
+    this.bsAchievementText = '',
+    this.bsAchievementImagePath = '',
     this.bsTotalPlayedAchievement = 0,
   });
 
   @override
   List<Object> get props => [
-    // reached1HandsPlayed,
-    // reached5HandsPlayed,
-    bsTotalPlayedAchievement,
-  ];
+        // reached1HandsPlayed,
+        // reached5HandsPlayed,
+        bsAchievementText,
+        bsAchievementImagePath,
+        bsTotalPlayedAchievement,
+      ];
 }

@@ -1,7 +1,9 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:count_champ/logic/cubits/achievements_cubit/achievements_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/scheduler.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -36,89 +38,69 @@ class _HomeState extends State<Home> {
               Navigator.pushNamed(context, '/achievements');
             },
             child: const Text('Achievements')),
-        Container(
-          height: 200,
-          child: AchievementUnlockedWidget(),
-          // AlertDialog(
-          //   title: const Text('AlertDialog Title'),
-          //   content: const Text('this is a demo alert diolog'),
-          //   actions: <Widget>[
-          //     TextButton(
-          //       child: const Text('Approve'),
-          //       onPressed: () {
-          //       	Navigator.of(context).pop();
-          //       },
-          //     ),
-          //   ],
-          // ),
+        BlocBuilder<AchievementsCubit, AchievementsState>(
+          builder: (context, state) {
+            if (state.achievementReached == true) {
+              return const SizedBox(
+                height: 200,
+                child: AchievementUnlockedAlertWidget(),
+              );
+            }
+            return const SizedBox.shrink();
+          },
         ),
       ],
     ))));
   }
 }
 
-class AchievementUnlockedWidget extends StatefulWidget {
+class AchievementUnlockedAlertWidget extends StatefulWidget {
+  const AchievementUnlockedAlertWidget({Key? key}) : super(key: key);
+
   @override
-  _AchievementUnlockedWidgetState createState() =>
-      _AchievementUnlockedWidgetState();
+  _AchievementUnlockedAlertWidgetState createState() =>
+      _AchievementUnlockedAlertWidgetState();
 }
 
-class _AchievementUnlockedWidgetState extends State<AchievementUnlockedWidget> {
+class _AchievementUnlockedAlertWidgetState
+    extends State<AchievementUnlockedAlertWidget> {
   @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-            body: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          ElevatedButton(
-            onPressed: () {
-              _showMaterialDialog();
-            },
-            child: Text('Show Material Dialog'),
-          ),
-        ],
-      ),
-    )));
+  void initState() {
+    super.initState();
+
+    SchedulerBinding.instance?.addPostFrameCallback((_) {
+      _ifLoaded();
+    });
   }
 
-  void _showMaterialDialog() {
-//     showDialog(Dialog(
-//   backgroundColor: Colors.transparent,
-//   insetPadding: EdgeInsets.all(10),
-//   child: Stack(
-//     overflow: Overflow.visible,
-//     alignment: Alignment.center,
-//     children: <Widget>[
-//       Container(
-//         width: double.infinity,
-//         height: 200,
-//         decoration: BoxDecoration(
-//           borderRadius: BorderRadius.circular(15),
-//           color: Colors.lightBlue
-//         ),
-//         padding: EdgeInsets.fromLTRB(20, 50, 20, 20),
-//         child: Text("You can make cool stuff!",
-//           style: TextStyle(fontSize: 24),
-//           textAlign: TextAlign.center
-//         ),
-//       ),
-//       Positioned(
-//         top: -100,
-//         child: Image.network("https://i.imgur.com/2yaf2wb.png", width: 150, height: 150)
-//       )
-//     ],
-//   )
-// ));
+  _ifLoaded() async {
+    _showMaterialDialog(context);
+    // _playSoundEffect();
+    // AudioPlayer player = AudioPlayer();
+    // player.play('assets/audio/shuffling_chips.mp3');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return const SizedBox.shrink();
+  }
+
+  // _playSoundEffect() async {
+  //   AudioPlayer player = AudioPlayer();
+  //   int result = await player.play('assets/audio/shuffling_chips.mp3', isLocal: true);
+  // }
+
+  _showMaterialDialog(context) {
     showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (context) {
           return Dialog(
               backgroundColor: Colors.transparent,
               insetPadding: const EdgeInsets.all(10),
               child: Stack(
-                clipBehavior: Clip.none, alignment: Alignment.center,
+                clipBehavior: Clip.none,
+                alignment: Alignment.center,
                 children: <Widget>[
                   Container(
                     width: double.infinity,
@@ -126,55 +108,60 @@ class _AchievementUnlockedWidgetState extends State<AchievementUnlockedWidget> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         color: Colors.lightBlue),
-                    padding: EdgeInsets.fromLTRB(20, 50, 20, 20),
+                    padding: const EdgeInsets.fromLTRB(20, 50, 20, 10),
                     child: Column(
-                      children: const [
-                        // SizedBox(height: 10,),
-                        Text("Achievement Unlocked!",
-                            style: TextStyle(fontSize: 24),
-                            textAlign: TextAlign.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        const Text(
+                          "Achievement Unlocked!",
+                          style: TextStyle(fontSize: 24),
+                          textAlign: TextAlign.center,
                         ),
-                        Text('Somehting here'),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        BlocBuilder<AchievementsCubit, AchievementsState>(
+                            builder: (context, state) {
+                          return Text(
+                            state.achievementText,
+                            style: const TextStyle(fontSize: 16),
+                          );
+                        }),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        ElevatedButton(
+                            onPressed: () {
+                              BlocProvider.of<AchievementsCubit>(context)
+                                  .clearAchievementReached();
+                              Navigator.pop(context);
+                            },
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all(Colors.amber[400]),
+                            ),
+                            child: const Text(
+                              'Awesome!',
+                              style: TextStyle(color: Colors.black),
+                            ))
                       ],
                     ),
                   ),
                   Positioned(
-                      top: -110,
-                      child: Image.network("https://cdn3.volusion.com/ghvuq.vvbmn/v/vspfiles/photos/HD-CC-LV-5.jpg?v-cache=1438083632",
-                      // child: Image.network("https://i.imgur.com/2yaf2wb.png",
-                          width: 150, height: 150))
+                      top: -50,
+                      child: BlocBuilder<AchievementsCubit, AchievementsState>(
+                        builder: (context, state) {
+                          if (state.achievementImagePath.isNotEmpty) {
+                            return Image(
+                                image: AssetImage(state.achievementImagePath),
+                                width: 100,
+                                height: 100);
+                          }
+                          return const SizedBox.shrink();
+                        },
+                      ))
                 ],
               ));
-          // Container(
-          //   // height: 400,
-          //   child: AlertDialog(
-          //     title: Text('Achievement Unlocked!'),
-          //     content: Column(
-          //       children: const [
-          //         Text('Hey! I am Text!'),
-          //         Text('Hey! I am Text!'),
-          //         Text('Hey! I am Text!'),
-          //         // Text('Hey! I am Text!'),
-          //         // Text('Hey! I am Text!'),
-          //         // Text('Hey! I am Text!'),
-          //         // Text('Hey! I am Text!'),
-          //         // Text('Hey! I am Text!'),
-          //         // Text('Hey! I am Text!'),
-          //       ],
-          //     ),
-          //     actions: <Widget>[
-          //       TextButton(
-          //           onPressed: () {
-          //             _dismissDialog();
-          //           },
-          //           child: const Text('Awesome')),
-          //     ],
-          //   ),
-          // );
         });
-  }
-
-  _dismissDialog() {
-    Navigator.pop(context);
   }
 }

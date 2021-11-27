@@ -14,6 +14,9 @@ class AchievementsCubit extends Cubit<AchievementsState> {
     required this.bsAchievementsCubit,
     bsAchievementsStreamSubscription,
   }) : super(AchievementsState(
+          achievementReached: false,
+          achievementText: '',
+          achievementImagePath: '',
           bsTotalPlayedAchievement: 0,
         )) {
     _monitorBsAchievementsStreamSubscriptionCubit();
@@ -23,22 +26,26 @@ class AchievementsCubit extends Cubit<AchievementsState> {
       _monitorBsAchievementsStreamSubscriptionCubit() {
     return bsAchievementsStreamSubscription =
         bsAchievementsCubit.stream.listen((bsAchievementsState) {
-      print('achievement stream triggered from  bs achievements');
       _updateAchievementsList(bsAchievementsState);
-
     });
   }
 
   void _updateAchievementsList(bsAchievementsState) {
-    print('in update achievemtns func');
-    print(bsAchievementsState);
     emit(AchievementsState(
+      achievementReached: true,
+      achievementText: bsAchievementsState.bsAchievementText,
+      achievementImagePath: bsAchievementsState.bsAchievementImagePath,
       bsTotalPlayedAchievement: bsAchievementsState.bsTotalPlayedAchievement,
     ));
-    // emit(AchievementsState(
-    //   reached1HandsPlayed: bsAchievementsState.reached1HandsPlayed,
-    //   reached5HandsPlayed: bsAchievementsState.reached5HandsPlayed,
-    // ));
+  }
+
+  clearAchievementReached() {
+    emit(AchievementsState(
+      achievementReached: false,
+      achievementText: '',
+      achievementImagePath: '',
+      bsTotalPlayedAchievement: state.bsTotalPlayedAchievement,
+    ));
   }
 
   @override
