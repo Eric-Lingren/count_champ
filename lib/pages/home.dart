@@ -75,9 +75,7 @@ class _AchievementUnlockedAlertWidgetState
 
   _ifLoaded() async {
     _showMaterialDialog(context);
-    // _playSoundEffect();
-    // AudioPlayer player = AudioPlayer();
-    // player.play('assets/audio/shuffling_chips.mp3');
+    _playSoundEffect();
   }
 
   @override
@@ -85,10 +83,13 @@ class _AchievementUnlockedAlertWidgetState
     return const SizedBox.shrink();
   }
 
-  // _playSoundEffect() async {
-  //   AudioPlayer player = AudioPlayer();
-  //   int result = await player.play('assets/audio/shuffling_chips.mp3', isLocal: true);
-  // }
+  _playSoundEffect() async {
+    AudioCache player = AudioCache();
+    const soundPath  = 'audio/shuffling_chips.mp3';
+    // const soundPath  = 'audio/slot_payoff.wav';
+    player.play(soundPath, volume: 1.0);
+
+  }
 
   _showMaterialDialog(context) {
     showDialog(
