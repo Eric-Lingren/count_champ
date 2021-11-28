@@ -180,26 +180,9 @@ class DeckCubit extends Cubit<DeckState> {
       _ustonSsEnabled = countSettingsState.ustonSsEnabled;
 
       _setStartingCountOffeset();
-      // if (_red7Enabled == true) {
-      //   //* Set the Running Count offset required
-      //   int roundedDeckQuantity = _deckQuantity.round();
-      //   if (roundedDeckQuantity == 1) _runningCountOffest = -2.0;
-      //   if (roundedDeckQuantity == 2) _runningCountOffest = -4.0;
-      //   if (roundedDeckQuantity >= 3 && roundedDeckQuantity <= 4) {
-      //     _runningCountOffest = -8.0;
-      //   }
-      //   if (roundedDeckQuantity > 4 && roundedDeckQuantity < 8) {
-      //     _runningCountOffest = -12.0;
-      //   }
-      //   if (roundedDeckQuantity >= 8) _runningCountOffest = -16.0;
-      // }
-      // if (_red7Enabled == false) {
-      //   _runningCountOffest = 0.0;
-      // }
-      if (_isShowingCount == countSettingsState.showCount) {
-        //* Dont shuffle the deck if no settings changed other than show count
-        shuffleDeck();
-      }
+        //* Dont shuffle the deck if no settings changed other than show count:
+      if (_isShowingCount == countSettingsState.showCount) shuffleDeck();
+      //* Else Shuffle Deck:
       _isShowingCount = countSettingsState.showCount;
     });
   }
@@ -224,14 +207,14 @@ class DeckCubit extends Cubit<DeckState> {
 
   void shuffleDeck() {
     int counter = 0;
-    List tempDeck = [];
+    List shuffledDeck = [];
     while (counter < _deckQuantity.round()) {
-      var newDeck = state.deckRepository;
-      newDeck.shuffle();
-      tempDeck.add(newDeck);
+      var shuffled52CardDeck = state.deckRepository;
+      shuffled52CardDeck.shuffle();
+      shuffledDeck = [...shuffledDeck, ...shuffled52CardDeck];
       counter++;
     }
-    var shuffledDeck = tempDeck.expand((i) => i).toList();
+
     _resetDealerHoleCards();
     _initPlayableCards(shuffledDeck);
   }
@@ -258,6 +241,7 @@ class DeckCubit extends Cubit<DeckState> {
 
   _dealStartingHand() {
     if (state.dealtCards.length > state.cutCardIndex) shuffleDeck();
+
     List handsDealt = [];
     int fakeTrueCount = 0;
     //* Deals custom hand types for Basic Strategy Trainer
@@ -295,6 +279,7 @@ class DeckCubit extends Cubit<DeckState> {
 
   _dealOneCard(toWhom) {
     var tempRemainingCards = state.shuffledDeck;
+
     var dealtCards = [];
     var tempDealerHand = [];
     var tempPlayerHand = [];
@@ -324,11 +309,12 @@ class DeckCubit extends Cubit<DeckState> {
   }
 
   _dealRandomHand() {
+    _resetDealerHoleCards();
     var tempRemainingCards = state.shuffledDeck;
-    print(tempRemainingCards.length);
     var dealtCards = [];
     var tempDealerHand = [];
     var tempPlayerHand = [];
+
     for (int i = 0; i < 4; i++) {
       if (i.isEven) {
         if (i == 0) tempRemainingCards[i].isHoleCard = true;
