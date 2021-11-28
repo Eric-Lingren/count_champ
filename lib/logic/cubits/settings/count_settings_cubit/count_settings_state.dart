@@ -15,6 +15,24 @@ class CountSettingsState extends Equatable {
   bool red7Enabled;
   bool zenEnabled;
   bool omega2Enabled;
+  bool thorps10Enabled;
+  bool acefiveEnabled;
+  bool kiss1Enabled;
+  bool kiss2Enabled;
+  bool kiss3Enabled;
+  bool canfieldExpertEnabled;
+  bool canfieldMasterEnabled;
+  bool mentorEnabled;
+  bool rekoEnabled;
+  bool silverFoxEnabled;
+  bool ubz2Enabled;
+  bool revereAdvPlusMinusEnabled;
+  bool reverePointCountEnabled;
+  bool revereApcEnabled;
+  bool revere14Enabled;
+  bool ustonAdvPlusMinusEnabled;
+  bool ustonApcEnabled;
+  bool ustonSsEnabled;
 
   CountSettingsState({
     required this.deckQuantity,
@@ -31,6 +49,24 @@ class CountSettingsState extends Equatable {
     required this.red7Enabled,
     required this.zenEnabled,
     required this.omega2Enabled,
+    required this.thorps10Enabled,
+    required this.acefiveEnabled,
+    required this.kiss1Enabled,
+    required this.kiss2Enabled,
+    required this.kiss3Enabled,
+    required this.canfieldExpertEnabled,
+    required this.canfieldMasterEnabled,
+    required this.mentorEnabled,
+    required this.rekoEnabled,
+    required this.silverFoxEnabled,
+    required this.ubz2Enabled,
+    required this.revereAdvPlusMinusEnabled,
+    required this.reverePointCountEnabled,
+    required this.revereApcEnabled,
+    required this.revere14Enabled,
+    required this.ustonAdvPlusMinusEnabled,
+    required this.ustonApcEnabled,
+    required this.ustonSsEnabled,
   });
 
   @override
@@ -49,5 +85,23 @@ class CountSettingsState extends Equatable {
         red7Enabled,
         zenEnabled,
         omega2Enabled,
+        thorps10Enabled,
+        acefiveEnabled,
+        kiss1Enabled,
+        kiss2Enabled,
+        kiss3Enabled,
+        canfieldExpertEnabled,
+        canfieldMasterEnabled,
+        mentorEnabled,
+        rekoEnabled,
+        silverFoxEnabled,
+        ubz2Enabled,
+        revereAdvPlusMinusEnabled,
+        reverePointCountEnabled,
+        revereApcEnabled,
+        revere14Enabled,
+        ustonAdvPlusMinusEnabled,
+        ustonApcEnabled,
+        ustonSsEnabled,
       ];
 }

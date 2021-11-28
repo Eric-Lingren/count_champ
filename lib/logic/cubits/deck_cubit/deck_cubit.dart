@@ -2,13 +2,31 @@ import 'dart:async';
 import 'dart:math';
 import 'package:bloc/bloc.dart';
 import 'package:count_champ/constants/raw_deck_data.dart';
+import 'package:count_champ/data/models/counting_systems/ace_five_count_generator.dart';
+import 'package:count_champ/data/models/counting_systems/canfield_expert_count_generator.dart';
+import 'package:count_champ/data/models/counting_systems/canfield_master_count_generator.dart';
 import 'package:count_champ/data/models/counting_systems/halves_count_generator.dart';
 import 'package:count_champ/data/models/counting_systems/hilo_count_generator.dart';
 import 'package:count_champ/data/models/counting_systems/hiopt1_count_generator.dart';
 import 'package:count_champ/data/models/counting_systems/hiopt2_count_generator.dart';
+import 'package:count_champ/data/models/counting_systems/kiss1_count_generator.dart';
+import 'package:count_champ/data/models/counting_systems/kiss2_count_generator.dart';
+import 'package:count_champ/data/models/counting_systems/kiss3_count_generator.dart';
 import 'package:count_champ/data/models/counting_systems/ko_count_generator.dart';
+import 'package:count_champ/data/models/counting_systems/mentor_count_generator.dart';
 import 'package:count_champ/data/models/counting_systems/omega2_count_generator.dart';
 import 'package:count_champ/data/models/counting_systems/red7_count_generator.dart';
+import 'package:count_champ/data/models/counting_systems/reko_count_generator.dart';
+import 'package:count_champ/data/models/counting_systems/revere_14_count_generator.dart';
+import 'package:count_champ/data/models/counting_systems/revere_adv_plus_minus_count_generator.dart';
+import 'package:count_champ/data/models/counting_systems/revere_apc_count_generator.dart';
+import 'package:count_champ/data/models/counting_systems/revere_point_count_generator.dart';
+import 'package:count_champ/data/models/counting_systems/silver_fox_count_generator.dart';
+import 'package:count_champ/data/models/counting_systems/thorps_10_count_generator.dart';
+import 'package:count_champ/data/models/counting_systems/ubz2_count_generator.dart';
+import 'package:count_champ/data/models/counting_systems/uston_adv_plus_minus_count_generator.dart';
+import 'package:count_champ/data/models/counting_systems/uston_apc_count_generator.dart';
+import 'package:count_champ/data/models/counting_systems/uston_ss_count_generator.dart';
 import 'package:count_champ/data/models/counting_systems/zen_count_generator.dart';
 import 'package:count_champ/logic/cubits/basic_strategy_cubit/basic_strategy_cubit.dart';
 import 'package:count_champ/logic/cubits/count_cubit/count_cubit.dart';
@@ -37,6 +55,24 @@ class DeckCubit extends Cubit<DeckState> {
   late bool _red7Enabled = false;
   late bool _zenEnabled = false;
   late bool _omegaEnabled = false;
+  late bool _thorps10Enabled = false;
+  late bool _acefiveEnabled = false;
+  late bool _kiss1Enabled = false;
+  late bool _kiss2Enabled = false;
+  late bool _kiss3Enabled = false;
+  late bool _canfieldExpertEnabled = false;
+  late bool _canfieldMasterEnabled = false;
+  late bool _mentorEnabled = false;
+  late bool _rekoEnabled = false;
+  late bool _silverFoxEnabled = false;
+  late bool _ubz2Enabled = false;
+  late bool _revereAdvPlusMinusEnabled = false;
+  late bool _reverePointCountEnabled = false;
+  late bool _revereApcEnabled = false;
+  late bool _revere14Enabled = false;
+  late bool _ustonAdvPlusMinusEnabled = false;
+  late bool _ustonApcEnabled = false;
+  late bool _ustonSsEnabled = false;
   final BasicStrategyCubit basicStrategyCubit;
   late StreamSubscription basicStrategyStreamSubscription;
   final BasicStrategySettingsCubit basicStrategySettingsCubit;
@@ -45,7 +81,6 @@ class DeckCubit extends Cubit<DeckState> {
   late StreamSubscription countStreamSubscription;
   final CountSettingsCubit countSettingsCubit;
   late StreamSubscription countSettingsStreamSubscription;
-  
 
   DeckCubit({
     required this.basicStrategyCubit,
@@ -125,23 +160,42 @@ class DeckCubit extends Cubit<DeckState> {
       _red7Enabled = countSettingsState.red7Enabled;
       _zenEnabled = countSettingsState.zenEnabled;
       _omegaEnabled = countSettingsState.omega2Enabled;
+      _thorps10Enabled = countSettingsState.thorps10Enabled;
+      _acefiveEnabled = countSettingsState.acefiveEnabled;
+      _kiss1Enabled = countSettingsState.kiss1Enabled;
+      _kiss2Enabled = countSettingsState.kiss2Enabled;
+      _kiss3Enabled = countSettingsState.kiss3Enabled;
+      _canfieldExpertEnabled = countSettingsState.canfieldExpertEnabled;
+      _canfieldMasterEnabled = countSettingsState.canfieldMasterEnabled;
+      _mentorEnabled = countSettingsState.mentorEnabled;
+      _rekoEnabled = countSettingsState.rekoEnabled;
+      _silverFoxEnabled = countSettingsState.silverFoxEnabled;
+      _ubz2Enabled = countSettingsState.ubz2Enabled;
+      _revereAdvPlusMinusEnabled = countSettingsState.revereAdvPlusMinusEnabled;
+      _reverePointCountEnabled = countSettingsState.reverePointCountEnabled;
+      _revereApcEnabled = countSettingsState.revereApcEnabled;
+      _revere14Enabled = countSettingsState.revere14Enabled;
+      _ustonAdvPlusMinusEnabled = countSettingsState.ustonAdvPlusMinusEnabled;
+      _ustonApcEnabled = countSettingsState.ustonApcEnabled;
+      _ustonSsEnabled = countSettingsState.ustonSsEnabled;
 
-      if (_red7Enabled == true) {
-        //* Set the Running Count offset required
-        int roundedDeckQuantity = _deckQuantity.round();
-        if (roundedDeckQuantity == 1) _runningCountOffest = -2.0;
-        if (roundedDeckQuantity == 2) _runningCountOffest = -4.0;
-        if (roundedDeckQuantity >= 3 && roundedDeckQuantity <= 4) {
-          _runningCountOffest = -8.0;
-        }
-        if (roundedDeckQuantity > 4 && roundedDeckQuantity < 8) {
-          _runningCountOffest = -12.0;
-        }
-        if (roundedDeckQuantity >= 8) _runningCountOffest = -16.0;
-      }
-      if (_red7Enabled == false) {
-        _runningCountOffest = 0.0;
-      }
+      _setStartingCountOffeset();
+      // if (_red7Enabled == true) {
+      //   //* Set the Running Count offset required
+      //   int roundedDeckQuantity = _deckQuantity.round();
+      //   if (roundedDeckQuantity == 1) _runningCountOffest = -2.0;
+      //   if (roundedDeckQuantity == 2) _runningCountOffest = -4.0;
+      //   if (roundedDeckQuantity >= 3 && roundedDeckQuantity <= 4) {
+      //     _runningCountOffest = -8.0;
+      //   }
+      //   if (roundedDeckQuantity > 4 && roundedDeckQuantity < 8) {
+      //     _runningCountOffest = -12.0;
+      //   }
+      //   if (roundedDeckQuantity >= 8) _runningCountOffest = -16.0;
+      // }
+      // if (_red7Enabled == false) {
+      //   _runningCountOffest = 0.0;
+      // }
       if (_isShowingCount == countSettingsState.showCount) {
         //* Dont shuffle the deck if no settings changed other than show count
         shuffleDeck();
@@ -635,8 +689,91 @@ class DeckCubit extends Cubit<DeckState> {
     if (_omegaEnabled) {
       countValue = Omega2CountGenerator(card.value).fetchCountValue();
     }
+    if (_thorps10Enabled) {
+      countValue = Thorps10CountGenerator(card.value).fetchCountValue();
+    }
+    if (_acefiveEnabled) {
+      countValue = AceFiveCountGenerator(card.value).fetchCountValue();
+    }
+    if (_kiss1Enabled) {
+      countValue = Kiss1CountGenerator(card.value, card.suit, card.name)
+          .fetchCountValue();
+    }
+    if (_kiss2Enabled) {
+      countValue = Kiss2CountGenerator(card.value, card.suit).fetchCountValue();
+    }
+    if (_kiss3Enabled) {
+      countValue = Kiss3CountGenerator(card.value, card.suit).fetchCountValue();
+    }
+    if (_canfieldExpertEnabled) {
+      countValue = CanfieldExpertCountGenerator(card.value).fetchCountValue();
+    }
+    if (_canfieldMasterEnabled) {
+      countValue = CanfieldMasterCountGenerator(card.value).fetchCountValue();
+    }
+    if (_mentorEnabled) {
+      countValue = MentorCountGenerator(card.value).fetchCountValue();
+    }
+    if (_rekoEnabled) {
+      countValue = RekoCountGenerator(card.value).fetchCountValue();
+    }
+    if (_silverFoxEnabled) {
+      countValue = SilverFoxCountGenerator(card.value).fetchCountValue();
+    }
+    if (_ubz2Enabled) {
+      countValue = Ubz2CountGenerator(card.value).fetchCountValue();
+    }
+    if (_revereAdvPlusMinusEnabled) {
+      countValue = RevereAdvPlusMinusCountGenerator(card.value).fetchCountValue();
+    }
+    if (_reverePointCountEnabled) {
+      countValue = ReverePointCountGenerator(card.value).fetchCountValue();
+    }
+    if (_revereApcEnabled) {
+      countValue = RevereApcCountGenerator(card.value).fetchCountValue();
+    }
+    if (_revere14Enabled) {
+      countValue = Revere14CountGenerator(card.value).fetchCountValue();
+    }
+    if (_ustonAdvPlusMinusEnabled) {
+      countValue = UstonAdvPlusMinusCountGenerator(card.value).fetchCountValue();
+    }
+    if (_ustonApcEnabled) {
+      countValue = UstonApcCountGenerator(card.value).fetchCountValue();
+    }
+    if (_ustonSsEnabled) {
+      countValue = UstonSsCountGenerator(card.value).fetchCountValue();
+    }
 
     return countValue;
+  }
+
+  void _setStartingCountOffeset() {
+    int roundedDeckQuantity = _deckQuantity.round();
+    if (_red7Enabled == true) {
+      //* Set the Running Count offset required for Red 7 Counts
+      if (roundedDeckQuantity == 1) _runningCountOffest = -2.0;
+      if (roundedDeckQuantity == 2) _runningCountOffest = -4.0;
+      if (roundedDeckQuantity >= 3 && roundedDeckQuantity <= 4) {
+        _runningCountOffest = -8.0;
+      }
+      if (roundedDeckQuantity > 4 && roundedDeckQuantity < 8) {
+        _runningCountOffest = -12.0;
+      }
+      if (roundedDeckQuantity >= 8) _runningCountOffest = -16.0;
+    } else if (_rekoEnabled == true) {
+      //* Set the Running Count offset required for Reko Counts
+      if (roundedDeckQuantity == 1) _runningCountOffest = -1.0;
+      if (roundedDeckQuantity == 2) _runningCountOffest = -5.0;
+      if (roundedDeckQuantity >= 3 && roundedDeckQuantity <= 7) {
+        _runningCountOffest = -20.0;
+      }
+      if (roundedDeckQuantity > 7) _runningCountOffest = -27.0;
+    } else if (_ubz2Enabled == true) {
+      _runningCountOffest = roundedDeckQuantity * -2.0;
+    } else {
+      _runningCountOffest = 0.0;
+    }
   }
 
   @override

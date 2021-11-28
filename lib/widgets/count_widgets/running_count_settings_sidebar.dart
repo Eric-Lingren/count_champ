@@ -137,13 +137,8 @@ class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
                 activeColor: Colors.green,
               );
             })),
-
-
-
-
-
         ListTile(
-            title: const Text("Halves"),
+            title: const Text("Wong Halves"),
             leading: BlocBuilder<CountSettingsCubit, CountSettingsState>(
                 builder: (context, state) {
               return Switch(
@@ -202,6 +197,242 @@ class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
                 value: state.omega2Enabled,
                 onChanged: (value) {
                   context.read<CountSettingsCubit>().toggleOmega2(value);
+                },
+                activeTrackColor: Colors.lightGreenAccent[700],
+                activeColor: Colors.green,
+              );
+            })),
+
+
+        ListTile(
+            title: const Text("Thorp's Ten-Count"),
+            leading: BlocBuilder<CountSettingsCubit, CountSettingsState>(
+                builder: (context, state) {
+              return Switch(
+                value: state.thorps10Enabled,
+                onChanged: (value) {
+                  context.read<CountSettingsCubit>().toggleThorps10(value);
+                },
+                activeTrackColor: Colors.lightGreenAccent[700],
+                activeColor: Colors.green,
+              );
+            })),
+        ListTile(
+            title: const Text("Ace/Five Count"),
+            leading: BlocBuilder<CountSettingsCubit, CountSettingsState>(
+                builder: (context, state) {
+              return Switch(
+                value: state.acefiveEnabled,
+                onChanged: (value) {
+                  context.read<CountSettingsCubit>().toggleAceFive(value);
+                },
+                activeTrackColor: Colors.lightGreenAccent[700],
+                activeColor: Colors.green,
+              );
+            })),
+        ListTile(
+            title: const Text("KISS I"),
+            leading: BlocBuilder<CountSettingsCubit, CountSettingsState>(
+                builder: (context, state) {
+              return Switch(
+                value: state.kiss1Enabled,
+                onChanged: (value) {
+                  context.read<CountSettingsCubit>().toggleKiss1(value);
+                },
+                activeTrackColor: Colors.lightGreenAccent[700],
+                activeColor: Colors.green,
+              );
+            })),
+        ListTile(
+            title: const Text("KISS II"),
+            leading: BlocBuilder<CountSettingsCubit, CountSettingsState>(
+                builder: (context, state) {
+              return Switch(
+                value: state.kiss2Enabled,
+                onChanged: (value) {
+                  context.read<CountSettingsCubit>().toggleKiss2(value);
+                },
+                activeTrackColor: Colors.lightGreenAccent[700],
+                activeColor: Colors.green,
+              );
+            })),
+        ListTile(
+            title: const Text("KISS III"),
+            leading: BlocBuilder<CountSettingsCubit, CountSettingsState>(
+                builder: (context, state) {
+              return Switch(
+                value: state.kiss3Enabled,
+                onChanged: (value) {
+                  context.read<CountSettingsCubit>().toggleKiss3(value);
+                },
+                activeTrackColor: Colors.lightGreenAccent[700],
+                activeColor: Colors.green,
+              );
+            })),
+        ListTile(
+            title: const Text("Canfield Expert"),
+            leading: BlocBuilder<CountSettingsCubit, CountSettingsState>(
+                builder: (context, state) {
+              return Switch(
+                value: state.canfieldExpertEnabled,
+                onChanged: (value) {
+                  context.read<CountSettingsCubit>().toggleCanfieldExpert(value);
+                },
+                activeTrackColor: Colors.lightGreenAccent[700],
+                activeColor: Colors.green,
+              );
+            })),
+        ListTile(
+            title: const Text("Canfield Master"),
+            leading: BlocBuilder<CountSettingsCubit, CountSettingsState>(
+                builder: (context, state) {
+              return Switch(
+                value: state.canfieldMasterEnabled,
+                onChanged: (value) {
+                  context.read<CountSettingsCubit>().toggleCanfieldMaster(value);
+                },
+                activeTrackColor: Colors.lightGreenAccent[700],
+                activeColor: Colors.green,
+              );
+            })),
+        ListTile(
+            title: const Text("Mentor"),
+            leading: BlocBuilder<CountSettingsCubit, CountSettingsState>(
+                builder: (context, state) {
+              return Switch(
+                value: state.mentorEnabled,
+                onChanged: (value) {
+                  context.read<CountSettingsCubit>().toggleMentor(value);
+                },
+                activeTrackColor: Colors.lightGreenAccent[700],
+                activeColor: Colors.green,
+              );
+            })),
+        ListTile(
+            title: const Text("Reko"),
+            leading: BlocBuilder<CountSettingsCubit, CountSettingsState>(
+                builder: (context, state) {
+              return Switch(
+                value: state.rekoEnabled,
+                onChanged: (value) {
+                  context.read<CountSettingsCubit>().toggleReko(value);
+                },
+                activeTrackColor: Colors.lightGreenAccent[700],
+                activeColor: Colors.green,
+              );
+            })),
+        ListTile(
+            title: const Text("Silver Fox"),
+            leading: BlocBuilder<CountSettingsCubit, CountSettingsState>(
+                builder: (context, state) {
+              return Switch(
+                value: state.silverFoxEnabled,
+                onChanged: (value) {
+                  context.read<CountSettingsCubit>().toggleSilverFox(value);
+                },
+                activeTrackColor: Colors.lightGreenAccent[700],
+                activeColor: Colors.green,
+              );
+            })),
+        ListTile(
+            title: const Text("UBZ 2"),
+            leading: BlocBuilder<CountSettingsCubit, CountSettingsState>(
+                builder: (context, state) {
+              return Switch(
+                value: state.ubz2Enabled,
+                onChanged: (value) {
+                  context.read<CountSettingsCubit>().toggleUbz2(value);
+                },
+                activeTrackColor: Colors.lightGreenAccent[700],
+                activeColor: Colors.green,
+              );
+            })),
+        ListTile(
+            title: const Text("Revere Adv. Plus Minus"),
+            leading: BlocBuilder<CountSettingsCubit, CountSettingsState>(
+                builder: (context, state) {
+              return Switch(
+                value: state.revereAdvPlusMinusEnabled,
+                onChanged: (value) {
+                  context.read<CountSettingsCubit>().toggleRevereAdvPlusMinus(value);
+                },
+                activeTrackColor: Colors.lightGreenAccent[700],
+                activeColor: Colors.green,
+              );
+            })),
+        ListTile(
+            title: const Text("Revere Point Count"),
+            leading: BlocBuilder<CountSettingsCubit, CountSettingsState>(
+                builder: (context, state) {
+              return Switch(
+                value: state.reverePointCountEnabled,
+                onChanged: (value) {
+                  context.read<CountSettingsCubit>().toggleReverePointCount(value);
+                },
+                activeTrackColor: Colors.lightGreenAccent[700],
+                activeColor: Colors.green,
+              );
+            })),
+        ListTile(
+            title: const Text("Revere APC"),
+            leading: BlocBuilder<CountSettingsCubit, CountSettingsState>(
+                builder: (context, state) {
+              return Switch(
+                value: state.revereApcEnabled,
+                onChanged: (value) {
+                  context.read<CountSettingsCubit>().toggleRevereApc(value);
+                },
+                activeTrackColor: Colors.lightGreenAccent[700],
+                activeColor: Colors.green,
+              );
+            })),
+        ListTile(
+            title: const Text("Revere 14"),
+            leading: BlocBuilder<CountSettingsCubit, CountSettingsState>(
+                builder: (context, state) {
+              return Switch(
+                value: state.revere14Enabled,
+                onChanged: (value) {
+                  context.read<CountSettingsCubit>().toggleRevere14(value);
+                },
+                activeTrackColor: Colors.lightGreenAccent[700],
+                activeColor: Colors.green,
+              );
+            })),
+        ListTile(
+            title: const Text("Uston Adv. Plus Minus"),
+            leading: BlocBuilder<CountSettingsCubit, CountSettingsState>(
+                builder: (context, state) {
+              return Switch(
+                value: state.ustonAdvPlusMinusEnabled,
+                onChanged: (value) {
+                  context.read<CountSettingsCubit>().toggleUstonAdvPlusMinus(value);
+                },
+                activeTrackColor: Colors.lightGreenAccent[700],
+                activeColor: Colors.green,
+              );
+            })),
+        ListTile(
+            title: const Text("Uston APC"),
+            leading: BlocBuilder<CountSettingsCubit, CountSettingsState>(
+                builder: (context, state) {
+              return Switch(
+                value: state.ustonApcEnabled,
+                onChanged: (value) {
+                  context.read<CountSettingsCubit>().toggleUstonApc(value);
+                },
+                activeTrackColor: Colors.lightGreenAccent[700],
+                activeColor: Colors.green,
+              );
+            })),
+        ListTile(
+            title: const Text("Uston SS"),
+            leading: BlocBuilder<CountSettingsCubit, CountSettingsState>(
+                builder: (context, state) {
+              return Switch(
+                value: state.ustonSsEnabled,
+                onChanged: (value) {
+                  context.read<CountSettingsCubit>().toggleUstonSs(value);
                 },
                 activeTrackColor: Colors.lightGreenAccent[700],
                 activeColor: Colors.green,

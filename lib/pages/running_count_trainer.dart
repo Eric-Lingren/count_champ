@@ -38,6 +38,7 @@ class _RunningCountTrainerState extends State<RunningCountTrainer> {
                 onPressed: () {
                   context.read<DeckCubit>().shuffleDeck();
                   Navigator.pop(context);
+                  // TODO Stop speed count if page navigated away from 
                 },
               );
             },

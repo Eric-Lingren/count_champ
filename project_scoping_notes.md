@@ -206,3 +206,5 @@
 >## Affiliate: 
 >### Page   
 >    Risk of Ruin CVCX (later phases)   
+
+### Daily rewards
