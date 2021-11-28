@@ -325,6 +325,7 @@ class DeckCubit extends Cubit<DeckState> {
 
   _dealRandomHand() {
     var tempRemainingCards = state.shuffledDeck;
+    print(tempRemainingCards.length);
     var dealtCards = [];
     var tempDealerHand = [];
     var tempPlayerHand = [];
@@ -724,7 +725,8 @@ class DeckCubit extends Cubit<DeckState> {
       countValue = Ubz2CountGenerator(card.value).fetchCountValue();
     }
     if (_revereAdvPlusMinusEnabled) {
-      countValue = RevereAdvPlusMinusCountGenerator(card.value).fetchCountValue();
+      countValue =
+          RevereAdvPlusMinusCountGenerator(card.value).fetchCountValue();
     }
     if (_reverePointCountEnabled) {
       countValue = ReverePointCountGenerator(card.value).fetchCountValue();
@@ -736,7 +738,8 @@ class DeckCubit extends Cubit<DeckState> {
       countValue = Revere14CountGenerator(card.value).fetchCountValue();
     }
     if (_ustonAdvPlusMinusEnabled) {
-      countValue = UstonAdvPlusMinusCountGenerator(card.value).fetchCountValue();
+      countValue =
+          UstonAdvPlusMinusCountGenerator(card.value).fetchCountValue();
     }
     if (_ustonApcEnabled) {
       countValue = UstonApcCountGenerator(card.value).fetchCountValue();
