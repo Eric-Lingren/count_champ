@@ -44,7 +44,7 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
   late bool _canDas;
   late bool _canDoubleAny2;
   late bool _canSplitAces;
-  late bool _dealerHitsSoft17;
+  late bool _dealerStandsSoft17;
   late bool _canSurrender;
   late bool _practiceIllustrious18;
   late bool _practiceFab4;
@@ -87,7 +87,7 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
     _canDas = basisStrategyGameSettingsState.canDas;
     _canDoubleAny2 = basisStrategyGameSettingsState.canDoubleAny2;
     _canSplitAces = basisStrategyGameSettingsState.canSplitAces;
-    _dealerHitsSoft17 = basisStrategyGameSettingsState.dealerHitsSoft17;
+    _dealerStandsSoft17 = basisStrategyGameSettingsState.dealerStandsSoft17;
     _canSurrender = basisStrategyGameSettingsState.canSurrender;
     _deckQuantity = basisStrategyGameSettingsState.deckQuantity;
     _practiceIllustrious18 =
@@ -179,19 +179,19 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
     }
     if (_playerTotal == 8) {
       _handRules =
-          Hard8Plays(_canDoubleAny2, _dealerHitsSoft17, _deckQuantity).fetch();
+          Hard8Plays(_canDoubleAny2, _dealerStandsSoft17, _deckQuantity).fetch();
     }
     if (_playerTotal == 9) {
       _handRules =
-          Hard9Plays(_canDoubleAny2, _dealerHitsSoft17, _deckQuantity).fetch();
+          Hard9Plays(_canDoubleAny2, _dealerStandsSoft17, _deckQuantity).fetch();
     }
     if (_playerTotal == 10) {
       _handRules =
-          Hard10Plays(_canDoubleAny2, _dealerHitsSoft17, _deckQuantity).fetch();
+          Hard10Plays(_canDoubleAny2, _dealerStandsSoft17, _deckQuantity).fetch();
     }
     if (_playerTotal == 11) {
       _handRules =
-          Hard11Plays(_canDoubleAny2, _dealerHitsSoft17, _deckQuantity).fetch();
+          Hard11Plays(_canDoubleAny2, _dealerStandsSoft17, _deckQuantity).fetch();
     }
     if (_playerTotal == 12) {
       _handRules = Hard12Plays().fetch();
@@ -201,15 +201,15 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
     }
     if (_playerTotal == 15) {
       _handRules =
-          Hard15Plays(_dealerHitsSoft17, _deckQuantity, _canSurrender).fetch();
+          Hard15Plays(_dealerStandsSoft17, _deckQuantity, _canSurrender).fetch();
     }
     if (_playerTotal == 16) {
       _handRules =
-          Hard16Plays(_dealerHitsSoft17, _deckQuantity, _canSurrender).fetch();
+          Hard16Plays(_dealerStandsSoft17, _deckQuantity, _canSurrender).fetch();
     }
     if (_playerTotal == 17) {
       _handRules =
-          Hard17Plays(_dealerHitsSoft17, _deckQuantity, _canSurrender).fetch();
+          Hard17Plays(_dealerStandsSoft17, _deckQuantity, _canSurrender).fetch();
     }
     if (_playerTotal >= 18) {
       _handRules = Hard18Plays().fetch();
@@ -224,7 +224,7 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
     }
     if (_playerTotal == 14) {
       _handRules =
-          Soft14Plays(_canDoubleAny2, _dealerHitsSoft17, _deckQuantity).fetch();
+          Soft14Plays(_canDoubleAny2, _dealerStandsSoft17, _deckQuantity).fetch();
     }
     if (_playerTotal == 15 || _playerTotal == 16) {
       _handRules = Soft1516Plays(_canDoubleAny2, _deckQuantity).fetch();
@@ -234,11 +234,11 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
     }
     if (_playerTotal == 18) {
       _handRules =
-          Soft18Plays(_canDoubleAny2, _dealerHitsSoft17, _deckQuantity).fetch();
+          Soft18Plays(_canDoubleAny2, _dealerStandsSoft17, _deckQuantity).fetch();
     }
     if (_playerTotal == 19) {
       _handRules =
-          Soft19Plays(_canDoubleAny2, _dealerHitsSoft17, _deckQuantity).fetch();
+          Soft19Plays(_canDoubleAny2, _dealerStandsSoft17, _deckQuantity).fetch();
     }
     if (_playerTotal >= 20) {
       _handRules = Soft20Plays().fetch();
@@ -262,16 +262,16 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
     }
     if (_playerTotal == 14) {
       _handRules =
-          Pair14Plays(_canDas, _dealerHitsSoft17, _canSurrender, _deckQuantity)
+          Pair14Plays(_canDas, _dealerStandsSoft17, _canSurrender, _deckQuantity)
               .fetch();
     }
     if (_playerTotal == 16) {
       _handRules =
-          Pair16Plays(_dealerHitsSoft17, _canSurrender, _deckQuantity).fetch();
+          Pair16Plays(_dealerStandsSoft17, _canSurrender, _deckQuantity).fetch();
     }
     if (_playerTotal == 18) {
       _handRules =
-          Pair18Plays(_canDas, _dealerHitsSoft17, _deckQuantity).fetch();
+          Pair18Plays(_canDas, _dealerStandsSoft17, _deckQuantity).fetch();
     }
     if (_playerTotal == 22) {
       _handRules = Pair22Plays(_canSplitAces).fetch();
@@ -290,7 +290,7 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
   _findDeviationBsRules() {
     String _correctPlay = '';
     _correctPlay = DeviationPlays(
-            _dealerHitsSoft17,
+            _dealerStandsSoft17,
             _trueCount,
             _dealerFaceTotal,
             _playerTotal,

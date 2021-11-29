@@ -6,7 +6,7 @@ class BasicStrategySettingsState extends Equatable {
   bool canResplitPairs;
   bool canSplitAces;
   bool canHitAfterSplittingAces;
-  bool dealerHitsSoft17;
+  bool dealerStandsSoft17;
   bool canSurrender;
   bool dealerPeeks;
   double deckQuantity;
@@ -25,7 +25,7 @@ class BasicStrategySettingsState extends Equatable {
     required this.canResplitPairs,
     required this.canSplitAces,
     required this.canHitAfterSplittingAces,
-    required this.dealerHitsSoft17,
+    required this.dealerStandsSoft17,
     required this.canSurrender,
     required this.dealerPeeks,
     required this.deckQuantity,
@@ -46,7 +46,7 @@ class BasicStrategySettingsState extends Equatable {
     canResplitPairs, 
     canSplitAces, 
     canHitAfterSplittingAces, 
-    dealerHitsSoft17,
+    dealerStandsSoft17,
     canSurrender,
     dealerPeeks,
     deckQuantity,

@@ -7,42 +7,42 @@
 class Soft18Plays {
   //* Settings Rules Needed:
   final bool _canDoubleAny2;
-  final bool _dealerHitsSoft17;
+  final bool _dealerStandsSoft17;
   final double _deckQuantity;
 
-  Soft18Plays(this._canDoubleAny2, this._dealerHitsSoft17, this._deckQuantity);
+  Soft18Plays(this._canDoubleAny2, this._dealerStandsSoft17, this._deckQuantity);
 
   fetch() {
     int deckCount = _deckQuantity.round();
 
     if (deckCount >= 4) {
-      if(!_dealerHitsSoft17){
+      if(_dealerStandsSoft17){
         if (_canDoubleAny2) return soft18MultiDeckDealerStandsDoubleAllowed;
         if (!_canDoubleAny2) return soft18MultiDeckDealerStandsDoubleNotAllowed;
       }
-      if(_dealerHitsSoft17){
+      if(!_dealerStandsSoft17){
         if (_canDoubleAny2) return soft18MultiDeckDealerHitsDoubleAllowed;
         if (!_canDoubleAny2) return soft18MultiDeckDealerHitsDoubleNotAllowed;
       }
     }
 
     if (deckCount >= 2 && deckCount < 4) {
-      if(!_dealerHitsSoft17){
+      if(_dealerStandsSoft17){
         if (_canDoubleAny2) return soft18DoubleDeckDealerStandsDoubleAllowed;
         if (!_canDoubleAny2) return soft18DoubleDeckDealerStandsDoubleNotAllowed;
       }
-      if(_dealerHitsSoft17){
+      if(!_dealerStandsSoft17){
         if (_canDoubleAny2) return soft18DoubleDeckDealerHitsDoubleAllowed;
         if (!_canDoubleAny2) return soft18DoubleDeckDealerHitsDoubleNotAllowed;
       }
     }
 
     if (deckCount < 2) {
-      if(!_dealerHitsSoft17){
+      if(_dealerStandsSoft17){
         if (_canDoubleAny2) return soft18SingleDeckDealerStandsDoubleAllowed;
         if (!_canDoubleAny2) return soft18SingleDeckDealerStandsDoubleNotAllowed;
       }
-      if(_dealerHitsSoft17){
+      if(!_dealerStandsSoft17){
         if (_canDoubleAny2) return soft18SingleDeckDealerHitsDoubleAllowed;
         if (!_canDoubleAny2) return soft18SingleDeckDealerHitsDoubleNotAllowed;
       }

@@ -10,21 +10,21 @@
 class Hard11Plays {
   //* Settings Rules Needed:
   final bool _canDoubleAny2;
-  final bool _dealerHitsSoft17;
+  final bool _dealerStandsSoft17;
   final double _deckQuantity;
 
-  Hard11Plays(this._canDoubleAny2, this._dealerHitsSoft17, this._deckQuantity);
+  Hard11Plays(this._canDoubleAny2, this._dealerStandsSoft17, this._deckQuantity);
 
   fetch() {
     int deckCount = _deckQuantity.round();
     if (deckCount >= 4) {
-      if (!_dealerHitsSoft17) {
+      if (_dealerStandsSoft17) {
         if (_canDoubleAny2) return hard11MultiDeckDealerStandsDoubleAllowed; // 1
         if (!_canDoubleAny2) {
           return hard11MultiDeckDealerStandsDoubleNotAllowed;
         } // 2
       }
-      if (_dealerHitsSoft17) {
+      if (!_dealerStandsSoft17) {
         if (_canDoubleAny2) return hard11MultiDeckDealerHitsDoubleAllowed; // 3
         if (!_canDoubleAny2) {
           return hard11MultiDeckDealerHitsDoubleNotAllowed;
@@ -32,7 +32,7 @@ class Hard11Plays {
       }
     }
     if (deckCount >= 2 && deckCount < 4) {
-      if (!_dealerHitsSoft17) {
+      if (_dealerStandsSoft17) {
         if (_canDoubleAny2) {
           return hard11DoubleDeckDealerStandsDoubleAllowed;
         } // 5
@@ -40,7 +40,7 @@ class Hard11Plays {
           return hard11DoubleDeckDealerStandsDoubleNotAllowed;
         } // 6
       }
-      if (_dealerHitsSoft17) {
+      if (!_dealerStandsSoft17) {
         if (_canDoubleAny2) return hard11DoubleDeckDealerHitsDoubleAllowed; // 7
         if (!_canDoubleAny2) {
           return hard11DoubleDeckDealerHitsDoubleNotAllowed;
@@ -48,7 +48,7 @@ class Hard11Plays {
       }
     }
     if (deckCount < 2) {
-      if (!_dealerHitsSoft17) {
+      if (_dealerStandsSoft17) {
         if (_canDoubleAny2) {
           return hard11SingleDeckDealerStandsDoubleAllowed;
         } // 9
@@ -56,7 +56,7 @@ class Hard11Plays {
           return hard11SingleDeckDealerStandsDoubleNotAllowed;
         } // 10
       }
-      if (_dealerHitsSoft17) {
+      if (!_dealerStandsSoft17) {
         if (_canDoubleAny2) return hard11SingleDeckDealerHitsDoubleAllowed; // 11
         if (!_canDoubleAny2) {
           return hard11SingleDeckDealerHitsDoubleNotAllowed;

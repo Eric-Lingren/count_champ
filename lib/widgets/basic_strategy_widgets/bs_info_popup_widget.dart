@@ -14,13 +14,15 @@ class BsInfoPopupWidget extends StatelessWidget {
         insetPadding: const EdgeInsets.all(10),
         child: Container(
             width: double.infinity,
-            height: 400,
-            padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
+            // height: 100,
+            // height: double.infinity,
+            padding: const EdgeInsets.fromLTRB(25, 20, 25, 30),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               color: Colors.lightBlue,
             ),
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
                   infoTitle,

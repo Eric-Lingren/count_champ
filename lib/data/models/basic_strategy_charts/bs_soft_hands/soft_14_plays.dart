@@ -7,10 +7,10 @@
 class Soft14Plays {
   //* Settings Rules Needed:
   final bool _canDoubleAny2;
-  final bool _dealerHitsSoft17;
+  final bool _dealerStandsSoft17;
   final double _deckQuantity;
 
-  Soft14Plays(this._canDoubleAny2, this._dealerHitsSoft17, this._deckQuantity);
+  Soft14Plays(this._canDoubleAny2, this._dealerStandsSoft17, this._deckQuantity);
 
   fetch() {
     int deckCount = _deckQuantity.round();
@@ -21,11 +21,11 @@ class Soft14Plays {
     }
 
     if (deckCount >= 2 && deckCount < 4) {
-      if(!_dealerHitsSoft17){
+      if(_dealerStandsSoft17){
         if (_canDoubleAny2) return soft14DoubleDeckDealerStandsDoubleAllowed; 
         if (!_canDoubleAny2) return soft14DoubleDeckDealerStandsDoubleNotAllowed;
       }
-      if(_dealerHitsSoft17){
+      if(!_dealerStandsSoft17){
         if (_canDoubleAny2) return soft14DoubleDeckDealerHitsDoubleAllowed; 
         if (!_canDoubleAny2) return soft14DoubleDeckDealerHitsDoubleNotAllowed;
       }

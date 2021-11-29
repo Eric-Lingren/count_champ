@@ -7,11 +7,11 @@
 class Pair14Plays {
   //* Settings Rules Needed:
   final bool _canDas;
-  final bool _dealerHitsSoft17;
+  final bool _dealerStandsSoft17;
   final bool _canSurrender;
   final double _deckQuantity;
 
-  Pair14Plays(this._canDas, this._dealerHitsSoft17, this._canSurrender, this._deckQuantity);
+  Pair14Plays(this._canDas, this._dealerStandsSoft17, this._canSurrender, this._deckQuantity);
 
   fetch() {
     int deckCount = _deckQuantity.round();
@@ -28,7 +28,7 @@ class Pair14Plays {
     }
 
     if (deckCount < 2) {
-      if (!_dealerHitsSoft17) {
+      if (_dealerStandsSoft17) {
         if (_canDas) {
           if (canSurrender) {
             return pair14SingleDeckDealerStandsDoubleAllowedSurrenderAllowed;
@@ -46,7 +46,7 @@ class Pair14Plays {
           }
         }
       }
-      if (_dealerHitsSoft17) {
+      if (!_dealerStandsSoft17) {
         if (_canDas) {
           if (canSurrender) {
             return pair14SingleDeckDealerHitsDoubleAllowedSurrenderAllowed;

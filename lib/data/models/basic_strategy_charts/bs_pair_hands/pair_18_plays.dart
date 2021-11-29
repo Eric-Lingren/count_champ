@@ -7,10 +7,10 @@
 class Pair18Plays {
   //* Settings Rules Needed:
   final bool _canDas;
-  final bool _dealerHitsSoft17;
+  final bool _dealerStandsSoft17;
   final double _deckQuantity;
 
-  Pair18Plays(this._canDas, this._dealerHitsSoft17, this._deckQuantity);
+  Pair18Plays(this._canDas, this._dealerStandsSoft17, this._deckQuantity);
 
   fetch() {
     int deckCount = _deckQuantity.round();
@@ -18,8 +18,8 @@ class Pair18Plays {
     if (deckCount >= 2) return pair18MultiDeck;
 
     if (deckCount < 2) {
-      if (!_dealerHitsSoft17) return pair18MultiDeck;
-      if (_dealerHitsSoft17) {
+      if (_dealerStandsSoft17) return pair18MultiDeck;
+      if (!_dealerStandsSoft17) {
         if(_canDas) return pair18SingleDeckDasAllowed;
         if(!_canDas) return pair18SingleDeckDasNotAllowed;
       }

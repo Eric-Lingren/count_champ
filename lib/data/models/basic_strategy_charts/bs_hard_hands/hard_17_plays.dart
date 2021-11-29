@@ -9,11 +9,11 @@
 
 class Hard17Plays {
   //* Settings Rules Needed:
-  final bool _dealerHitsSoft17;
+  final bool __dealerStandsSoft17;
   final double _deckQuantity;
   final bool _canSurrender;
 
-  Hard17Plays(this._dealerHitsSoft17, this._deckQuantity,
+  Hard17Plays(this.__dealerStandsSoft17, this._deckQuantity,
       this._canSurrender);
 
   fetch() {
@@ -22,10 +22,10 @@ class Hard17Plays {
     if (_canSurrender) canSurrender = true;
 
     if (deckCount >= 4) {
-      if (!_dealerHitsSoft17) {
+      if (__dealerStandsSoft17) {
           return hard17MultiDeckDealerStands;
         }
-      if (_dealerHitsSoft17) {
+      if (!__dealerStandsSoft17) {
         if (canSurrender) return hard17MultiDeckDealerHitsSurrenderAllowed; // 3
         if (!canSurrender) {
           return hard17MultiDeckDealerHitsSurrenderNotAllowed;
@@ -33,10 +33,10 @@ class Hard17Plays {
       }
     }
     if (deckCount >= 2 && deckCount < 4) {
-      if (!_dealerHitsSoft17) {
+      if (__dealerStandsSoft17) {
           return hard17DoubleDeckDealerStands;
         } // 5
-      if (_dealerHitsSoft17) {
+      if (!__dealerStandsSoft17) {
         if (canSurrender) return hard17DoubleDeckDealerHitsSurrenderAllowed; // 7
         if (!canSurrender) {
           return hard17DoubleDeckDealerHitsSurrenderNotAllowed;
@@ -44,10 +44,10 @@ class Hard17Plays {
       }
     }
     if (deckCount < 2) {
-      if (!_dealerHitsSoft17) {
+      if (__dealerStandsSoft17) {
           return hard17SingleDeckDealerStands;
       }
-      if (_dealerHitsSoft17) {
+      if (!__dealerStandsSoft17) {
         if (canSurrender)
           return hard17SingleDeckDealerHitsSurrenderAllowed; // 11
         if (!canSurrender) {

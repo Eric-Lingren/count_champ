@@ -1,5 +1,5 @@
 class DeviationPlays {
-  final bool _dealerHitsSoft17;
+  final bool _dealerStandsSoft17;
   final int _trueCount;
   final int _dealerFaceTotal;
   final int _playerTotal;
@@ -10,7 +10,7 @@ class DeviationPlays {
   final String _handType;
 
   DeviationPlays(
-      this._dealerHitsSoft17,
+      this._dealerStandsSoft17,
       this._trueCount,
       this._dealerFaceTotal,
       this._playerTotal,
@@ -43,8 +43,8 @@ class DeviationPlays {
       if (_dealerFaceTotal == 9 && _trueCount >= 3) return 'surrender';
       if (_dealerFaceTotal == 10 && _trueCount >= 0) return 'surrender';
       if (_dealerFaceTotal == 11){
-        if (_dealerHitsSoft17 && _trueCount >= -1) return 'surrender';
-        if (!_dealerHitsSoft17 && _trueCount >= 2) return 'surrender';
+        if (!_dealerStandsSoft17 && _trueCount >= -1) return 'surrender';
+        if (_dealerStandsSoft17 && _trueCount >= 2) return 'surrender';
       }
     }
 
@@ -69,8 +69,8 @@ class DeviationPlays {
           if (_trueCount >= 4) return 'split';
         }
         if (decks >= 2 && decks > 4) {
-          if (_dealerHitsSoft17 && _trueCount >= 4) return 'split';
-          if (!_dealerHitsSoft17 && _trueCount >= 5) return 'split';
+          if (!_dealerStandsSoft17 && _trueCount >= 4) return 'split';
+          if (_dealerStandsSoft17 && _trueCount >= 5) return 'split';
         }
         if (decks >= 4) {
           if (_trueCount >= 4) return 'split';
@@ -94,16 +94,16 @@ class DeviationPlays {
 
     if (_playerTotal == 11 && _dealerFaceTotal == 11) {
       if (decks < 2) {
-        if (!_dealerHitsSoft17 && _trueCount >= -1) return 'double';
-        if (_dealerHitsSoft17 && _trueCount >= -2) return 'double';
+        if (_dealerStandsSoft17 && _trueCount >= -1) return 'double';
+        if (!_dealerStandsSoft17 && _trueCount >= -2) return 'double';
       }
       if (decks >= 2 && decks < 4) {
-        if (!_dealerHitsSoft17 && _trueCount >= 0) return 'double';
-        if (_dealerHitsSoft17 && _trueCount >= -1) return 'double';
+        if (_dealerStandsSoft17 && _trueCount >= 0) return 'double';
+        if (!_dealerStandsSoft17 && _trueCount >= -1) return 'double';
       }
       if (decks >= 4) {
-        if (!_dealerHitsSoft17 && _trueCount >= 1) return 'double';
-        if (_dealerHitsSoft17 && _trueCount >= 0) return 'double';
+        if (_dealerStandsSoft17 && _trueCount >= 1) return 'double';
+        if (!_dealerStandsSoft17 && _trueCount >= 0) return 'double';
       }
     }
 
@@ -119,8 +119,8 @@ class DeviationPlays {
         if (_trueCount >= 3) return 'double';
       }
       if (decks >= 4) {
-        if (!_dealerHitsSoft17 && _trueCount >= 4) return 'double';
-        if (_dealerHitsSoft17 && _trueCount >= 3) return 'double';
+        if (_dealerStandsSoft17 && _trueCount >= 4) return 'double';
+        if (!_dealerStandsSoft17 && _trueCount >= 3) return 'double';
       }
     }
 
@@ -148,16 +148,16 @@ class DeviationPlays {
 
     if (_playerTotal == 12 && _dealerFaceTotal == 6) {
       if (decks < 2) {
-        if (!_dealerHitsSoft17 && _trueCount <= 1) return 'hit';
-        if (_dealerHitsSoft17 && _trueCount <= -2) return 'hit';
+        if (_dealerStandsSoft17 && _trueCount <= 1) return 'hit';
+        if (!_dealerStandsSoft17 && _trueCount <= -2) return 'hit';
       }
       if (decks >= 2 && decks < 4) {
-        if (!_dealerHitsSoft17 && _trueCount <= 0) return 'hit';
-        if (_dealerHitsSoft17 && _trueCount <= -3) return 'hit';
+        if (_dealerStandsSoft17 && _trueCount <= 0) return 'hit';
+        if (!_dealerStandsSoft17 && _trueCount <= -3) return 'hit';
       }
       if (decks >= 4) {
-        if (!_dealerHitsSoft17 && _trueCount <= -1) return 'hit';
-        if (_dealerHitsSoft17 && _trueCount <= -3) return 'hit';
+        if (_dealerStandsSoft17 && _trueCount <= -1) return 'hit';
+        if (!_dealerStandsSoft17 && _trueCount <= -3) return 'hit';
       }
     }
 

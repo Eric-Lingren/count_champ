@@ -9,11 +9,11 @@
 
 class Hard15Plays {
   //* Settings Rules Needed:
-  final bool _dealerHitsSoft17;
+  final bool _dealerStandsSoft17;
   final double _deckQuantity;
   final bool _canSurrender;
 
-  Hard15Plays(this._dealerHitsSoft17, this._deckQuantity,
+  Hard15Plays(this._dealerStandsSoft17, this._deckQuantity,
       this._canSurrender);
 
   fetch() {
@@ -22,7 +22,7 @@ class Hard15Plays {
     if (_canSurrender) canSurrender = true;
 
     if (deckCount >= 4) {
-      if (!_dealerHitsSoft17) {
+      if (_dealerStandsSoft17) {
         if (canSurrender) {
           return hard15MultiDeckDealerStandsSurrenderAllowed;
         } // 1
@@ -30,7 +30,7 @@ class Hard15Plays {
           return hard15MultiDeckDealerStandsSurrenderNotAllowed;
         } // 2
       }
-      if (_dealerHitsSoft17) {
+      if (!_dealerStandsSoft17) {
         if (canSurrender) return hard15MultiDeckDealerHitsSurrenderAllowed; // 3
         if (!canSurrender) {
           return hard15MultiDeckDealerHitsSurrenderNotAllowed;
@@ -38,7 +38,7 @@ class Hard15Plays {
       }
     }
     if (deckCount >= 2 && deckCount < 4) {
-      if (!_dealerHitsSoft17) {
+      if (_dealerStandsSoft17) {
         if (canSurrender) {
           return hard15DoubleDeckDealerStandsSurrenderAllowed;
         } // 5
@@ -46,7 +46,7 @@ class Hard15Plays {
           return hard15DoubleDeckDealerStandsSurrenderNotAllowed;
         } // 6
       }
-      if (_dealerHitsSoft17) {
+      if (!_dealerStandsSoft17) {
         if (canSurrender) return hard15DoubleDeckDealerHitsSurrenderAllowed; // 7
         if (!canSurrender) {
           return hard15DoubleDeckDealerHitsSurrenderNotAllowed;
@@ -54,7 +54,7 @@ class Hard15Plays {
       }
     }
     if (deckCount < 2) {
-      if (!_dealerHitsSoft17) {
+      if (_dealerStandsSoft17) {
         if (canSurrender) {
           return hard15SingleDeckDealerStandsSurrenderAllowed;
         } // 9
@@ -62,7 +62,7 @@ class Hard15Plays {
           return hard15SingleDeckDealerStandsSurrenderNotAllowed;
         } // 10
       }
-      if (_dealerHitsSoft17) {
+      if (!_dealerStandsSoft17) {
         if (canSurrender)
           return hard15SingleDeckDealerHitsSurrenderAllowed; // 11
         if (!canSurrender) {
