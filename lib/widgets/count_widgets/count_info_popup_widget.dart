@@ -44,7 +44,7 @@ class _CountInfoPopupWidgetState extends State<CountInfoPopupWidget> {
                 padding: const EdgeInsets.fromLTRB(25, 10, 25, 10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
-                  color: Colors.lightBlue,
+                  color: Colors.lightBlue[600],
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -95,7 +95,7 @@ class _CountInfoPopupWidgetState extends State<CountInfoPopupWidget> {
                                           ),
                                           color: Colors.white,
                                         ),
-                                        width: 20,
+                                        width: 24,
                                         padding: const EdgeInsets.fromLTRB(
                                             1, 0, 1, 0),
                                         child: Text(
@@ -115,7 +115,7 @@ class _CountInfoPopupWidgetState extends State<CountInfoPopupWidget> {
                                           ),
                                           color: Colors.white,
                                         ),
-                                        width: 20,
+                                        width: 24,
                                         padding: const EdgeInsets.fromLTRB(
                                             1, 0, 1, 0),
                                         child: Text(
@@ -156,7 +156,7 @@ class _CountInfoPopupWidgetState extends State<CountInfoPopupWidget> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Playing Efficency:  ${widget.playingEfficency}',
+                              'Playing  Efficiency:  ${widget.playingEfficency}',
                               style: const TextStyle(
                                   fontSize: 13, color: Colors.white),
                               textAlign: TextAlign.center,

@@ -128,7 +128,7 @@ class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
                         insuranceCorrelation: '76%',
                         indexes: const [1,1,1,1,1,0,0,0,1,1],
                         systemInfo: 'Hi-Lo is by far the most widely used card counting system. It is generally accepted as a good balance between ease of use and profitability. Created by computer scientist Harvey Dubner in 1963, Hi-Lo was later optimized by computer programmer Julian Braun. Edward Thorp published this version in his 1966 book "Beat The Dealer." It was further refined again by Stanford Wong and published in his 1994 book "Professional Blackjack."'
-                    );
+                        );
                   },
                 );
               }),),
@@ -144,7 +144,28 @@ class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
                 activeTrackColor: Colors.lightGreenAccent[700],
                 activeColor: Colors.green,
               );
-            })),
+            }),
+            trailing: IconButton(
+              icon: const Icon(Icons.info_outline),
+              color: Colors.lightBlue[400],
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return CountInfoPopupWidget(
+                        infoTitle: 'Hi-Opt I',
+                        easeOfUse: '6.5',
+                        systemType: 'Balanced',
+                        bettingCorrelation: '88%',
+                        playingEfficency: '61%',
+                        insuranceCorrelation: '85%',
+                        indexes: const [0,1,1,1,1,0,0,0,-1,0],
+                        systemInfo: 'Hi-Opt I (aka Highly Optimum) is a simple system that used to be the most popular counting system for single deck games. As these games were replaced by shoe games, the popluarity of this system waned. It was created by Lance Humble and Carl Cooper and built upon the foundation laid by Charles Einstein in 1968. For this reason it is often refered to as the Einstein Count. The current version of this system can be found in the 1980 book titled "The Worlds Greatest Blackjack Book."'
+                        
+                    );
+                  },
+                );
+              }),),
         ListTile(
             title: const Text("Hi-Opt II"),
             leading: BlocBuilder<CountSettingsCubit, CountSettingsState>(
@@ -157,7 +178,28 @@ class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
                 activeTrackColor: Colors.lightGreenAccent[700],
                 activeColor: Colors.green,
               );
-            })),
+            }),
+            trailing: IconButton(
+              icon: const Icon(Icons.info_outline),
+              color: Colors.lightBlue[400],
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return CountInfoPopupWidget(
+                        infoTitle: 'Hi-Opt II',
+                        easeOfUse: '4',
+                        systemType: 'Balanced',
+                        bettingCorrelation: '91%',
+                        playingEfficency: '67%',
+                        insuranceCorrelation: '91%',
+                        indexes: const [1,1,2,2,1,1,0,0,-2,0],
+                        systemInfo: 'Hi-Opt II is a more complex version of Hi-Opt I and a level 2 system, meaning the card indexes have two levels of values. It is considered a complicated though highly effective system. It works very well in single-deck games and shoe games but performs better in shoe games with a separate Ace side count. This system was developed by Lance Humble and Julian Braun in 1976 and is found in the book "The Worlds Greatest Blackjack Book."'
+                        
+                    );
+                  },
+                );
+              }),),
         ListTile(
             title: const Text("Wong Halves"),
             leading: BlocBuilder<CountSettingsCubit, CountSettingsState>(
@@ -170,7 +212,28 @@ class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
                 activeTrackColor: Colors.lightGreenAccent[700],
                 activeColor: Colors.green,
               );
-            })),
+            }),
+            trailing: IconButton(
+              icon: const Icon(Icons.info_outline),
+              color: Colors.lightBlue[400],
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return CountInfoPopupWidget(
+                        infoTitle: 'Wong Halves',
+                        easeOfUse: '2.5',
+                        systemType: 'Balanced',
+                        bettingCorrelation: '99%',
+                        playingEfficency: '56%',
+                        insuranceCorrelation: '72%',
+                        indexes: const [.5,1,1,1.5,1,.5,0,.5,-1,-1],
+                        systemInfo: 'Wong Halves (aka Wong Count or simply Wong) is a fractional counting system. It is widely regarded as one of the most accurate systems and one of the most difficult ever created, so novice counters should avoid it. John Ferguson, who went by Stanford Wong, developed this system and published it in his 1975 book "Professional Blackjack." Although still used, most players opt for a more simplified counting system to minimize playing errors.'
+                        
+                    );
+                  },
+                );
+              }),),
         ListTile(
             title: const Text("Knockout (K-O)"),
             leading: BlocBuilder<CountSettingsCubit, CountSettingsState>(
@@ -183,7 +246,28 @@ class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
                 activeTrackColor: Colors.lightGreenAccent[700],
                 activeColor: Colors.green,
               );
-            })),
+            }),
+            trailing: IconButton(
+              icon: const Icon(Icons.info_outline),
+              color: Colors.lightBlue[400],
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return CountInfoPopupWidget(
+                        infoTitle: 'Knockout - aka K-O',
+                        easeOfUse: '7.5',
+                        systemType: 'Unbalanced',
+                        bettingCorrelation: '98%',
+                        playingEfficency: '55%',
+                        insuranceCorrelation: '78%',
+                        indexes: const [1,1,1,1,1,1,0,0,-1,-1],
+                        systemInfo: 'K-O Stands for "Knockout Blackjack" or Olaf Vancura and Ken Fuchs, who created this system and published it in their 1996 book by the same name. This unbalanced system is straightforward to learn and is just as effective as Hi-Lo without requiring conversion to True Count.  Once the Running Count reaches +2, the deck is in your favor. It has been coined "The Easiest Card Counting System Ever Devised."'
+                        
+                    );
+                  },
+                );
+              }),),
         ListTile(
             title: const Text("Red 7"),
             leading: BlocBuilder<CountSettingsCubit, CountSettingsState>(
@@ -196,7 +280,28 @@ class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
                 activeTrackColor: Colors.lightGreenAccent[700],
                 activeColor: Colors.green,
               );
-            })),
+            }),
+            trailing: IconButton(
+              icon: const Icon(Icons.info_outline),
+              color: Colors.lightBlue[400],
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return CountInfoPopupWidget(
+                        infoTitle: 'Red Seven',
+                        easeOfUse: '7',
+                        systemType: 'Unbalanced',
+                        bettingCorrelation: '98%',
+                        playingEfficency: '54%',
+                        insuranceCorrelation: '78%',
+                        indexes: const [1,1,1,1,1,'0/1',0,0,-1,-1],
+                        systemInfo: 'Red Seven was one of the first "Easy" counting systems devised. It was created by Arnold Snyder and published in his 1983 book "Blackbelt in Blackjack." Being unbalanced it does not require conversion to a True Count; However, the value of the seven changes depending upon the suit (red = 1 / black = 0), and the initial count is based upon the number of decks being played.'
+                        
+                    );
+                  },
+                );
+              }),),
         ListTile(
             title: const Text("Zen"),
             leading: BlocBuilder<CountSettingsCubit, CountSettingsState>(
@@ -209,7 +314,28 @@ class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
                 activeTrackColor: Colors.lightGreenAccent[700],
                 activeColor: Colors.green,
               );
-            })),
+            }),
+            trailing: IconButton(
+              icon: const Icon(Icons.info_outline),
+              color: Colors.lightBlue[400],
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return CountInfoPopupWidget(
+                        infoTitle: 'Zen Count',
+                        easeOfUse: '4',
+                        systemType: 'Balanced',
+                        bettingCorrelation: '96%',
+                        playingEfficency: '63%',
+                        insuranceCorrelation: '85%',
+                        indexes: const [1,1,2,2,2,1,0,0,-2,-1],
+                        systemInfo: 'Zen Count is a level 2 system and is considered the strongest level 2 system for betting efficiency. There are two versions of this system. The original where you convert to True Count by the number of whole decks remaining and the latest where you convert by the number of quarter decks remaining.  The original is seen as more effective. Arnold Snyder published it in his 1983 book "Blackbelt in Blackjack."'
+                        
+                    );
+                  },
+                );
+              }),),
         ListTile(
             title: const Text("Omega II"),
             leading: BlocBuilder<CountSettingsCubit, CountSettingsState>(
@@ -222,9 +348,28 @@ class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
                 activeTrackColor: Colors.lightGreenAccent[700],
                 activeColor: Colors.green,
               );
-            })),
-
-
+            }),
+            trailing: IconButton(
+              icon: const Icon(Icons.info_outline),
+              color: Colors.lightBlue[400],
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return CountInfoPopupWidget(
+                        infoTitle: 'Omega II',
+                        easeOfUse: '4',
+                        systemType: 'Balanced',
+                        bettingCorrelation: '92%',
+                        playingEfficency: '67%',
+                        insuranceCorrelation: '85%',
+                        indexes: const [1,1,2,2,2,1,0,-1,-2,0],
+                        systemInfo: 'Omega II is an advanced level 2 system and is considered difficult to use. Since this is an expert system, it should be avoided by beginners.  An Ace side count can be used to improve its effectiveness, but that complicates it even further. Omega II was very popular among counters in the 1990s, but it has since fallen out of fashion in favor of more simplified counting systems. Created by Bryce Carlson, it can be found in his 1992 book titled "Blackjack for Blood."'
+                        
+                    );
+                  },
+                );
+              }),),
         ListTile(
             title: const Text("Thorp's Ten-Count"),
             leading: BlocBuilder<CountSettingsCubit, CountSettingsState>(
@@ -237,7 +382,28 @@ class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
                 activeTrackColor: Colors.lightGreenAccent[700],
                 activeColor: Colors.green,
               );
-            })),
+            }),
+            trailing: IconButton(
+              icon: const Icon(Icons.info_outline),
+              color: Colors.lightBlue[400],
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return CountInfoPopupWidget(
+                        infoTitle: 'Thorps Ten Count',
+                        easeOfUse: '5',
+                        systemType: 'Balanced',
+                        bettingCorrelation: '74%',
+                        playingEfficency: '62%',
+                        insuranceCorrelation: '?',
+                        indexes: const [4,4,4,4,4,4,4,4,-9,4],
+                        systemInfo: "Ace counting had been used in the 1940's and 50's, but Thorps Ten Count created by Edward Thorp in 1956 was the first true card counting system, laying the foundations for Hi-Lo. Thorp partnered with professional gambler Manny Kimmel, who went by the name Mr. X. Together they staked \$10,000 in Reno and Lake Tahoe to validate the basis of Thorp's mathematical research that Blackjack could be beaten. Bringing home \$11,000 in profits their first weekend, they proved card counting was both possible and profitable. This counting system is no longer used, but it is an integral piece of history."
+                        
+                    );
+                  },
+                );
+              }),),
         ListTile(
             title: const Text("Ace/Five Count"),
             leading: BlocBuilder<CountSettingsCubit, CountSettingsState>(
