@@ -250,6 +250,7 @@ class BasicStrategySettingsCubit extends Cubit<BasicStrategySettingsState> {
       };
   void togglePracticeBsHardHands(value) => {
         if (value) {bsAllHands = false, bsIllustrious18 = false, bsfab4 = false, bsInsurance = false},
+        if (!value) {bsAllHands = true},
         emit(BasicStrategySettingsState(
           canDas: state.canDas,
           canResplitPairs: state.canResplitPairs,
@@ -272,6 +273,7 @@ class BasicStrategySettingsCubit extends Cubit<BasicStrategySettingsState> {
       };
   void togglePracticeBsSoftHands(value) => {
         if (value) {bsAllHands = false, bsIllustrious18 = false, bsfab4 = false, bsInsurance = false},
+        if (!value) {bsAllHands = true},
         emit(BasicStrategySettingsState(
           canDas: state.canDas,
           canResplitPairs: state.canResplitPairs,
@@ -294,6 +296,7 @@ class BasicStrategySettingsCubit extends Cubit<BasicStrategySettingsState> {
       };
   void togglePracticeBsSplitHands(value) => {
         if (value) {bsAllHands = false, bsIllustrious18 = false, bsfab4 = false, bsInsurance = false},
+        if (!value) {bsAllHands = true},
         emit(BasicStrategySettingsState(
           canDas: state.canDas,
           canResplitPairs: state.canResplitPairs,
@@ -317,6 +320,7 @@ class BasicStrategySettingsCubit extends Cubit<BasicStrategySettingsState> {
   void toggleIllustrious18(value) => {
     if (value)
           {bsAllHands = false, bsHardHands = false, bsSoftHands = false, bsSplitHands = false, bsfab4 = false, bsInsurance = false},
+    if (!value) {bsAllHands = true},
         emit(BasicStrategySettingsState(
           canDas: state.canDas,
           canResplitPairs: state.canResplitPairs,
@@ -340,6 +344,7 @@ class BasicStrategySettingsCubit extends Cubit<BasicStrategySettingsState> {
   void toggleFab4(value) => {
     if (value)
           {bsAllHands = false, bsHardHands = false, bsSoftHands = false, bsSplitHands = false, bsIllustrious18 = false, bsInsurance = false},
+    if (!value) {bsAllHands = true},
         emit(BasicStrategySettingsState(
           canDas: state.canDas,
           canResplitPairs: state.canResplitPairs,
@@ -367,6 +372,7 @@ class BasicStrategySettingsCubit extends Cubit<BasicStrategySettingsState> {
   void toggleInsurance(value) => {
     if (value)
           {bsAllHands = false, bsHardHands = false, bsSoftHands = false, bsSplitHands = false, bsIllustrious18 = false, bsfab4 = false},
+    if (!value) {bsAllHands = true},
         emit(BasicStrategySettingsState(
           canDas: state.canDas,
           canResplitPairs: state.canResplitPairs,

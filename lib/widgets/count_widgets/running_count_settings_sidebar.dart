@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:count_champ/logic/cubits/running_count_stats_cubit/session/running_count_session_stats_cubit.dart';
 import 'package:count_champ/logic/cubits/settings/count_settings_cubit/count_settings_cubit.dart';
+import 'package:count_champ/widgets/count_widgets/count_info_popup_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -110,7 +111,27 @@ class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
                 activeTrackColor: Colors.lightGreenAccent[700],
                 activeColor: Colors.green,
               );
-            })),
+            }),
+            trailing: IconButton(
+              icon: const Icon(Icons.info_outline),
+              color: Colors.lightBlue[400],
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return CountInfoPopupWidget(
+                        infoTitle: 'Hi-Lo',
+                        easeOfUse: '6',
+                        systemType: 'Balanced',
+                        bettingCorrelation: '97%',
+                        playingEfficency: '51%',
+                        insuranceCorrelation: '76%',
+                        indexes: const [1,1,1,1,1,0,0,0,1,1],
+                        systemInfo: 'Hi-Lo is by far the most widely used card counting system. It is generally accepted as a good balance between ease of use and profitability. Created by computer scientist Harvey Dubner in 1963, Hi-Lo was later optimized by computer programmer Julian Braun. Edward Thorp published this version in his 1966 book "Beat The Dealer." It was further refined again by Stanford Wong and published in his 1994 book "Professional Blackjack."'
+                    );
+                  },
+                );
+              }),),
         ListTile(
             title: const Text("Hi-Opt I"),
             leading: BlocBuilder<CountSettingsCubit, CountSettingsState>(
