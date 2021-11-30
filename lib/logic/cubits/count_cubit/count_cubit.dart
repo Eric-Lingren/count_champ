@@ -14,7 +14,7 @@ class CountCubit extends Cubit<CountState> {
   CountCubit({
     required this.countSettingsCubit,
     countSettingsStreamSubscription,
-  }) : super(CountState(didCheckResult: false, wasPlayerCountCorrect: false)){
+  }) : super(CountState(didCheckResult: false, wasPlayerCountCorrect: false)) {
     _monitorCountSettingsCubit();
   }
 
@@ -69,6 +69,7 @@ class CountCubit extends Cubit<CountState> {
   }
 
   void stopSpeedCount() {
+    print('STOPPING SPEED COUNT');
     _isRunningSpeedCount = false;
   }
 

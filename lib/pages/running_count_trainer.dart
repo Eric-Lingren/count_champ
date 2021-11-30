@@ -32,13 +32,28 @@ class _RunningCountTrainerState extends State<RunningCountTrainer> {
     return (Scaffold(
         appBar: AppBar(
           leading: Builder(
-            builder: (BuildContext context) {
+            builder: (BuildContext pageContext) {
+              // TODO Stop speed count if page navigated away from
+              // return BlocBuilder<CountCubit, CountState>(
+              //     builder: (countContext, countState) {
+              //       return IconButton(
+              //   icon: const Icon(Icons.arrow_back),
+              //   onPressed: () {
+              //     countContext.read<CountCubit>().stopSpeedCount();
+              //     // countContext.read<CountCubit>().resetCheckRunningCount();
+              //     context.read<DeckCubit>().shuffleDeck();
+              //     Navigator.pop(pageContext);
+              //     // TODO Stop speed count if page navigated away from
+              //   },
+              // );
+              // });
+
               return IconButton(
                 icon: const Icon(Icons.arrow_back),
                 onPressed: () {
+                  context.read<CountCubit>().stopSpeedCount();
                   context.read<DeckCubit>().shuffleDeck();
-                  Navigator.pop(context);
-                  // TODO Stop speed count if page navigated away from 
+                  Navigator.pop(pageContext);
                 },
               );
             },

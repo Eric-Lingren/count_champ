@@ -47,6 +47,8 @@ class DeckCubit extends Cubit<DeckState> {
   late bool _practiceFab4 = false;
   late bool _practiceInsurance = false;
   late bool _isShowingCount = true; // ToDo - get the default another way
+  late bool _isDealingOneCard = true;
+  late bool _isDealingTwoCards = false;
   late bool _hiLoEnabled = true; // ToDo - get the default another way
   late bool _hiOpt1Enabled = false;
   late bool _hiOpt2Enabled = false;
@@ -142,7 +144,8 @@ class DeckCubit extends Cubit<DeckState> {
     // _dealOneCard('player'); //* Deals one card initially on count trainer mount
     return countStreamSubscription = countCubit.stream.listen((countState) {
       if (countState.didDeal == true) {
-        _dealOneCard('player'); //* Deals one card to selected person.
+        if(_isDealingOneCard == true) _dealOneCard('player'); 
+        if(_isDealingTwoCards == true) _dealTwoCards('player'); 
       }
     });
   }
@@ -152,6 +155,8 @@ class DeckCubit extends Cubit<DeckState> {
         countSettingsCubit.stream.listen((countSettingsState) {
       _deckQuantity = countSettingsState.deckQuantity;
       _deckPenetration = countSettingsState.deckPenetration;
+      _isDealingOneCard = countSettingsState.isDealingOneCard;
+      _isDealingTwoCards = countSettingsState.isDealingTwoCards;
       _hiLoEnabled = countSettingsState.hiLoEnabled;
       _hiOpt1Enabled = countSettingsState.hiOpt1Enabled;
       _hiOpt2Enabled = countSettingsState.hiOpt2Enabled;
@@ -180,7 +185,7 @@ class DeckCubit extends Cubit<DeckState> {
       _ustonSsEnabled = countSettingsState.ustonSsEnabled;
 
       _setStartingCountOffeset();
-        //* Dont shuffle the deck if no settings changed other than show count:
+      //* Dont shuffle the deck if no settings changed other than show count:
       if (_isShowingCount == countSettingsState.showCount) shuffleDeck();
       //* Else Shuffle Deck:
       _isShowingCount = countSettingsState.showCount;
@@ -295,6 +300,40 @@ class DeckCubit extends Cubit<DeckState> {
     double runningCountValue = _calculateRunningCount(tempRemainingCards[0]);
     tempRemainingCards.removeRange(0, 1);
     double newRunningCount = state.runningCount + runningCountValue;
+
+    emit(DeckState(
+      deckRepository: state.deckRepository,
+      shuffledDeck: state.shuffledDeck,
+      cutCardIndex: state.cutCardIndex,
+      dealerHand: tempDealerHand,
+      playerHand: tempPlayerHand,
+      dealtCards: [...state.dealtCards, ...dealtCards],
+      trueCount: 0, // Todo set this count for real
+      runningCount: newRunningCount,
+    ));
+  }
+
+  _dealTwoCards(toWhom) {
+    var tempRemainingCards = state.shuffledDeck;
+
+    var dealtCards = [];
+    var tempDealerHand = [];
+    var tempPlayerHand = [];
+    if (toWhom == 'player') {
+      tempPlayerHand.add(tempRemainingCards[0]);
+      tempPlayerHand.add(tempRemainingCards[1]);
+      tempDealerHand = state.dealerHand;
+    }
+    if (toWhom == 'dealer') {
+      tempDealerHand.add(tempRemainingCards[0]);
+      tempDealerHand.add(tempRemainingCards[1]);
+      tempPlayerHand = state.playerHand;
+    }
+    dealtCards.add(tempRemainingCards[0]);
+    double runningCountValueCard1 = _calculateRunningCount(tempRemainingCards[0]);
+    double runningCountValueCard2 = _calculateRunningCount(tempRemainingCards[1]);
+    tempRemainingCards.removeRange(0, 2);
+    double newRunningCount = state.runningCount + runningCountValueCard1 + runningCountValueCard2;
 
     emit(DeckState(
       deckRepository: state.deckRepository,
@@ -758,7 +797,7 @@ class DeckCubit extends Cubit<DeckState> {
         _runningCountOffest = -20.0;
       }
       if (roundedDeckQuantity > 7) _runningCountOffest = -27.0;
-    } else if (_ubz2Enabled == true) {
+    } else if (_ubz2Enabled == true || _ustonSsEnabled == true) {
       _runningCountOffest = roundedDeckQuantity * -2.0;
     } else {
       _runningCountOffest = 0.0;

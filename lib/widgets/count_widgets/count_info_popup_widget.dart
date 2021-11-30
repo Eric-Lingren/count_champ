@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class CountInfoPopupWidget extends StatefulWidget {
   String infoTitle = '';
   String easeOfUse = '';
+  // String playerAdvantage = '';
   String systemType = '';
   String bettingCorrelation = '';
   String playingEfficency = '';
@@ -16,6 +17,7 @@ class CountInfoPopupWidget extends StatefulWidget {
     Key? key,
     required this.infoTitle,
     required this.easeOfUse,
+    // required this.playerAdvantage,
     required this.systemType,
     required this.bettingCorrelation,
     required this.playingEfficency,
@@ -60,6 +62,11 @@ class _CountInfoPopupWidgetState extends State<CountInfoPopupWidget> {
                       style: const TextStyle(fontSize: 16, color: Colors.white),
                       textAlign: TextAlign.center,
                     ),
+                    // Text(
+                    //   'Player Advantage:  ${widget.playerAdvantage}',
+                    //   style: const TextStyle(fontSize: 14, color: Colors.white),
+                    //   textAlign: TextAlign.center,
+                    // ),
                     const SizedBox(height: 15),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
