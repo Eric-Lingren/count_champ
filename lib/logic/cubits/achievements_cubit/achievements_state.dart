@@ -1,5 +1,3 @@
-
-
 part of 'achievements_cubit.dart';
 
 class AchievementsState extends Equatable {
@@ -47,5 +45,6 @@ class AchievementsState extends Equatable {
 
   String toJson() => json.encode(toMap());
 
-  factory AchievementsState.fromJson(String source) => AchievementsState.fromMap(json.decode(source));
+  factory AchievementsState.fromJson(String source) =>
+      AchievementsState.fromMap(json.decode(source));
 }

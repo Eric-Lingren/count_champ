@@ -33,12 +33,17 @@ class AchievementsCubit extends HydratedCubit<AchievementsState> {
   }
 
   void _updateAchievementsList(bsAchievementsState) {
+    bool achievementReached = true;
+    // Prevents achievement alerts if stats are reset
+    if (bsAchievementsState.bsTotalPlayedAchievement < 0) {
+      achievementReached = false;
+    }
     emit(AchievementsState(
-      achievementReached: true,
-      achievementText: bsAchievementsState.bsAchievementText,
-      achievementImagePath: bsAchievementsState.bsAchievementImagePath,
-      bsTotalPlayedAchievement: bsAchievementsState.bsTotalPlayedAchievement,
-    ));
+        achievementReached: achievementReached,
+        achievementText: bsAchievementsState.bsAchievementText,
+        achievementImagePath: bsAchievementsState.bsAchievementImagePath,
+        bsTotalPlayedAchievement:
+            bsAchievementsState.bsTotalPlayedAchievement));
   }
 
   clearAchievementReached() {
@@ -50,7 +55,7 @@ class AchievementsCubit extends HydratedCubit<AchievementsState> {
     ));
   }
 
-    @override
+  @override
   AchievementsState? fromJson(Map<String, dynamic> json) {
     return AchievementsState.fromMap(json);
   }

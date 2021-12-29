@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 
 class AchievementsChipRow extends StatelessWidget {
   final int achievements;
-  final String type;
+  // final String type;
+  final List achievementLevels;
   final List achievementImages = [
     'assets/images/chips/1_white.png',
     'assets/images/chips/5_red.png',
@@ -14,21 +15,21 @@ class AchievementsChipRow extends StatelessWidget {
   ];
 
   AchievementsChipRow(
-      {Key? key, required this.achievements, required this.type})
+      {Key? key, required this.achievements, required this.achievementLevels})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    List achievementLevels = [];
     String nextAchievementLevel = 'Completed All Levels';
-    if (type == 'bs') {
-      achievementLevels = [1, 5, 10, 15, 20, 25, 30, 35, 40];
-    }
     int lastAchievementIndex =
         achievementLevels.indexWhere((i) => i > achievements);
 
-    int nextAchievement = achievementLevels[lastAchievementIndex];
-    if (nextAchievement > 0) nextAchievementLevel = nextAchievement.toString();
+    if (lastAchievementIndex >= 0) {
+      int nextAchievement = achievementLevels[lastAchievementIndex];
+      nextAchievementLevel = nextAchievement.toString();
+    } else {
+      lastAchievementIndex = achievementLevels.length - 1;
+    }
 
     List userAchievements = achievementImages.sublist(0, lastAchievementIndex);
     int missingAchievements =

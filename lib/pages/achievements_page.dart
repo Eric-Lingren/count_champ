@@ -25,7 +25,7 @@ class AchievementsPage extends StatelessWidget {
           foregroundColor: Colors.white,
         ),
         body: SafeArea(
-          child: Container(
+            child: Container(
           margin: const EdgeInsets.only(top: 10.0),
           child: Column(
             children: [
@@ -35,18 +35,18 @@ class AchievementsPage extends StatelessWidget {
                   Container(
                     padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                     child: const Text(
-                          'Basic Strategy Hands Played',
-                          style: TextStyle(fontSize: 20),
-                        ),
+                      'Basic Strategy Hands Played',
+                      style: TextStyle(fontSize: 20),
+                    ),
                   ),
                 ],
               ),
-
               BlocBuilder<AchievementsCubit, AchievementsState>(
                   builder: (context, state) {
-                return AchievementsChipRow(achievements: state.bsTotalPlayedAchievement, type: 'bs');
+                return AchievementsChipRow(
+                    achievements: state.bsTotalPlayedAchievement,
+                    achievementLevels: [1, 5, 10, 15, 20, 25, 30]);
               }),
-
             ],
           ),
         )));

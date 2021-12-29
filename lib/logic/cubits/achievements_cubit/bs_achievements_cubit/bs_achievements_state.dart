@@ -44,8 +44,6 @@ class BsAchievementsState extends Equatable {
   // bool reached10000PairHandsPlayed;
 
   BsAchievementsState({
-    // this.reached1HandsPlayed = false,
-    // this.reached5HandsPlayed = false,
     this.bsAchievementText = '',
     this.bsAchievementImagePath = '',
     this.bsTotalPlayedAchievement = 0,
@@ -53,8 +51,6 @@ class BsAchievementsState extends Equatable {
 
   @override
   List<Object> get props => [
-        // reached1HandsPlayed,
-        // reached5HandsPlayed,
         bsAchievementText,
         bsAchievementImagePath,
         bsTotalPlayedAchievement,
