@@ -45,7 +45,7 @@ class AchievementsPage extends StatelessWidget {
                   builder: (context, state) {
                 return AchievementsChipRow(
                     achievements: state.bsTotalPlayedAchievement,
-                    achievementLevels: [1, 5, 10, 15, 20, 25, 30]);
+                    achievementLevels: const [10, 50, 250, 500, 1000, 5000, 10000]);
               }),
             ],
           ),

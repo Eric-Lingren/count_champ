@@ -69,7 +69,6 @@ class CountCubit extends Cubit<CountState> {
   }
 
   void stopSpeedCount() {
-    print('STOPPING SPEED COUNT');
     _isRunningSpeedCount = false;
   }
 

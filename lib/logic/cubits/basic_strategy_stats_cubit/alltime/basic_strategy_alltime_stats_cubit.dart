@@ -217,9 +217,9 @@ class BasicStrategyAlltimeStatsCubit
     emit(BasicStrategyAlltimeStatsState(
       currentStreak: 0,
       handsPlayed: 0,
-      correctHandsPlayed: 0,
+      correctHandsPlayed: 0, //!
       incorrectHandsPlayed: 0,
-      hardHandsPlayed: 0,
+      hardHandsPlayed: 0, //!
       hardHandsCorrect: 0,
       hardHandsIncorrect: 0,
       softHandsPlayed: 0,

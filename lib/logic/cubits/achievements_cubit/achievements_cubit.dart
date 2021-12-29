@@ -34,7 +34,7 @@ class AchievementsCubit extends HydratedCubit<AchievementsState> {
 
   void _updateAchievementsList(bsAchievementsState) {
     bool achievementReached = true;
-    // Prevents achievement alerts if stats are reset
+    //* Prevents achievement alerts if stats are reset
     if (bsAchievementsState.bsTotalPlayedAchievement < 0) {
       achievementReached = false;
     }
