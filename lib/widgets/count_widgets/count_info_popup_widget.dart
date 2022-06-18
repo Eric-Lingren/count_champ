@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class CountInfoPopupWidget extends StatefulWidget {
   String infoTitle = '';
   String easeOfUse = '';
+  String systemLevel = '';
   // String playerAdvantage = '';
   String systemType = '';
   String bettingCorrelation = '';
@@ -17,6 +18,7 @@ class CountInfoPopupWidget extends StatefulWidget {
     Key? key,
     required this.infoTitle,
     required this.easeOfUse,
+    required this.systemLevel,
     // required this.playerAdvantage,
     required this.systemType,
     required this.bettingCorrelation,
@@ -59,6 +61,11 @@ class _CountInfoPopupWidgetState extends State<CountInfoPopupWidget> {
                     const SizedBox(height: 5),
                     Text(
                       'Ease of Use:  ${widget.easeOfUse}/10',
+                      style: const TextStyle(fontSize: 16, color: Colors.white),
+                      textAlign: TextAlign.center,
+                    ),
+                    Text(
+                      'Level ${widget.systemLevel} Count',
                       style: const TextStyle(fontSize: 16, color: Colors.white),
                       textAlign: TextAlign.center,
                     ),
@@ -370,23 +377,23 @@ class _CountInfoPopupWidgetState extends State<CountInfoPopupWidget> {
                     ),
                     const SizedBox(height: 5),
 
-                    SizedBox( //* Scrollable Text Inset
+                    SizedBox(
+                      //* Scrollable Text Inset
                       height: 250,
                       child: Column(
                         children: [
                           Expanded(
                             flex: 1,
-                            child: 
-                            SingleChildScrollView(
+                            child: SingleChildScrollView(
                               scrollDirection: Axis.vertical,
                               child: Text(
-                                  widget.systemInfo,
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.white,
-                                  ),
-                                  textAlign: TextAlign.center,
+                                widget.systemInfo,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.white,
                                 ),
+                                textAlign: TextAlign.center,
+                              ),
                             ),
                           ),
                         ],

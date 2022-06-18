@@ -162,6 +162,7 @@ class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
                     return CountInfoPopupWidget(
                         infoTitle: 'Hi-Lo',
                         easeOfUse: '6',
+                        systemLevel: '1',
                         // playerAdvantage: '1.0 - 1.5%',
                         systemType: 'Balanced',
                         bettingCorrelation: '97%',
@@ -196,6 +197,7 @@ class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
                     return CountInfoPopupWidget(
                         infoTitle: 'Hi-Opt I',
                         easeOfUse: '6.5',
+                        systemLevel: '1',
                         // playerAdvantage: '',
                         systemType: 'Balanced',
                         bettingCorrelation: '88%',
@@ -230,6 +232,7 @@ class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
                     return CountInfoPopupWidget(
                         infoTitle: 'Hi-Opt II',
                         easeOfUse: '4',
+                        systemLevel: '2',
                         // playerAdvantage: '',
                         systemType: 'Balanced',
                         bettingCorrelation: '91%',
@@ -264,6 +267,7 @@ class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
                     return CountInfoPopupWidget(
                         infoTitle: 'Wong Halves',
                         easeOfUse: '2.5',
+                        systemLevel: '3',
                         // playerAdvantage: '',
                         systemType: 'Balanced',
                         bettingCorrelation: '99%',
@@ -298,6 +302,7 @@ class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
                     return CountInfoPopupWidget(
                         infoTitle: 'Knockout - aka K-O',
                         easeOfUse: '7.5',
+                        systemLevel: '1',
                         // playerAdvantage: '',
                         systemType: 'Unbalanced',
                         bettingCorrelation: '98%',
@@ -332,6 +337,7 @@ class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
                     return CountInfoPopupWidget(
                         infoTitle: 'Red Seven',
                         easeOfUse: '7',
+                        systemLevel: '1',
                         // playerAdvantage: '',
                         systemType: 'Unbalanced',
                         bettingCorrelation: '98%',
@@ -366,6 +372,7 @@ class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
                     return CountInfoPopupWidget(
                         infoTitle: 'Zen Count',
                         easeOfUse: '4',
+                        systemLevel: '2',
                         // playerAdvantage: '',
                         systemType: 'Balanced',
                         bettingCorrelation: '96%',
@@ -400,6 +407,7 @@ class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
                     return CountInfoPopupWidget(
                         infoTitle: 'Omega II',
                         easeOfUse: '4',
+                        systemLevel: '2',
                         // playerAdvantage: '',
                         systemType: 'Balanced',
                         bettingCorrelation: '92%',
@@ -434,6 +442,7 @@ class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
                     return CountInfoPopupWidget(
                         infoTitle: 'Thorps Ten Count',
                         easeOfUse: '5',
+                        systemLevel: '2', 
                         // playerAdvantage: '',
                         systemType: 'Balanced',
                         bettingCorrelation: '74%',
@@ -468,6 +477,7 @@ class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
                     return CountInfoPopupWidget(
                         infoTitle: 'Ace Five Count',
                         easeOfUse: '9',
+                        systemLevel: '1',
                         // playerAdvantage: '0.3 - 0.67%',
                         systemType: 'Balanced',
                         bettingCorrelation: '54%',
@@ -502,6 +512,7 @@ class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
                     return CountInfoPopupWidget(
                         infoTitle: 'Kiss I',
                         easeOfUse: '7',
+                        systemLevel: '1',
                         // playerAdvantage: '0.48%',
                         systemType: 'Unbalanced',
                         bettingCorrelation: '87%',
@@ -536,6 +547,7 @@ class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
                     return CountInfoPopupWidget(
                         infoTitle: 'Kiss II',
                         easeOfUse: '7',
+                        systemLevel: '1',
                         // playerAdvantage: '0.64%',
                         systemType: 'Unbalanced',
                         bettingCorrelation: '90%',
@@ -570,6 +582,7 @@ class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
                     return CountInfoPopupWidget(
                         infoTitle: 'Kiss III',
                         easeOfUse: '7',
+                        systemLevel: '1',
                         // playerAdvantage: '0.64%',
                         systemType: 'Unbalanced',
                         bettingCorrelation: '98%',
@@ -604,6 +617,7 @@ class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
                     return CountInfoPopupWidget(
                         infoTitle: 'Canfield Expert',
                         easeOfUse: '6',
+                        systemLevel: '1',
                         // playerAdvantage: '%',
                         systemType: 'Balanced',
                         bettingCorrelation: '87%',
@@ -638,6 +652,7 @@ class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
                     return CountInfoPopupWidget(
                         infoTitle: 'Canfield Master',
                         easeOfUse: '4',
+                        systemLevel: '???',
                         // playerAdvantage: '%',
                         systemType: 'Balanced',
                         bettingCorrelation: '92%',
@@ -672,6 +687,7 @@ class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
                     return CountInfoPopupWidget(
                         infoTitle: 'Mentor',
                         easeOfUse: '4',
+                        systemLevel: '???',
                         // playerAdvantage: '%',
                         systemType: 'Balanced',
                         bettingCorrelation: '97%',
@@ -706,6 +722,7 @@ class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
                     return CountInfoPopupWidget(
                         infoTitle: 'REKO',
                         easeOfUse: '8',
+                        systemLevel: '1',
                         // playerAdvantage: '%',
                         systemType: 'Unbalanced',
                         bettingCorrelation: '98%',
@@ -740,6 +757,7 @@ class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
                     return CountInfoPopupWidget(
                         infoTitle: 'Silver Fox',
                         easeOfUse: '6',
+                        systemLevel: '1',
                         // playerAdvantage: '%',
                         systemType: 'Balanced',
                         bettingCorrelation: '96%',
@@ -774,6 +792,7 @@ class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
                     return CountInfoPopupWidget(
                         infoTitle: 'UBZ2',
                         easeOfUse: '6.5',
+                        systemLevel: '2',
                         // playerAdvantage: '%',
                         systemType: 'Unbalanced',
                         bettingCorrelation: '97%',
@@ -808,6 +827,7 @@ class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
                     return CountInfoPopupWidget(
                         infoTitle: 'Revere Advanced Plus Minus',
                         easeOfUse: '6',
+                        systemLevel: '?',
                         // playerAdvantage: '%',
                         systemType: 'Balanced',
                         bettingCorrelation: '89%',
@@ -842,6 +862,7 @@ class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
                     return CountInfoPopupWidget(
                         infoTitle: 'Revere Point Count',
                         easeOfUse: '6',
+                        systemLevel: '2',
                         // playerAdvantage: '%',
                         systemType: 'Balanced',
                         bettingCorrelation: '100%',
@@ -876,6 +897,7 @@ class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
                     return CountInfoPopupWidget(
                         infoTitle: 'Revere APC',
                         easeOfUse: '1',
+                        systemLevel: '?',
                         // playerAdvantage: '%',
                         systemType: 'Balanced',
                         bettingCorrelation: '100%',
@@ -910,6 +932,7 @@ class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
                     return CountInfoPopupWidget(
                         infoTitle: 'Revere 14',
                         easeOfUse: '1',
+                        systemLevel: '?',
                         // playerAdvantage: '%',
                         systemType: 'Balanced',
                         bettingCorrelation: '92%',
@@ -944,6 +967,7 @@ class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
                     return CountInfoPopupWidget(
                         infoTitle: 'Uston Advanced Plus Minus',
                         easeOfUse: '6.5',
+                        systemLevel: '?',
                         // playerAdvantage: '%',
                         systemType: 'Balanced',
                         bettingCorrelation: '95%',
@@ -978,6 +1002,7 @@ class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
                     return CountInfoPopupWidget(
                         infoTitle: 'Uston APC',
                         easeOfUse: '2.5',
+                        systemLevel: '3',
                         // playerAdvantage: '%',
                         systemType: 'Balanced',
                         bettingCorrelation: '91%',
@@ -1012,6 +1037,7 @@ class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
                     return CountInfoPopupWidget(
                         infoTitle: 'Uston SS',
                         easeOfUse: '4.5',
+                        systemLevel: '?',
                         // playerAdvantage: '%',
                         systemType: 'Unbalanced',
                         bettingCorrelation: '99%',
