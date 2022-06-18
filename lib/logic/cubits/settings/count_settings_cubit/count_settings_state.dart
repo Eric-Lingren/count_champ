@@ -9,6 +9,7 @@ class CountSettingsState extends Equatable {
   bool isSpeedCountRunning;
   bool isDealingOneCard;
   bool isDealingTwoCards;
+  bool isDealingFourCards;
   bool hiLoEnabled;
   bool hiOpt1Enabled;
   bool hiOpt2Enabled;
@@ -45,6 +46,7 @@ class CountSettingsState extends Equatable {
     required this.isSpeedCountRunning,
     required this.isDealingOneCard,
     required this.isDealingTwoCards,
+    required this.isDealingFourCards,
     required this.hiLoEnabled,
     required this.hiOpt1Enabled,
     required this.hiOpt2Enabled,
@@ -83,6 +85,7 @@ class CountSettingsState extends Equatable {
         isSpeedCountRunning,
         isDealingOneCard,
         isDealingTwoCards,
+        isDealingFourCards,
         hiLoEnabled,
         hiOpt1Enabled,
         hiOpt2Enabled,

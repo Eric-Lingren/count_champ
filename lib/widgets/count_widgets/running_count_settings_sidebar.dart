@@ -125,6 +125,19 @@ class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
               activeColor: Colors.green,
             );
           })),
+        ListTile(
+          title: const Text("Deal 4 Cards"),
+          leading: BlocBuilder<CountSettingsCubit, CountSettingsState>(
+              builder: (context, state) {
+            return Switch(
+              value: state.isDealingFourCards,
+              onChanged: (value) {
+                context.read<CountSettingsCubit>().toggleDealFourCards(value);
+              },
+              activeTrackColor: Colors.lightGreenAccent[700],
+              activeColor: Colors.green,
+            );
+          })),
         Divider( color: Colors.blue[300], thickness: 2 ),
         ListTile(
             title: const Text("Hi-Lo"),

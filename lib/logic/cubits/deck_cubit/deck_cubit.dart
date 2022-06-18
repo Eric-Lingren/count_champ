@@ -49,6 +49,7 @@ class DeckCubit extends Cubit<DeckState> {
   late bool _isShowingCount = true; // ToDo - get the default another way
   late bool _isDealingOneCard = true;
   late bool _isDealingTwoCards = false;
+  late bool _isDealingFourCards = false;
   late bool _hiLoEnabled = true; // ToDo - get the default another way
   late bool _hiOpt1Enabled = false;
   late bool _hiOpt2Enabled = false;
@@ -144,8 +145,12 @@ class DeckCubit extends Cubit<DeckState> {
     // _dealOneCard('player'); //* Deals one card initially on count trainer mount
     return countStreamSubscription = countCubit.stream.listen((countState) {
       if (countState.didDeal == true) {
-        if(_isDealingOneCard == true) _dealOneCard('player'); 
-        if(_isDealingTwoCards == true) _dealTwoCards('player'); 
+        if (_isDealingOneCard == true) _dealOneCard('player');
+        if (_isDealingTwoCards == true) _dealTwoCards('player');
+        if (_isDealingFourCards == true) {
+          _dealTwoCards('player');
+          _dealTwoCards('dealer');
+        }
       }
     });
   }
@@ -157,6 +162,7 @@ class DeckCubit extends Cubit<DeckState> {
       _deckPenetration = countSettingsState.deckPenetration;
       _isDealingOneCard = countSettingsState.isDealingOneCard;
       _isDealingTwoCards = countSettingsState.isDealingTwoCards;
+      _isDealingFourCards = countSettingsState.isDealingFourCards;
       _hiLoEnabled = countSettingsState.hiLoEnabled;
       _hiOpt1Enabled = countSettingsState.hiOpt1Enabled;
       _hiOpt2Enabled = countSettingsState.hiOpt2Enabled;
@@ -330,10 +336,13 @@ class DeckCubit extends Cubit<DeckState> {
       tempPlayerHand = state.playerHand;
     }
     dealtCards.add(tempRemainingCards[0]);
-    double runningCountValueCard1 = _calculateRunningCount(tempRemainingCards[0]);
-    double runningCountValueCard2 = _calculateRunningCount(tempRemainingCards[1]);
+    double runningCountValueCard1 =
+        _calculateRunningCount(tempRemainingCards[0]);
+    double runningCountValueCard2 =
+        _calculateRunningCount(tempRemainingCards[1]);
     tempRemainingCards.removeRange(0, 2);
-    double newRunningCount = state.runningCount + runningCountValueCard1 + runningCountValueCard2;
+    double newRunningCount =
+        state.runningCount + runningCountValueCard1 + runningCountValueCard2;
 
     emit(DeckState(
       deckRepository: state.deckRepository,
@@ -797,6 +806,14 @@ class DeckCubit extends Cubit<DeckState> {
         _runningCountOffest = -20.0;
       }
       if (roundedDeckQuantity > 7) _runningCountOffest = -27.0;
+    } else if (_koEnabled == true) {
+      //* Set the Running Count offset required for Reko Counts
+      if (roundedDeckQuantity == 1) _runningCountOffest = 0.0;
+      if (roundedDeckQuantity == 2) _runningCountOffest = -4.0;
+      if (roundedDeckQuantity >= 3 && roundedDeckQuantity <= 7) {
+        _runningCountOffest = -20.0;
+      }
+      if (roundedDeckQuantity > 7) _runningCountOffest = -28.0;
     } else if (_ubz2Enabled == true || _ustonSsEnabled == true) {
       _runningCountOffest = roundedDeckQuantity * -2.0;
     } else {

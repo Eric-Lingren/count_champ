@@ -33,26 +33,12 @@ class _RunningCountTrainerState extends State<RunningCountTrainer> {
         appBar: AppBar(
           leading: Builder(
             builder: (BuildContext pageContext) {
-              // TODO Stop speed count if page navigated away from
-              // return BlocBuilder<CountCubit, CountState>(
-              //     builder: (countContext, countState) {
-              //       return IconButton(
-              //   icon: const Icon(Icons.arrow_back),
-              //   onPressed: () {
-              //     countContext.read<CountCubit>().stopSpeedCount();
-              //     // countContext.read<CountCubit>().resetCheckRunningCount();
-              //     context.read<DeckCubit>().shuffleDeck();
-              //     Navigator.pop(pageContext);
-              //     // TODO Stop speed count if page navigated away from
-              //   },
-              // );
-              // });
-
               return IconButton(
                 icon: const Icon(Icons.arrow_back),
                 onPressed: () {
                   context.read<CountCubit>().stopSpeedCount();
                   context.read<DeckCubit>().shuffleDeck();
+                  context.read<CountSettingsCubit>().exitCountTrainer();
                   Navigator.pop(pageContext);
                 },
               );
@@ -71,6 +57,21 @@ class _RunningCountTrainerState extends State<RunningCountTrainer> {
           children: <Widget>[
             RunningCountHeaderWidget(),
 
+            //* Renders the Cards Dealt
+            BlocBuilder<DeckCubit, DeckState>(builder: (context, state) {
+              if (state.dealerHand.isNotEmpty) {
+                return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: state.dealerHand
+                        .map<Widget>((card) => CardTemplate(
+                                cardCode: card.code,
+                                value: card.value,
+                                isHoleCard: card.isHoleCard)
+                            .getWidget())
+                        .toList());
+              }
+              return const SizedBox.shrink();
+            }),
             //* Renders the Cards Dealt
             BlocBuilder<DeckCubit, DeckState>(builder: (context, state) {
               if (state.playerHand.isNotEmpty) {
@@ -151,8 +152,47 @@ class _RunningCountTrainerState extends State<RunningCountTrainer> {
                           );
                         }
                       });
+                    } else {
+                      return BlocBuilder<DeckCubit, DeckState>(
+                          builder: (context, deckState) {
+                        if (deckState.playerHand.isNotEmpty) {
+                          
+                          return Row(children: [
+                            // countSettingsState.isSpeedCountRunning == true) {
+
+                            // }
+                            ElevatedButton(
+                                onPressed: () {
+                                  context.read<CountCubit>().stopSpeedCount();
+                                },
+                                child: const Text('Pause')),
+                            ElevatedButton(
+                                onPressed: () {
+                                  context
+                                      .read<CountCubit>()
+                                      .beginSpeedCount(_cardsPerSecond);
+                                },
+                                child: const Text('Resume')),
+                            ElevatedButton(
+                                onPressed: () {
+                                  context.read<DeckCubit>().shuffleDeck();
+                                  context
+                                      .read<CountCubit>()
+                                      .resetCheckRunningCount();
+                                  context
+                                      .read<CountCubit>()
+                                      .beginSpeedCount(_cardsPerSecond);
+                                  context
+                                      .read<CountSettingsCubit>()
+                                      .startingSpeedCount(true);
+                                },
+                                child: const Text('Restart'))
+                          ]);
+                        }
+                        return const SizedBox.shrink();
+                      });
                     }
-                    return const SizedBox.shrink();
+                    // return const SizedBox.shrink();
                   });
                 } else {
                   return BlocBuilder<DeckCubit, DeckState>(
