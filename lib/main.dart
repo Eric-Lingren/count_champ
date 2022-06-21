@@ -97,7 +97,7 @@ class _MyAppState extends State<MyApp> {
       ],
       child: MaterialApp(
         title: 'Count Champ',
-        initialRoute: '/running_count_trainer',
+        // initialRoute: '/running_count_trainer',
         // initialRoute: '/achievements',
         // initialRoute: '/basic_strategy_trainer',
         theme: ThemeData(

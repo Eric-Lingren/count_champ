@@ -22,7 +22,15 @@ class RunningCountHeaderWidget extends StatelessWidget {
                     return BlocBuilder<RunningCountAlltimeStatsCubit,
                             RunningCountAlltimeStatsState>(
                         builder: (context, runningCountAlltimeStatsState) {
-                      return Text('Streak: ' + runningCountSessionStatsState.streak.toString());
+                      return Container (
+                        margin: const EdgeInsets.only(left: 20.0),
+                        child: Text(
+                          'Streak : ' + runningCountSessionStatsState.streak.toString(),
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            color: Colors.white,
+                        ))
+                      );
                     });
                   }),
                   Container(
@@ -30,7 +38,7 @@ class RunningCountHeaderWidget extends StatelessWidget {
                     child: Column(children: [
                       IconButton(
                         icon: const Icon(Icons.show_chart_outlined,
-                            color: Colors.black, size: 36.0),
+                            color: Colors.white, size: 36.0),
                         onPressed: () {
                           Navigator.pushNamed(context, '/running_count_stats');
                         },

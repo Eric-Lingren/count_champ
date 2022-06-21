@@ -35,6 +35,7 @@ class _CheckCountFormState extends State<CheckCountForm> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             TextFormField(
+              cursorColor: Colors.white,
               textAlign: TextAlign.center,
               controller: formController,
               keyboardType: TextInputType.number,
@@ -54,12 +55,24 @@ class _CheckCountFormState extends State<CheckCountForm> {
               },
               decoration: const InputDecoration(
                 labelText: "Whats The Count?",
+                labelStyle: TextStyle(
+                  color: Colors.white
+                ),
+                enabledBorder: UnderlineInputBorder(      
+                  borderSide: BorderSide(color: Colors.white),   
+                ),  
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
+                ),  
               ),
-              style: const TextStyle(fontSize: 18),
+              style: const TextStyle(fontSize: 18, color: Colors.white),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0),
               child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.white,
+                ),
                 onPressed: () {
                   //* Hides the keyboard
                   if (!currentFocus.hasPrimaryFocus) {
@@ -71,7 +84,13 @@ class _CheckCountFormState extends State<CheckCountForm> {
                         formController.text, widget.runningCount);
                   }
                 },
-                child: const Text('Submit'),
+                child: const Text(
+                  'Submit',
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    color: Colors.black,
+                  ),
+                ),
               ),
             ),
           ],

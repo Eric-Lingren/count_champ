@@ -67,6 +67,7 @@ flutter:
     - assets/images/cards/card_faces/
     - assets/images/cards/card_backs/
     - assets/images/chips/
+    - assets/images/backgrounds/
     - assets/data/
     - assets/audio/
 
