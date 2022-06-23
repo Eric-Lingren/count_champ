@@ -74,7 +74,7 @@ class BsAchievementsCubit extends Cubit<BsAchievementsState> {
   void totalBsHandsPlayedAchievement(count, image) {
     emit(BsAchievementsState(
       bsTotalPlayedAchievement: count,
-      bsAchievementText: count.toString() + ' Basic Strategy Hand Played',
+      bsAchievementText: count.toString() + ' Basic Strategy Hands Played',
       bsAchievementImagePath: 'assets/images/chips/' + image,
     ));
   }

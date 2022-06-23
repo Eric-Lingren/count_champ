@@ -10,6 +10,7 @@ import 'package:count_champ/logic/cubits/running_count_stats_cubit/alltime/runni
 import 'package:count_champ/logic/cubits/running_count_stats_cubit/session/running_count_session_stats_cubit.dart';
 import 'package:count_champ/logic/cubits/settings/basic_strategy_settings_cubit/basic_strategy_settings_cubit.dart';
 import 'package:count_champ/logic/cubits/settings/count_settings_cubit/count_settings_cubit.dart';
+import 'package:count_champ/logic/cubits/settings/deviations_settings_cubit/deviations_settings_cubit.dart';
 import 'package:count_champ/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -94,12 +95,15 @@ class _MyAppState extends State<MyApp> {
             create: (context) => AchievementsCubit(
               bsAchievementsCubit: context.read<BsAchievementsCubit>()
             )),
+        BlocProvider<DeviationsSettingsCubit>(
+            create: (context) => DeviationsSettingsCubit()),
       ],
       child: MaterialApp(
         title: 'Count Champ',
         // initialRoute: '/running_count_trainer',
         // initialRoute: '/achievements',
         // initialRoute: '/basic_strategy_trainer',
+        initialRoute: '/deviations_trainer',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),

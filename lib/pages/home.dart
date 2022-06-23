@@ -90,95 +90,15 @@ class _HomeState extends State<Home> {
                 child: Row(
                   children: <Widget>[
                     const SizedBox(width: 50),
-                    // Container(
-                    //   width: 250,
-                    //   height: 400,
-                    //   child: Stack(
-                    //     fit: StackFit.expand,
-                    //     children: <Widget>[
-                    //       GestureDetector(
-                    //         onTap: () { 
-                    //           Navigator.pushNamed(context, '/basic_strategy_trainer');
-                    //         },
-                    //       child: Container(
-                    //         decoration: BoxDecoration(
-                    //           borderRadius: const BorderRadius.all(
-                    //             Radius.circular(10.0),
-                    //           ),
-                    //           color: Colors.black,
-                    //           image: DecorationImage(
-                    //             fit: BoxFit.cover,
-                    //             colorFilter: 
-                    //               ColorFilter.mode(Colors.black.withOpacity(0.7), 
-                    //               BlendMode.dstATop),
-                          //       image: const AssetImage('assets/images/backgrounds/home_nav_card.jpeg'),
-                          //     ),
-                          //   ),
-                          // ),
-                          // ),
-                          // Positioned(
-                          //   bottom: 20,
-                          //   right: 10,
-                          //   child: Column(
-                          //     children: const <Widget>[
-                          //       Text(
-                          //         "Basic Strategy",
-                          //         textAlign: TextAlign.left,
-                          //         style: TextStyle(
-                          //           fontSize: 20,
-                          //           fontWeight: FontWeight.bold,
-                          //           color: Colors.white,
-      //                               decoration: TextDecoration.none,
-      //                             ),
-      //                         ),
-      //                         SizedBox(height: 5),
-      //                         Text(
-      //                           '''       Practice the correct play for  
-      //  any situation''',
-      //                           textAlign: TextAlign.left,
-      //                           style: TextStyle(
-      //                             fontSize: 12,
-      //                             color: Colors.white,
-      //                             decoration: TextDecoration.none,
-      //                             fontStyle: FontStyle.italic,
-      //                             fontWeight: FontWeight.w100
-      //                           ),
-      //                         ),
-      //                       ],
-      //                     ),
-      //                   ),
-      //                 ],
-      //               ),
-      //             ),
-                  const HomeNavWidget(navLink: '/basic_strategy_trainer', navTitle: 'Basic Strategy', navSubtitle:'''                 Practice the correct play for  
-                 any situation''', rightPosition: 10.0),
+                    const HomeNavWidget(navLink: '/basic_strategy_trainer', navTitle: 'Basic Strategy', navSubtitle:' Practice the correct play for any situation', rightPosition: 10.0),
+                    const SizedBox(width: 20),
+                    const HomeNavWidget(navLink: '/running_count_trainer', navTitle: 'Running Count', navSubtitle:'Practice counting to gain the advantage', rightPosition: 50),
+                    const SizedBox(width: 20),
+                    const HomeNavWidget(navLink: '/deviations_trainer', navTitle: 'Deviations', navSubtitle:'Optimize your play with deviations', rightPosition: 50),
+                    const SizedBox(width: 20),
+                    const HomeNavWidget(navLink: '/achievements', navTitle: 'Achievements', navSubtitle:'Check out the awards you have earned', rightPosition: 50),
+                    const SizedBox(width: 50),
 
-                  const SizedBox(width: 20),
-
-                  const HomeNavWidget(navLink: '/running_count_trainer', navTitle: 'TESTING', navSubtitle:'assgdsfgdasfg', rightPosition: 50),
-
-
-
-
-            
-
-
-
-                ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/basic_strategy_trainer');
-                    },
-                    child: const Text('Basic Strategy')),
-                ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/running_count_trainer');
-                    },
-                    child: const Text('Count Trainer')),
-                ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/achievements');
-                    },
-                    child: const Text('Achievements')),
                 BlocBuilder<AchievementsCubit, AchievementsState>(
                   builder: (context, state) {
                     if (state.achievementReached == true) {
@@ -191,6 +111,6 @@ class _HomeState extends State<Home> {
                   },
                 ),
               ]),
-            )));
+            )]))));
   }
 }
