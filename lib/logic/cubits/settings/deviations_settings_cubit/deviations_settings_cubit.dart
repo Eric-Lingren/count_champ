@@ -8,6 +8,7 @@ class DeviationsSettingsCubit extends Cubit<DeviationsSettingsState> {
   var bsIllustrious18;
   var bsfab4;
   var bsInsurance;
+  var deviationFlashcards;
 
   DeviationsSettingsCubit()
       : super(DeviationsSettingsState(
@@ -16,15 +17,16 @@ class DeviationsSettingsCubit extends Cubit<DeviationsSettingsState> {
           practiceIllustrious18: false,
           practiceFab4: false,
           practiceInsurance: false,
+          deviationFlashcards: const [{'q': 'q1', 'a': 'a1'}]
         ));
 
   void setDeckQuantity(value) => emit(DeviationsSettingsState(
-    deckQuantity: value,
-    practiceIllustrious18: state.practiceIllustrious18,
-    practiceFab4: state.practiceFab4,
-    practiceInsurance: state.practiceInsurance,
-  ));
-
+        deckQuantity: value,
+        practiceIllustrious18: state.practiceIllustrious18,
+        practiceFab4: state.practiceFab4,
+        practiceInsurance: state.practiceInsurance,
+        deviationFlashcards: state.deviationFlashcards,
+      ));
 
   void toggleIllustrious18(value) => {
         print('toggle Illustrious 18'),
@@ -35,6 +37,7 @@ class DeviationsSettingsCubit extends Cubit<DeviationsSettingsState> {
           practiceIllustrious18: value,
           practiceFab4: bsfab4,
           practiceInsurance: bsInsurance,
+          deviationFlashcards: state.deviationFlashcards,
         )),
       };
 
@@ -47,6 +50,7 @@ class DeviationsSettingsCubit extends Cubit<DeviationsSettingsState> {
           practiceIllustrious18: bsIllustrious18,
           practiceFab4: value,
           practiceInsurance: bsInsurance,
+          deviationFlashcards: state.deviationFlashcards,
         )),
       };
 
@@ -59,6 +63,7 @@ class DeviationsSettingsCubit extends Cubit<DeviationsSettingsState> {
           practiceIllustrious18: bsIllustrious18,
           practiceFab4: bsfab4,
           practiceInsurance: value,
+          deviationFlashcards: state.deviationFlashcards,
         )),
       };
 

@@ -11,6 +11,7 @@ import 'package:count_champ/logic/cubits/running_count_stats_cubit/session/runni
 import 'package:count_champ/logic/cubits/settings/basic_strategy_settings_cubit/basic_strategy_settings_cubit.dart';
 import 'package:count_champ/logic/cubits/settings/count_settings_cubit/count_settings_cubit.dart';
 import 'package:count_champ/logic/cubits/settings/deviations_settings_cubit/deviations_settings_cubit.dart';
+import 'package:count_champ/logic/cubits/deviations_cubit/deviations_cubit.dart';
 import 'package:count_champ/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -97,6 +98,8 @@ class _MyAppState extends State<MyApp> {
             )),
         BlocProvider<DeviationsSettingsCubit>(
             create: (context) => DeviationsSettingsCubit()),
+        BlocProvider<DeviationsCubit>(
+            create: (context) => DeviationsCubit()),
       ],
       child: MaterialApp(
         title: 'Count Champ',
