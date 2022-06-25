@@ -5,14 +5,12 @@ class DeviationsSettingsState extends Equatable {
   bool practiceIllustrious18;
   bool practiceFab4;
   bool practiceInsurance;
-  List deviationFlashcards;
 
   DeviationsSettingsState({
     required this.deckQuantity,
     required this.practiceIllustrious18,
     required this.practiceFab4,
     required this.practiceInsurance,
-    required this.deviationFlashcards,
   });
 
   @override
@@ -21,6 +19,5 @@ class DeviationsSettingsState extends Equatable {
         practiceIllustrious18,
         practiceFab4,
         practiceInsurance,
-        deviationFlashcards,
       ];
 }

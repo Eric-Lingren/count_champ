@@ -81,27 +81,53 @@ class DeviationsTrainer extends StatelessWidget {
 
                 child: BlocBuilder<DeviationsCubit, DeviationsState>(
                     builder: (deviationsContext, deviationsState) {
-                  return ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          primary: Colors.white,
-                          minimumSize: const Size(200, 40)),
-                      onPressed: () {
-                        deviationsContext
-                            .read<DeviationsCubit>()
-                            .getFlashcard();
-                      },
-                      child: const Text(
-                        'Some Button',
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          color: Colors.black,
-                        ),
-                      ));
+                  print(deviationsState.buttonAnswerOptions);
+                  if(deviationsState.buttonAnswerOptions.length > 0){
+                    return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: deviationsState.buttonAnswerOptions
+                        .map<Widget>((option) => Container(
+                          margin: const EdgeInsets.all(10.0),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                primary: Colors.white,
+                                minimumSize: const Size(60, 50)),
+                            onPressed: () {
+                              deviationsContext
+                                  .read<DeviationsCubit>()
+                                  .drawFlashcard();
+                            },
+                            child: Text(
+                              '$option',
+                              style: const TextStyle(
+                                fontSize: 26.0,
+                                color: Colors.black,
+                              )
+                            )
+                          )
+                        )
+                      ).toList());
+                  } else{
+                    return ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.white,
+                            minimumSize: const Size(200, 40)),
+                        onPressed: () {
+                          deviationsContext
+                              .read<DeviationsCubit>()
+                              .drawFlashcard();
+                        },
+                        child: const Text(
+                          'Some Button',
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            color: Colors.black,
+                          ),
+                        ));
+                  }
                 })
                 // return const SizedBox.shrink();
-
-                // });
-                )
+              )
           ]),
           // )),
         ),
@@ -114,7 +140,12 @@ class DeviationsTrainer extends StatelessWidget {
               String dealer = deviationsState.currentFlashcard['dealer'];
               String player = deviationsState.currentFlashcard['player'];
               String answer = deviationsState.currentFlashcard['answer'];
-              String question = 'D:  $dealer \n\nvs \n\nP:  $player';
+              String question = '';
+              if (dealer == 'Insurance') {
+                question = 'Insurance';
+              } else if (dealer.isNotEmpty) {
+                question = 'D:  $dealer \n\nvs \n\nP:  $player';
+              }
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

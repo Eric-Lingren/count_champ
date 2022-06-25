@@ -99,7 +99,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider<DeviationsSettingsCubit>(
             create: (context) => DeviationsSettingsCubit()),
         BlocProvider<DeviationsCubit>(
-            create: (context) => DeviationsCubit()),
+            create: (context) => DeviationsCubit(deviationsSettingsCubit: context.read<DeviationsSettingsCubit>())),
       ],
       child: MaterialApp(
         title: 'Count Champ',
