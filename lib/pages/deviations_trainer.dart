@@ -1,6 +1,7 @@
 import 'package:count_champ/logic/cubits/deviations_cubit/deviations_cubit.dart';
 import 'package:count_champ/widgets/deviations_widgets/flashcard_view.dart';
 import 'package:count_champ/widgets/deviations_widgets/deviations_settings_sidebar.dart';
+import 'package:count_champ/logic/cubits/deviations_stats_cubit/session/deviations_session_stats_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,7 +14,6 @@ class DeviationsTrainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<DeviationsCubit, DeviationsState>(
         builder: (deviationsContext, deviationsState) {
-      print(deviationsState.wasPlayerCorrect);
       var backgroundColor;
       if (deviationsState.wasPlayerCorrect) {
         backgroundColor = Color(0xff28734D);
@@ -54,11 +54,23 @@ class DeviationsTrainer extends StatelessWidget {
                 // return Container (
                 Container(
                     margin: const EdgeInsets.only(left: 20.0),
-                    child: const Text('Streak : ',
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          color: Colors.white,
-                        ))),
+                    child: BlocBuilder<DeviationsSessionStatsCubit,
+                            DeviationsSessionStatsState>(
+                        builder: (deviationsSessionStatsContext,
+                            deviationsSessionStatsState) {
+                      return Text(
+                          'Streak : ${deviationsSessionStatsState.streak.toString()}',
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            color: Colors.white,
+                          ));
+                    })),
+
+                // child: const Text('Streak : ',
+                //     style: TextStyle(
+                //       fontSize: 20.0,
+                //       color: Colors.white,
+                //     ))),
                 //   });
                 // }),
                 const Spacer(),
@@ -66,7 +78,7 @@ class DeviationsTrainer extends StatelessWidget {
                   icon: const Icon(Icons.show_chart_outlined,
                       color: Colors.white, size: 36.0),
                   onPressed: () {
-                    Navigator.pushNamed(context, '/running_count_stats');
+                    Navigator.pushNamed(context, '/deviations_stats');
                   },
                 ),
               ],
@@ -76,23 +88,12 @@ class DeviationsTrainer extends StatelessWidget {
               elevation: 16.0,
               child: SafeArea(
                 child: DeviationsSettingsSidebar(),
-                // child: Text('hi')
               )),
           bottomNavigationBar: BottomAppBar(
             color: Colors.transparent,
             child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               Container(
-                  // padding: EdgeInsets.only(left: 75, right: 75, bottom: 75),
                   margin: const EdgeInsets.only(bottom: 75),
-
-                  // child: BlocBuilder<CountSettingsCubit, CountSettingsState>(
-                  //     builder: (context, countSettingsState) {
-                  //       return BlocBuilder<DeckCubit, DeckState>(
-                  //         builder: (context, deckState) {
-
-                  // if (deckState.cutCardIndex <= deckState.dealtCards.length &&
-                  //   countSettingsState.speedCountEnabled == true &&
-
                   child: BlocBuilder<DeviationsCubit, DeviationsState>(
                       builder: (deviationsContext, deviationsState) {
                     if (deviationsState.buttonAnswerOptions.length > 0) {
@@ -109,9 +110,9 @@ class DeviationsTrainer extends StatelessWidget {
                                         deviationsContext
                                             .read<DeviationsCubit>()
                                             .checkAnswer(option);
-                                        deviationsContext
-                                            .read<DeviationsCubit>()
-                                            .drawFlashcard();
+                                        // deviationsContext
+                                        //     .read<DeviationsCubit>()
+                                        //     .drawFlashcard();
                                       },
                                       child: Text('$option',
                                           style: const TextStyle(
@@ -120,22 +121,13 @@ class DeviationsTrainer extends StatelessWidget {
                                           )))))
                               .toList());
                     } else {
-                      return ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              primary: Colors.white,
-                              minimumSize: const Size(200, 40)),
-                          onPressed: () {
-                            deviationsContext
-                                .read<DeviationsCubit>()
-                                .drawFlashcard();
-                          },
-                          child: const Text(
+                      return const Text(
                             'Some Button',
                             style: TextStyle(
                               fontSize: 20.0,
                               color: Colors.black,
                             ),
-                          ));
+                          );
                     }
                   })
                   // return const SizedBox.shrink();

@@ -36,8 +36,6 @@ class BsAchievementsCubit extends Cubit<BsAchievementsState> {
   // 'assets/images/chips/5000_grey.png',
 
   void _checkAchievementToEmit(basicStratgeyAlltimeStatsState) {
-    print('running emit achieve');
-    print(basicStratgeyAlltimeStatsState);
     int handsPlayed = basicStratgeyAlltimeStatsState.handsPlayed;
     if (handsPlayed == 0) resetHandsPlayedAchievement();
     if (handsPlayed == 10) {

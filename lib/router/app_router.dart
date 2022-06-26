@@ -4,6 +4,7 @@ import 'package:count_champ/pages/basic_strategy_trainer.dart';
 import 'package:count_champ/pages/running_count_stats.dart';
 import 'package:count_champ/pages/running_count_trainer.dart';
 import 'package:count_champ/pages/deviations_trainer.dart';
+import 'package:count_champ/pages/deviations_stats.dart';
 import 'package:count_champ/pages/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +29,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const RunningCountStats());
       case '/deviations_trainer':
         return MaterialPageRoute(builder: (_) => const DeviationsTrainer());
+      case '/deviations_stats':
+        return MaterialPageRoute(builder: (_) => const DeviationsStats());
       default:
         return null;
     }

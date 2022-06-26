@@ -12,15 +12,16 @@ import 'package:count_champ/logic/cubits/settings/basic_strategy_settings_cubit/
 import 'package:count_champ/logic/cubits/settings/count_settings_cubit/count_settings_cubit.dart';
 import 'package:count_champ/logic/cubits/settings/deviations_settings_cubit/deviations_settings_cubit.dart';
 import 'package:count_champ/logic/cubits/deviations_cubit/deviations_cubit.dart';
+
+import 'package:count_champ/logic/cubits/deviations_stats_cubit/session/deviations_session_stats_cubit.dart';
+// import 'package:count_champ/logic/cubits/basic_strategy_stats_cubit/alltime/basic_strategy_alltime_stats_cubit.dart';
+
 import 'package:count_champ/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
-
-
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -60,17 +61,16 @@ class _MyAppState extends State<MyApp> {
             create: (context) => BasicStrategyCubit()),
         BlocProvider<CountCubit>(
             create: (context) => CountCubit(
-              countSettingsCubit: context.read<CountSettingsCubit>(),
-            )),
+                  countSettingsCubit: context.read<CountSettingsCubit>(),
+                )),
         BlocProvider<RunningCountSessionStatsCubit>(
             create: (context) => RunningCountSessionStatsCubit(
-              countSettingsCubit: context.read<CountSettingsCubit>(),
-              countCubit: context.read<CountCubit>())),
+                countSettingsCubit: context.read<CountSettingsCubit>(),
+                countCubit: context.read<CountCubit>())),
         BlocProvider<RunningCountAlltimeStatsCubit>(
             create: (context) => RunningCountAlltimeStatsCubit(
-              countSettingsCubit: context.read<CountSettingsCubit>(),
-              countCubit: context.read<CountCubit>()
-            )),
+                countSettingsCubit: context.read<CountSettingsCubit>(),
+                countCubit: context.read<CountCubit>())),
         BlocProvider<DeckCubit>(
             create: (context) => DeckCubit(
                 countCubit: context.read<CountCubit>(),
@@ -91,15 +91,28 @@ class _MyAppState extends State<MyApp> {
                 correctPlaysCubit: context.read<CorrectPlaysCubit>())),
         BlocProvider<BsAchievementsCubit>(
             create: (context) => BsAchievementsCubit(
-              basicStratgeyAlltimeStatsCubit: context.read<BasicStrategyAlltimeStatsCubit>())),
-                      BlocProvider<AchievementsCubit>(
+                basicStratgeyAlltimeStatsCubit:
+                    context.read<BasicStrategyAlltimeStatsCubit>())),
+        BlocProvider<AchievementsCubit>(
             create: (context) => AchievementsCubit(
-              bsAchievementsCubit: context.read<BsAchievementsCubit>()
-            )),
+                bsAchievementsCubit: context.read<BsAchievementsCubit>())),
         BlocProvider<DeviationsSettingsCubit>(
             create: (context) => DeviationsSettingsCubit()),
         BlocProvider<DeviationsCubit>(
-            create: (context) => DeviationsCubit(deviationsSettingsCubit: context.read<DeviationsSettingsCubit>())),
+            create: (context) => DeviationsCubit(
+                deviationsSettingsCubit:
+                    context.read<DeviationsSettingsCubit>())),
+
+        BlocProvider<DeviationsSessionStatsCubit>(
+            create: (context) => DeviationsSessionStatsCubit(
+                // countSettingsCubit: context.read<DeviationsSettingsCubit>(),
+                deviationsCubit: context.read<DeviationsCubit>()
+                )),
+        // BlocProvider<RunningCountAlltimeStatsCubit>(
+        //     create: (context) => RunningCountAlltimeStatsCubit(
+        //       countSettingsCubit: context.read<CountSettingsCubit>(),
+        //       countCubit: context.read<CountCubit>()
+        //     )),
       ],
       child: MaterialApp(
         title: 'Count Champ',
