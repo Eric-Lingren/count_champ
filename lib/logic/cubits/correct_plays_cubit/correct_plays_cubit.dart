@@ -155,7 +155,7 @@ class CorrectPlaysCubit extends Cubit<CorrectPlaysState> {
       correctPlay = handRules[_dealerFaceTotal - 2];
     }
 
-    //* Renders text outputt for CorrectPlayWidget
+    //* Renders text output for CorrectPlayWidget
     String hand = 'Player: ${_playerTotal}  VS  Dealer: ${_dealerFaceTotal}';
 
     //* Resets a pair of 10's to a hard hand of 20 for convention in reporting
