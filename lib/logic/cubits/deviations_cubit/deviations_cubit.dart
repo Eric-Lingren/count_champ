@@ -22,7 +22,7 @@ class DeviationsCubit extends Cubit<DeviationsState> {
           isPlayingDeviations: false,
           deviationFlashcards: hiloIllustrious18DeviationFlashcards,
           currentFlashcard: hiloIllustrious18DeviationFlashcards[0],
-          buttonAnswerOptions: [-1,0,1,2],
+          buttonAnswerOptions: const [-1,0,1,2],
           wasPlayerCorrect: true,
         )) {
     _monitorDeviationsSettingsCubit();
@@ -95,21 +95,11 @@ class DeviationsCubit extends Cubit<DeviationsState> {
     while (state.deviationFlashcards[index] == state.currentFlashcard) {
       index = _generateRandomNumber(min, max);
     }
-
     return state.deviationFlashcards[index];
-    // var newFlashcard = state.deviationFlashcards[index];
-    // var buttonAnswerOptions = _generateButtonChoices(newFlashcard);
-    // emit(DeviationsState(
-    //   isPlayingDeviations: state.isPlayingDeviations,
-    //   deviationFlashcards: state.deviationFlashcards,
-    //   currentFlashcard: newFlashcard,
-    //   buttonAnswerOptions: buttonAnswerOptions,
-    //   wasPlayerCorrect: state.wasPlayerCorrect,
-    // ));
   }
 
   _generateRandomNumber(min, max) {
-    Random rnd = new Random();
+    Random rnd = Random();
     int r = rnd.nextInt(max);
     return r;
   }
@@ -128,16 +118,7 @@ class DeviationsCubit extends Cubit<DeviationsState> {
       }
       buttonAnswerOptions.sort();
     }
-
     return buttonAnswerOptions;
-
-    // emit(DeviationsState(
-    //   isPlayingDeviations: state.isPlayingDeviations,
-    //   deviationFlashcards: state.deviationFlashcards,
-    //   currentFlashcard: state.currentFlashcard,
-    //   buttonAnswerOptions: buttonAnswerOptions,
-    //   wasPlayerCorrect: state.wasPlayerCorrect,
-    // ));
   }
 
   @override

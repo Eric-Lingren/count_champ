@@ -12,6 +12,7 @@ class DeviationsSessionStatsCubit extends Cubit<DeviationsSessionStatsState> {
   // final CountSettingsCubit countSettingsCubit;
   // late StreamSubscription countSettingsStreamSubscription;
   // String _countingSystem = 'hilo';
+  var _previousHand;
 
   DeviationsSessionStatsCubit({
     required this.deviationsCubit,
@@ -32,6 +33,165 @@ class DeviationsSessionStatsCubit extends Cubit<DeviationsSessionStatsState> {
           insurancePlayed: 0,
           insuranceCorrect: 0,
           insuranceIncorrect: 0,
+          deviationsStatsMatrix: [
+            ['', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'A'], // Dealer
+            [
+              '20',
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': 0},
+              {'played': 0.0, 'correct': 0.0, 'percentage': 0},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+            ],
+            [
+              '19',
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+            ],
+            [
+              '18',
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+            ],
+            [
+              '17',
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+            ],
+            [
+              '16',
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': 0},
+              {'played': 0.0, 'correct': 0.0, 'percentage': 0},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+            ],
+            [
+              '15',
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': 0},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+            ],
+            [
+              '14',
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+            ],
+            [
+              '13',
+              {'played': 0.0, 'correct': 0.0, 'percentage': 0},
+              {'played': 0.0, 'correct': 0.0, 'percentage': 0},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+            ],
+            [
+              '12',
+              {'played': 0.0, 'correct': 0.0, 'percentage': 0},
+              {'played': 0.0, 'correct': 0.0, 'percentage': 0},
+              {'played': 0.0, 'correct': 0.0, 'percentage': 0},
+              {'played': 0.0, 'correct': 0.0, 'percentage': 0},
+              {'played': 0.0, 'correct': 0.0, 'percentage': 0},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+            ],
+            [
+              '11',
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': 0},
+            ],
+            [
+              '10',
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': 0},
+              {'played': 0.0, 'correct': 0.0, 'percentage': 0},
+            ],
+            [
+              '9',
+              {'played': 0.0, 'correct': 0.0, 'percentage': 0},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': 0},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+              {'played': 0.0, 'correct': 0.0, 'percentage': null},
+            ],
+          ],
         )) {
     // monitorCountSettingsCubit();
     _monitorDeviationsCubit();
@@ -43,26 +203,79 @@ class DeviationsSessionStatsCubit extends Cubit<DeviationsSessionStatsState> {
   //     if (countSettingsState.hiLoEnabled == true) _countingSystem = 'hilo';
   //     if (countSettingsState.hiOpt1Enabled == true) _countingSystem = 'hiopt1';
   //     if (countSettingsState.hiOpt2Enabled == true) _countingSystem = 'hiop2';
-  //     if (countSettingsState.halvesEnabled == true) _countingSystem = 'halves';
-  //     if (countSettingsState.koEnabled == true) _countingSystem = 'ko';
-  //     if (countSettingsState.red7Enabled == true) _countingSystem = 'red7';
-  //     if (countSettingsState.zenEnabled == true) _countingSystem = 'zen';
-  //     if (countSettingsState.omega2Enabled == true) _countingSystem = 'omega2';
   //   });
   // }
 
   StreamSubscription<DeviationsState> _monitorDeviationsCubit() {
     return deviationsStreamSubscription =
         deviationsCubit.stream.listen((deviationsState) {
-      print('\n\n\nDeviations Stream Subscritpion');
-      print(deviationsState.wasPlayerCorrect);
-
       if (deviationsState.wasPlayerCorrect == true) {
         _incrementTotalCorrect();
       } else {
         _incrementTotalIncorrect();
       }
+      _updateHandStats(deviationsState.wasPlayerCorrect);
+      _previousHand = deviationsState.currentFlashcard;
     });
+  }
+
+  _updateHandStats(wasPlayCorrect) {
+    if (_previousHand != null) {
+      var dealer = _previousHand['dealer'];
+      var player = _previousHand['player'];
+      var matrix = state.deviationsStatsMatrix;
+      var columnIndex;
+      columnIndex = matrix[0].indexWhere((element) => element == dealer);
+      var rowIndex;
+      for (var i = 0; i < matrix.length; i++) {
+        if (matrix[i][0] == player) rowIndex = i;
+      }
+      if (player == '10,10') {
+        rowIndex = 1;
+      }
+
+      var currentPlayStat = matrix[rowIndex][columnIndex];
+      var currentPlayed = currentPlayStat['played'];
+      var currentCorrect = currentPlayStat['correct'];
+
+      double newPlayed = currentPlayed + 1.0;
+      double newCorrect = currentCorrect;
+      if (wasPlayCorrect) newCorrect += 1.0;
+
+      var newPercentage;
+      if (newCorrect == 0.0) {
+        newPercentage = 0.0;
+      } else {
+        newPercentage = newCorrect / newPlayed;
+      }
+
+      var newStat = {
+        'played': newPlayed,
+        'correct': newCorrect,
+        'percentage': newPercentage
+      };
+
+      List updatedMatrix = [...matrix];
+      updatedMatrix[rowIndex][columnIndex] = newStat;
+      
+      emit(DeviationsSessionStatsState(
+      streak: state.streak,
+      totalPlayed: state.totalPlayed,
+      totalCorrect: state.totalCorrect,
+      totalIncorrect: state.totalIncorrect,
+      illustrious18Played: 0,
+      illustrious18Correct: 0,
+      illustrious18Incorrect: 0,
+      fab4Played: 0,
+      fab4Correct: 0,
+      fab4Incorrect: 0,
+      insurancePlayed: 0,
+      insuranceCorrect: 0,
+      insuranceIncorrect: 0,
+      deviationsStatsMatrix: updatedMatrix,
+    ));
+
+    }
   }
 
   _incrementTotalCorrect() {
@@ -80,6 +293,7 @@ class DeviationsSessionStatsCubit extends Cubit<DeviationsSessionStatsState> {
       insurancePlayed: 0,
       insuranceCorrect: 0,
       insuranceIncorrect: 0,
+      deviationsStatsMatrix: state.deviationsStatsMatrix,
     ));
   }
 
@@ -98,6 +312,7 @@ class DeviationsSessionStatsCubit extends Cubit<DeviationsSessionStatsState> {
       insurancePlayed: 0,
       insuranceCorrect: 0,
       insuranceIncorrect: 0,
+      deviationsStatsMatrix: state.deviationsStatsMatrix,
     ));
   }
 
