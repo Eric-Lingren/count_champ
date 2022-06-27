@@ -47,24 +47,7 @@ class _HomeState extends State<Home> {
                       ),
                     )));
               }),
-
-              Expanded(
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: <Widget>[
-                      
-                      const SizedBox(width: 50),
-                      const HomeNavWidget(navLink: '/basic_strategy_trainer', navTitle: 'Basic Strategy', navSubtitle:' Practice the correct play for any situation', rightPosition: 10.0),
-                      const SizedBox(width: 20),
-                      const HomeNavWidget(navLink: '/running_count_trainer', navTitle: 'Running Count', navSubtitle:'Practice counting to gain the advantage', rightPosition: 50),
-                      const SizedBox(width: 20),
-                      const HomeNavWidget(navLink: '/deviations_trainer', navTitle: 'Deviations', navSubtitle:'Optimize your play with deviations', rightPosition: 50),
-                      const SizedBox(width: 20),
-                      const HomeNavWidget(navLink: '/achievements', navTitle: 'Achievements', navSubtitle:'Check out the awards you have earned', rightPosition: 50),
-                      const SizedBox(width: 50),
-
-                  BlocBuilder<AchievementsCubit, AchievementsState>(
+              BlocBuilder<AchievementsCubit, AchievementsState>(
                     builder: (context, state) {
                       if (state.achievementReached == true) {
                         return const SizedBox(
@@ -75,9 +58,23 @@ class _HomeState extends State<Home> {
                       return const SizedBox.shrink();
                     },
                   ),
-                ]),
+
+              Expanded(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: const <Widget>[
+                      SizedBox(width: 50),
+                      HomeNavWidget(navLink: '/basic_strategy_trainer', navTitle: 'Basic Strategy', navSubtitle:' Practice the correct play for any situation', rightPosition: 10.0),
+                      SizedBox(width: 20),
+                      HomeNavWidget(navLink: '/running_count_trainer', navTitle: 'Running Count', navSubtitle:'Practice counting to gain the advantage', rightPosition: 50),
+                      SizedBox(width: 20),
+                      HomeNavWidget(navLink: '/deviations_trainer', navTitle: 'Deviations', navSubtitle:'Optimize your play with deviations', rightPosition: 50),
+                      SizedBox(width: 20),
+                      HomeNavWidget(navLink: '/achievements', navTitle: 'Achievements', navSubtitle:'Check out the awards you have earned', rightPosition: 50),
+                      SizedBox(width: 50),
+                  ]),
               ),)
-            
           ]))));
   }
 }
