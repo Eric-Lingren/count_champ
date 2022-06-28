@@ -23,11 +23,8 @@ class _BasicStrategyTrainerState extends State<BasicStrategyTrainer> {
     // return BlocBuilder<DeviationsCubit, DeviationsState>(
     //     builder: (deviationsContext, deviationsState) {});
 
-
-
     return BlocBuilder<CorrectPlaysCubit, CorrectPlaysState>(
-      builder: (context, correctPlaysState) {
-
+        builder: (context, correctPlaysState) {
       var backgroundColor;
       if (correctPlaysState.playWasCorrect) {
         backgroundColor = Color(0xff28734D);
@@ -85,143 +82,217 @@ class _BasicStrategyTrainerState extends State<BasicStrategyTrainer> {
                 child: BasicStrategySettingsSidebar(),
               )),
           bottomNavigationBar: BottomAppBar(
-            color: Colors.transparent,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                    // padding: EdgeInsets.only(left: 75, right: 75, bottom: 75),
-                    margin: const EdgeInsets.only(bottom: 75),
-                    child: BlocBuilder<BasicStrategySettingsCubit,
-                        BasicStrategySettingsState>(
-                      builder: (context, basicStrategySettingsState) {
-                        return BlocBuilder<DeckCubit, DeckState>(
-                            builder: (context, deckState) {
-                          if (deckState.playerHand.isEmpty) {
-                            return ElevatedButton(
-                                onPressed: () {
-                                  context
-                                      .read<BasicStrategyCubit>()
-                                      .initNextHand();
-                                },
-                                child: const Text('Start'));
-                          } else {
-                            return
-                                //   // Column(
-                                //   //   crossAxisAlignment: CrossAxisAlignment.center,
-                                //   //   mainAxisSize: MainAxisSize.max,
-                                //   //   mainAxisAlignment: MainAxisAlignment.end,
-                                //   //   // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                //   //   children: [
-                                Row(children: [
-                              ElevatedButton(
-                                  onPressed: () {
-                                    context
-                                        .read<CorrectPlaysCubit>()
-                                        .checkPlay('hit');
-                                    context
-                                        .read<BasicStrategyCubit>()
-                                        .initNextHand();
-                                  },
-                                  child: const Text('Hit')),
-                              ElevatedButton(
-                                  onPressed: () {
-                                    context
-                                        .read<CorrectPlaysCubit>()
-                                        .checkPlay('stand');
-                                    context
-                                        .read<BasicStrategyCubit>()
-                                        .initNextHand();
-                                  },
-                                  child: const Text('Stand')),
-                              ElevatedButton(
-                                  onPressed: () {
-                                    context
-                                        .read<CorrectPlaysCubit>()
-                                        .checkPlay('double');
-                                    context
-                                        .read<BasicStrategyCubit>()
-                                        .initNextHand();
-                                  },
-                                  child: const Text('Double')),
-                              ElevatedButton(
-                                  onPressed: () {
-                                    context
-                                        .read<CorrectPlaysCubit>()
-                                        .checkPlay('split');
-                                    context
-                                        .read<BasicStrategyCubit>()
-                                        .initNextHand();
-                                  },
-                                  child: const Text('Split')),
-                            ]);
-                          }
-                          //     //           Row(
-                          //     //             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          //     //             children: [
-                          //     //               BlocBuilder<BasicStrategySettingsCubit,
-                          //     //                       BasicStrategySettingsState>(
-                          //     //                   builder: (context, state) {
-                          //     //                 if (state.practiceInsurance == true) {
-                          //     //                   return ElevatedButton(
-                          //     //                       onPressed: () {
-                          //     //                         context
-                          //     //                             .read<CorrectPlaysCubit>()
-                          //     //                             .checkPlay('insurance');
-                          //     //                         context
-                          //     //                             .read<BasicStrategyCubit>()
-                          //     //                             .initNextHand();
-                          //     //                       },
-                          //     //                       child: const Text('Insurance'));
-                          //     //                 }
-                          //     //                 return const SizedBox.shrink();
-                          //     //             }),
-                          //     //             BlocBuilder<BasicStrategySettingsCubit,
-                          //     //                     BasicStrategySettingsState>(
-                          //     //                 builder: (context, state) {
-                          //     //               if (state.practiceFab4 == true ||
-                          //     //                   state.practiceIllustrious18 == true ||
-                          //     //                   state.practiceInsurance == true) {
-                          //     //                 return Column(
-                          //     //                   children: [
-                          //     //                     const Text('True Count:'),
-                          //     //                     BlocBuilder<DeckCubit, DeckState>(
-                          //     //                         builder: (context, state) {
-                          //     //                       return Text(state.trueCount.toString());
-                          //     //                     }),
-                          //     //                   ],
-                          //     //                 );
-                          //     //               }
-                          //     //               return const SizedBox.shrink();
-                          //     //             }),
-                          //     //   BlocBuilder<BasicStrategySettingsCubit,
-                          //     //           BasicStrategySettingsState>(
-                          //     //       builder: (context, state) {
-                          //     //     if (state.canSurrender == true) {
-                          //     //       return ElevatedButton(
-                          //     //           onPressed: () {
-                          //     //             context
-                          //     //                 .read<CorrectPlaysCubit>()
-                          //     //                 .checkPlay('surrender');
-                          //     //             context
-                          //     //                 .read<BasicStrategyCubit>()
-                          //     //                 .initNextHand();
-                          //     //           },
-                          //     //           child: const Text('Surrender'));
-                          //     //     }
-                          //     //     return const SizedBox.shrink();
-                          //     //   }),
-                          //     // ]),
-                          //   ]);
-                          // }
-
-                          // return const SizedBox.shrink();
-                        });
-                      },
-                    )),
-              ],
-            ),
-          ),
+              color: Colors.transparent,
+              child: BlocBuilder<BasicStrategySettingsCubit,
+                      BasicStrategySettingsState>(
+                  builder: (context, basicStrategySettingsState) {
+                return BlocBuilder<DeckCubit, DeckState>(
+                    builder: (context, deckState) {
+                  if (deckState.playerHand.isEmpty) {
+                    return Container(
+                      height: 150,
+                      child: Column(children: <Widget>[
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.white,
+                                minimumSize: const Size(100, 40),
+                                maximumSize: const Size(100, 40),
+                              ),
+                              onPressed: () {
+                                context.read<BasicStrategyCubit>().initNextHand();
+                              },
+                              child: const Text(
+                                'Start',
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  color: Colors.black,
+                                ),
+                              )
+                            )
+                          ])
+                    ]));
+                  } else {
+                    return Container(
+                      height: 150,
+                      child: Column(
+                        children: <Widget>[
+                          Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Colors.white,
+                                    ),
+                                    onPressed: () {
+                                      context
+                                          .read<CorrectPlaysCubit>()
+                                          .checkPlay('hit');
+                                      context
+                                          .read<BasicStrategyCubit>()
+                                          .initNextHand();
+                                    },
+                                    child: const Text(
+                                      'Hit',
+                                      style: TextStyle(
+                                        fontSize: 16.0,
+                                        color: Colors.black,
+                                      ),
+                                    )),
+                                ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Colors.white,
+                                    ),
+                                    onPressed: () {
+                                      context
+                                          .read<CorrectPlaysCubit>()
+                                          .checkPlay('stand');
+                                      context
+                                          .read<BasicStrategyCubit>()
+                                          .initNextHand();
+                                    },
+                                    child: const Text(
+                                      'Stand',
+                                      style: TextStyle(
+                                        fontSize: 16.0,
+                                        color: Colors.black,
+                                      ),
+                                    )),
+                                ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Colors.white,
+                                    ),
+                                    onPressed: () {
+                                      context
+                                          .read<CorrectPlaysCubit>()
+                                          .checkPlay('double');
+                                      context
+                                          .read<BasicStrategyCubit>()
+                                          .initNextHand();
+                                    },
+                                    child: const Text(
+                                      'Double',
+                                      style: TextStyle(
+                                        fontSize: 16.0,
+                                        color: Colors.black,
+                                      ),
+                                    )),
+                                ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Colors.white,
+                                    ),
+                                    onPressed: () {
+                                      context
+                                          .read<CorrectPlaysCubit>()
+                                          .checkPlay('split');
+                                      context
+                                          .read<BasicStrategyCubit>()
+                                          .initNextHand();
+                                    },
+                                    child: const Text(
+                                      'Split',
+                                      style: TextStyle(
+                                        fontSize: 16.0,
+                                        color: Colors.black,
+                                      ),
+                                    )),
+                              ]),
+                          const SizedBox(height: 10),
+                          Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                BlocBuilder<BasicStrategySettingsCubit,
+                                        BasicStrategySettingsState>(
+                                    builder: (context, state) {
+                                  if (state.practiceInsurance == true) {
+                                    return ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          primary: Colors.white,
+                                        ),
+                                        onPressed: () {
+                                          context
+                                              .read<CorrectPlaysCubit>()
+                                              .checkPlay('insurance');
+                                          context
+                                              .read<BasicStrategyCubit>()
+                                              .initNextHand();
+                                        },
+                                        child: const Text(
+                                          'Insurance',
+                                          style: TextStyle(
+                                            fontSize: 16.0,
+                                            color: Colors.black,
+                                          ),
+                                        ));
+                                  }
+                                  return const SizedBox.shrink();
+                                }),
+                                BlocBuilder<BasicStrategySettingsCubit,
+                                        BasicStrategySettingsState>(
+                                    builder: (context, state) {
+                                  if (state.practiceFab4 == true ||
+                                      state.practiceIllustrious18 == true ||
+                                      state.practiceInsurance == true) {
+                                    return Column(
+                                      children: [
+                                        const Text('True Count:',
+                                            style: TextStyle(
+                                              fontSize: 16.0,
+                                              color: Colors.white,
+                                            )),
+                                        BlocBuilder<DeckCubit, DeckState>(
+                                            builder: (context, state) {
+                                          return Text(
+                                              state.trueCount.toString(),
+                                              style: const TextStyle(
+                                                fontSize: 20.0,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                              ));
+                                        }),
+                                      ],
+                                    );
+                                  }
+                                  return const SizedBox.shrink();
+                                }),
+                                BlocBuilder<BasicStrategySettingsCubit,
+                                        BasicStrategySettingsState>(
+                                    builder: (context, state) {
+                                  if (state.canSurrender == true) {
+                                    return ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          primary: Colors.white,
+                                        ),
+                                        onPressed: () {
+                                          context
+                                              .read<CorrectPlaysCubit>()
+                                              .checkPlay('surrender');
+                                          context
+                                              .read<BasicStrategyCubit>()
+                                              .initNextHand();
+                                        },
+                                        child: const Text(
+                                          'Surrender',
+                                          style: TextStyle(
+                                            fontSize: 16.0,
+                                            color: Colors.black,
+                                          ),
+                                        ));
+                                  }
+                                  return const SizedBox.shrink();
+                                }),
+                              ]),
+                        ],
+                      ),
+                    );
+                  }
+                });
+              })),
           body: SafeArea(
               child: Column(children: <Widget>[
             BlocBuilder<DeckCubit, DeckState>(builder: (context, state) {
@@ -253,100 +324,6 @@ class _BasicStrategyTrainerState extends State<BasicStrategyTrainer> {
               }
               return const SizedBox.shrink();
             }),
-            // BlocBuilder<DeckCubit, DeckState>(builder: (context, state) {
-            // return Column(children: [
-            //   Row(
-            //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            //       children: [
-            //         ElevatedButton(
-            //             onPressed: () {
-            //               context.read<CorrectPlaysCubit>().checkPlay('hit');
-            //               context.read<BasicStrategyCubit>().initNextHand();
-            //             },
-            //             child: const Text('Hit')),
-            //         ElevatedButton(
-            //             onPressed: () {
-            //               context
-            //                   .read<CorrectPlaysCubit>()
-            //                   .checkPlay('stand');
-            //               context.read<BasicStrategyCubit>().initNextHand();
-            //             },
-            //             child: const Text('Stand')),
-            //         ElevatedButton(
-            //             onPressed: () {
-            //               context
-            //                   .read<CorrectPlaysCubit>()
-            //                   .checkPlay('double');
-            //               context.read<BasicStrategyCubit>().initNextHand();
-            //             },
-            //             child: const Text('Double')),
-            //         ElevatedButton(
-            //             onPressed: () {
-            //               context
-            //                   .read<CorrectPlaysCubit>()
-            //                   .checkPlay('split');
-            //               context.read<BasicStrategyCubit>().initNextHand();
-            //             },
-            //             child: const Text('Split')),
-            //       ]),
-            //     Row(
-            //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            //       children: [
-            //         BlocBuilder<BasicStrategySettingsCubit,
-            //                 BasicStrategySettingsState>(
-            //             builder: (context, state) {
-            //           if (state.practiceInsurance == true) {
-            //             return ElevatedButton(
-            //                 onPressed: () {
-            //                   context
-            //                       .read<CorrectPlaysCubit>()
-            //                       .checkPlay('insurance');
-            //                   context
-            //                       .read<BasicStrategyCubit>()
-            //                       .initNextHand();
-            //                 },
-            //                 child: const Text('Insurance'));
-            //           }
-            //           return const SizedBox.shrink();
-            //         }),
-            //         BlocBuilder<BasicStrategySettingsCubit,
-            //                 BasicStrategySettingsState>(
-            //             builder: (context, state) {
-            //           if (state.practiceFab4 == true ||
-            //               state.practiceIllustrious18 == true ||
-            //               state.practiceInsurance == true) {
-            //             return Column(
-            //               children: [
-            //                 const Text('True Count:'),
-            //                 BlocBuilder<DeckCubit, DeckState>(
-            //                     builder: (context, state) {
-            //                   return Text(state.trueCount.toString());
-            //                 }),
-            //               ],
-            //             );
-            //           }
-            //           return const SizedBox.shrink();
-            //         }),
-            //         BlocBuilder<BasicStrategySettingsCubit,
-            //                 BasicStrategySettingsState>(
-            //             builder: (context, state) {
-            //           if (state.canSurrender == true) {
-            //             return ElevatedButton(
-            //                 onPressed: () {
-            //                   context
-            //                       .read<CorrectPlaysCubit>()
-            //                       .checkPlay('surrender');
-            //                   context
-            //                       .read<BasicStrategyCubit>()
-            //                       .initNextHand();
-            //                 },
-            //                 child: const Text('Surrender'));
-            //           }
-            //           return const SizedBox.shrink();
-            //         }),
-            //       ]),
-            // ]);
-            // })
           ])));
     });
   }
