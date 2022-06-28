@@ -14,6 +14,8 @@ class BasicStrategySettingsSidebar extends StatefulWidget {
 
 class _BasicStrategySettingsSidebarState
     extends State<BasicStrategySettingsSidebar> {
+  final List<double> values = [1.0, 2.0, 4.0, 6.0, 8.0];
+  int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return (Scaffold(
@@ -26,32 +28,33 @@ class _BasicStrategySettingsSidebarState
             title: Text('Deck Quantity: ${state.deckQuantity.round()}'),
             isThreeLine: true,
             subtitle: Slider(
-              min: 1.0,
-              max: 8.0,
-              value: state.deckQuantity,
-              divisions: 7,
-              label: '${state.deckQuantity.round()}',
+              value: selectedIndex.toDouble(),
+              min: 0,
+              max: values.length - 1,
+              divisions: values.length - 1,
+              label: values[selectedIndex].toInt().toString(),
               onChanged: (value) {
-                context
-                    .read<BasicStrategySettingsCubit>()
-                    .setDeckQuantity(value);
+                setState(() {
+                  selectedIndex = value.toInt();
+                });
+                context.read<BasicStrategySettingsCubit>().setDeckQuantity(values[selectedIndex]);
               },
             ),
             trailing: IconButton(
-                icon: const Icon(Icons.info_outline),
-                color: Colors.lightBlue[400],
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return BsInfoPopupWidget(
-                          infoTitle: 'Deck Quantity',
-                          playerAdvantage: '0.0% - 0.48%',
-                          description:
-                              'Fewer decks allow a greater player advantage. 8 decks offer 0.0% player advantage. 6 deck games offer a 0.02% advantage. 4 deck games offer a 0.06% advantage. Double-deck and single-decks provide a 0.19% and 0.48% advantage to the player, respectively. Note that the number of decks in play can dramatically affect correct Basic Strategy rules as well.');
-                    },
-                  );
-                }),
+              icon: const Icon(Icons.info_outline),
+              color: Colors.lightBlue[400],
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return BsInfoPopupWidget(
+                        infoTitle: 'Deck Quantity',
+                        playerAdvantage: '0.0% - 0.48%',
+                        description:
+                            'Fewer decks allow a greater player advantage. 8 decks offer 0.0% player advantage. 6 deck games offer a 0.02% advantage. 4 deck games offer a 0.06% advantage. Double-deck and single-decks provide a 0.19% and 0.48% advantage to the player, respectively. Note that the number of decks in play can dramatically affect correct Basic Strategy rules as well.');
+                  },
+                );
+              }),
           );
         }),
         Divider(color: Colors.blue[300], thickness: 2),

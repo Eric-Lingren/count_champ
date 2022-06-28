@@ -148,6 +148,12 @@ class BasicStrategySettingsCubit extends Cubit<BasicStrategySettingsState> {
         practiceInsurance: state.practiceInsurance,
       ));
   void toggleCanSurrender(value) => {
+    if (!value && state.practiceFab4)
+      {bsfab4 = false, bsAllHands = true}
+    else{
+      bsAllHands = state.practiceBsAllHands,
+      bsfab4 = state.practiceFab4
+    },
         emit(BasicStrategySettingsState(
           canDas: state.canDas,
           canResplitPairs: state.canResplitPairs,
@@ -159,12 +165,12 @@ class BasicStrategySettingsCubit extends Cubit<BasicStrategySettingsState> {
           dealerPeeks: state.dealerPeeks,
           deckQuantity: state.deckQuantity,
           deckPenetration: state.deckPenetration,
-          practiceBsAllHands: state.practiceBsAllHands,
+          practiceBsAllHands: bsAllHands,
           practiceBsHardHands: state.practiceBsHardHands,
           practiceBsSoftHands: state.practiceBsSoftHands,
           practiceBsSplitHands: state.practiceBsSplitHands,
           practiceIllustrious18: state.practiceIllustrious18,
-          practiceFab4: state.practiceFab4,
+          practiceFab4: bsfab4,
           practiceInsurance: state.practiceInsurance,
         ))
       };

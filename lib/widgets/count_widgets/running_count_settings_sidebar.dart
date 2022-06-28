@@ -15,27 +15,33 @@ class CountSettingsSidebar extends StatefulWidget {
 
 // ToDo - Prevent no counting systems from being selected
 class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
+  final List<double> values = [1.0, 2.0, 4.0, 6.0, 8.0];
+  int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return (Scaffold(
         body: SingleChildScrollView(
             child: Column(
       children: <Widget>[
-        BlocBuilder<CountSettingsCubit, CountSettingsState>(
+          BlocBuilder<CountSettingsCubit, CountSettingsState>(
             builder: (context, state) {
           return ListTile(
-              title: Text('Deck Quantity: ${state.deckQuantity.round()}'),
-              isThreeLine: true,
-              subtitle: Slider(
-                min: 1.0,
-                max: 8.0,
-                value: state.deckQuantity,
-                divisions: 7,
-                label: '${state.deckQuantity.round()}',
-                onChanged: (value) {
-                  context.read<CountSettingsCubit>().setDeckQuantity(value);
-                },
-              ));
+            title: Text('Deck Quantity: ${state.deckQuantity.round()}'),
+            isThreeLine: true,
+            subtitle: Slider(
+              value: selectedIndex.toDouble(),
+              min: 0,
+              max: values.length - 1,
+              divisions: values.length - 1,
+              label: values[selectedIndex].toInt().toString(),
+              onChanged: (value) {
+                setState(() {
+                  selectedIndex = value.toInt();
+                });
+                context.read<CountSettingsCubit>().setDeckQuantity(values[selectedIndex]);
+              },
+            ),
+          );
         }),
         BlocBuilder<CountSettingsCubit, CountSettingsState>(
             builder: (context, state) {
