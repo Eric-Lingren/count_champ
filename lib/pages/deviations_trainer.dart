@@ -2,13 +2,22 @@ import 'package:count_champ/logic/cubits/deviations_cubit/deviations_cubit.dart'
 import 'package:count_champ/widgets/deviations_widgets/flashcard_view.dart';
 import 'package:count_champ/widgets/deviations_widgets/deviations_settings_sidebar.dart';
 import 'package:count_champ/logic/cubits/deviations_stats_cubit/session/deviations_session_stats_cubit.dart';
+import 'package:count_champ/widgets/global_widgets/help_chart_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flip_card/flip_card.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class DeviationsTrainer extends StatelessWidget {
   const DeviationsTrainer({Key? key}) : super(key: key);
+
+//   void openEndDrawer() {
+//   if (_drawerKey.currentState != null && _drawerOpened.value)
+//     _drawerKey.currentState!.close();
+//   _endDrawerKey.currentState?.open();
+// }
+  // final GlobalKey<ScaffoldState> _key = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -20,13 +29,13 @@ class DeviationsTrainer extends StatelessWidget {
       } else {
         backgroundColor = Color(0xffA51D19);
       }
-      // backgroundColor
+      //       Builder(builder: (context) {
+      //   return FloatingActionButton(
+      //     onPressed: () => Scaffold.of(context).openEndDrawer(), // <-- Opens drawer.
+      //   );
+      // }),
       return Scaffold(
           backgroundColor: backgroundColor,
-          // backgroundColor: return BlocBuilder<DeviationsCubit, DeviationsState>(
-          //             builder: (deviationsContext, deviationsState) {
-
-          //             }),
           appBar: AppBar(
             foregroundColor: Colors.white,
             backgroundColor: Colors.transparent,
@@ -36,9 +45,6 @@ class DeviationsTrainer extends StatelessWidget {
                 return IconButton(
                   icon: const Icon(Icons.arrow_back),
                   onPressed: () {
-                    // context.read<CountCubit>().stopSpeedCount();
-                    // context.read<DeckCubit>().shuffleDeck();
-                    // context.read<CountSettingsCubit>().exitCountTrainer();
                     Navigator.pop(pageContext);
                   },
                 );
@@ -46,41 +52,59 @@ class DeviationsTrainer extends StatelessWidget {
             ),
             title: Row(
               children: [
-                // BlocBuilder<RunningCountSessionStatsCubit,
-                //     RunningCountSessionStatsState>(builder: (context, runningCountSessionStatsState) {
-                //   return BlocBuilder<RunningCountAlltimeStatsCubit,
-                //           RunningCountAlltimeStatsState>(
-                //       builder: (context, runningCountAlltimeStatsState) {
-                // return Container (
                 Container(
-                    margin: const EdgeInsets.only(left: 20.0),
+                    margin: const EdgeInsets.only(left: 10.0),
                     child: BlocBuilder<DeviationsSessionStatsCubit,
                             DeviationsSessionStatsState>(
                         builder: (deviationsSessionStatsContext,
                             deviationsSessionStatsState) {
                       return Text(
                           'Streak : ${deviationsSessionStatsState.streak.toString()}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 20.0,
                             color: Colors.white,
                           ));
                     })),
-
-                // child: const Text('Streak : ',
-                //     style: TextStyle(
-                //       fontSize: 20.0,
-                //       color: Colors.white,
-                //     ))),
-                //   });
-                // }),
                 const Spacer(),
+                // IconButton(
+                //   icon: const FaIcon(FontAwesomeIcons.tableCellsLarge,
+                //       color: Colors.white, size: 24.0,),
+                //   onPressed: () {
+                //     Navigator.pushNamed(context, '/deviations_stats');
+                //   },
+                // ),
+
+                Container(
+                  margin: const EdgeInsets.only(right: 10),
+                  child: GestureDetector(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return const HelpChartWidget();
+                        });
+                    },
+                    child: const FaIcon(FontAwesomeIcons.circleQuestion,
+                      color: Colors.white, size: 24.0,)
+                  )
+                ),
+
+
+                // IconButton(
+                //   icon: const FaIcon(FontAwesomeIcons.circleQuestion,
+                //       color: Colors.white, size: 24.0,),
+                //   onPressed: () {
+                //     Navigator.pushNamed(context, '/deviations_stats');
+                //   },
+                // ),
                 IconButton(
-                  icon: const Icon(Icons.show_chart_outlined,
-                      color: Colors.white, size: 36.0),
+                  icon: const FaIcon(FontAwesomeIcons.chartLine,
+                      color: Colors.white, size: 24.0),
                   onPressed: () {
                     Navigator.pushNamed(context, '/deviations_stats');
                   },
                 ),
+
               ],
             ),
           ),
@@ -122,12 +146,12 @@ class DeviationsTrainer extends StatelessWidget {
                               .toList());
                     } else {
                       return const Text(
-                            'Some Button',
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              color: Colors.black,
-                            ),
-                          );
+                        'Some Button',
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          color: Colors.black,
+                        ),
+                      );
                     }
                   })
                   // return const SizedBox.shrink();
@@ -136,7 +160,8 @@ class DeviationsTrainer extends StatelessWidget {
             // )),
           ),
           body: SafeArea(
-              child: Container(
+              child: 
+              Container(
             margin: const EdgeInsets.only(top: 10.0),
             child: Center(
               child: BlocBuilder<DeviationsCubit, DeviationsState>(
@@ -153,6 +178,7 @@ class DeviationsTrainer extends StatelessWidget {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    // HelpChartWidget(),
                     SizedBox(
                         width: 250,
                         height: 250,

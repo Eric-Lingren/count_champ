@@ -13,11 +13,6 @@ class DeviationsSessionStats extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // var matrix = [
-    //   ['', '2', '3', '4', '5', '6', '7', '8', '9', 'A'], // Dealer
-    //   ['20', 0.0, .1, .2, .3, .4, .5, .6, .7, .8],
-    //   ['19', '', 99, '', '', .5, .9, 1.0, 0.0, .9],
-    // ];
 
     generateCellColor(value) {
       if (value <= .1) return Colors.red[800];
@@ -37,15 +32,11 @@ class DeviationsSessionStats extends StatelessWidget {
       return Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: rowData.asMap().entries.map<Widget>((cellData) {
-            // print(cellData.key);
-            // print(cellData.value);
             var index = cellData.key;
             var data = cellData.value;
-            // children: rowData.map<Widget>((cellData) {
             var cellValue = '';
             var cellColor;
             
-
             if (data.isNotEmpty) {
               if (data.runtimeType == String) {
                 // This is a column or row heading

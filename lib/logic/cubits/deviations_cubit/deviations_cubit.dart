@@ -1,4 +1,6 @@
 import 'package:bloc/bloc.dart';
+import 'package:count_champ/constants/deviation_flashcards/ko_deviation_flashcards.dart';
+import 'package:count_champ/constants/deviation_flashcards/reko_deviation_flashcards.dart';
 import 'package:equatable/equatable.dart';
 import 'dart:math';
 import 'dart:async';
@@ -9,9 +11,13 @@ part 'deviations_state.dart';
 class DeviationsCubit extends Cubit<DeviationsState> {
   var deviationFlashcards;
   var currentFlashcard;
-  var _practiceIllustrious18;
-  var _practiceInsurance;
-  var _practiceFab4;
+  double _deckQuantity = 8.0;
+  var _hiloEnabled = true;
+  var _koEnabled = false;
+  var _rekoEnabled = false;
+  var _practiceIllustrious18 = true;
+  var _practiceInsurance = false;
+  var _practiceFab4 = false;
   final DeviationsSettingsCubit deviationsSettingsCubit;
   late StreamSubscription deviationsSettingsStreamSubscription;
 
@@ -22,7 +28,7 @@ class DeviationsCubit extends Cubit<DeviationsState> {
           isPlayingDeviations: false,
           deviationFlashcards: hiloIllustrious18DeviationFlashcards,
           currentFlashcard: hiloIllustrious18DeviationFlashcards[0],
-          buttonAnswerOptions: const [-1,0,1,2],
+          buttonAnswerOptions: const [-1, 0, 1, 2],
           wasPlayerCorrect: true,
         )) {
     _monitorDeviationsSettingsCubit();
@@ -32,9 +38,13 @@ class DeviationsCubit extends Cubit<DeviationsState> {
       _monitorDeviationsSettingsCubit() {
     return deviationsSettingsStreamSubscription =
         deviationsSettingsCubit.stream.listen((deviationsSettingsState) {
+      _deckQuantity = deviationsSettingsState.deckQuantity;
       _practiceIllustrious18 = deviationsSettingsState.practiceIllustrious18;
       _practiceInsurance = deviationsSettingsState.practiceInsurance;
       _practiceFab4 = deviationsSettingsState.practiceFab4;
+      _hiloEnabled = deviationsSettingsState.hiLoEnabled;
+      _koEnabled = deviationsSettingsState.koEnabled;
+      _rekoEnabled = deviationsSettingsState.rekoEnabled;
       _setFlashcardList();
     });
   }
@@ -42,6 +52,24 @@ class DeviationsCubit extends Cubit<DeviationsState> {
   _setFlashcardList() {
     List tempFlashcardList = [];
 
+    if (_hiloEnabled) {
+      tempFlashcardList = _getHiLoFlashcardList();
+    } else if (_koEnabled) {
+      tempFlashcardList = _getKoFlashcardList();
+    } else if (_rekoEnabled) {
+      tempFlashcardList = _getRekoFlashcardList();
+    }
+
+    emit(DeviationsState(
+        isPlayingDeviations: state.isPlayingDeviations,
+        currentFlashcard: state.currentFlashcard,
+        deviationFlashcards: tempFlashcardList,
+        buttonAnswerOptions: state.buttonAnswerOptions,
+        wasPlayerCorrect: state.wasPlayerCorrect));
+  }
+
+  _getHiLoFlashcardList() {
+    List tempFlashcardList = [];
     if (_practiceIllustrious18) {
       tempFlashcardList = [
         ...tempFlashcardList,
@@ -60,13 +88,61 @@ class DeviationsCubit extends Cubit<DeviationsState> {
         ...hiloInsuranceDeviationFlashcards
       ];
     }
+    return tempFlashcardList;
+  }
 
-    emit(DeviationsState(
-        isPlayingDeviations: state.isPlayingDeviations,
-        currentFlashcard: state.currentFlashcard,
-        deviationFlashcards: tempFlashcardList,
-        buttonAnswerOptions: state.buttonAnswerOptions,
-        wasPlayerCorrect: state.wasPlayerCorrect));
+  _getKoFlashcardList() {
+    List tempFlashcardList = [...koAllDeckDeviationFlashcards];
+
+    if (_deckQuantity == 8) {
+      tempFlashcardList = [...tempFlashcardList, ...ko8DeckDeviationFlashcards];
+    }
+    if (_deckQuantity == 6) {
+      tempFlashcardList = [...tempFlashcardList, ...ko6DeckDeviationFlashcards];
+    }
+    if (_deckQuantity == 2) {
+      tempFlashcardList = [...tempFlashcardList, ...ko2DeckDeviationFlashcards];
+    }
+    if (_deckQuantity == 1) {
+      tempFlashcardList = [...tempFlashcardList, ...ko1DeckDeviationFlashcards];
+    }
+
+    return tempFlashcardList;
+  }
+
+  _getRekoFlashcardList() {
+    List tempFlashcardList = [];
+    if (_practiceIllustrious18) {
+      tempFlashcardList = [
+        ...tempFlashcardList,
+        ...reko8DeckIllustrious18DeviationFlashcards
+      ];
+      if (_deckQuantity == 6) {
+        tempFlashcardList = [
+          ...tempFlashcardList,
+          ...koAllDeckDeviationFlashcards
+        ];
+      }
+      if (_deckQuantity == 1) {
+        tempFlashcardList = [
+          ...tempFlashcardList,
+          ...reko1DeckIllustrious18DeviationFlashcards
+        ];
+      }
+    }
+    if (_practiceFab4) {
+      tempFlashcardList = [
+        ...tempFlashcardList,
+        ...rekoFab4DeviationFlashcards
+      ];
+    }
+    if (_practiceInsurance) {
+      tempFlashcardList = [
+        ...tempFlashcardList,
+        ...rekoInsuranceDeviationFlashcards
+      ];
+    }
+    return tempFlashcardList;
   }
 
   void checkAnswer(playerChoice) {

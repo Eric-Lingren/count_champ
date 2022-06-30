@@ -118,8 +118,8 @@ class _MyAppState extends State<MyApp> {
         title: 'Count Champ',
         // initialRoute: '/running_count_trainer',
         // initialRoute: '/achievements',
-        initialRoute: '/basic_strategy_trainer',
-        // initialRoute: '/deviations_trainer',
+        // initialRoute: '/basic_strategy_trainer',
+        initialRoute: '/deviations_trainer',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),

@@ -15,8 +15,8 @@ class CountSettingsSidebar extends StatefulWidget {
 
 // ToDo - Prevent no counting systems from being selected
 class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
-  final List<double> values = [1.0, 2.0, 4.0, 6.0, 8.0];
-  int selectedIndex = 0;
+  final List<double> values = [1.0, 2.0, 6.0, 8.0];
+  int selectedIndex = 3;
   @override
   Widget build(BuildContext context) {
     return (Scaffold(
@@ -180,6 +180,41 @@ class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
                   },
                 );
               }),),
+          ListTile(
+            title: const Text("Knockout (K-O)"),
+            leading: BlocBuilder<CountSettingsCubit, CountSettingsState>(
+                builder: (context, state) {
+              return Switch(
+                value: state.koEnabled,
+                onChanged: (value) {
+                  context.read<CountSettingsCubit>().toggleKo(value);
+                },
+                activeTrackColor: Colors.lightGreenAccent[700],
+                activeColor: Colors.green,
+              );
+            }),
+            trailing: IconButton(
+              icon: const Icon(Icons.info_outline),
+              color: Colors.lightBlue[400],
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return CountInfoPopupWidget(
+                        infoTitle: 'Knockout - aka K-O',
+                        easeOfUse: '7.5',
+                        systemLevel: '1',
+                        // playerAdvantage: '',
+                        systemType: 'Unbalanced',
+                        bettingCorrelation: '98%',
+                        playingEfficency: '55%',
+                        insuranceCorrelation: '78%',
+                        indexes: const [1,1,1,1,1,1,0,0,-1,-1],
+                        systemInfo: 'K-O Stands for "Knockout Blackjack" or Olaf Vancura and Ken Fuchs, who created this system and published it in their 1996 book by the same name. This unbalanced system is straightforward to learn and is just as effective as Hi-Lo without requiring conversion to True Count.  Once the Running Count reaches +2, the deck is in your favor. It has been coined "The Easiest Card Counting System Ever Devised."'
+                    );
+                  },
+                );
+              }),),
         ListTile(
             title: const Text("Hi-Opt I"),
             leading: BlocBuilder<CountSettingsCubit, CountSettingsState>(
@@ -281,41 +316,6 @@ class _CountSettingsSidebarState extends State<CountSettingsSidebar> {
                         insuranceCorrelation: '72%',
                         indexes: const [.5,1,1,1.5,1,.5,0,.5,-1,-1],
                         systemInfo: 'Wong Halves (aka Wong Count or simply Wong) is a fractional counting system. It is widely regarded as one of the most accurate systems and one of the most difficult ever created, so novice counters should avoid it. John Ferguson, who went by Stanford Wong, developed this system and published it in his 1975 book "Professional Blackjack." Although still used, most players opt for a more simplified counting system to minimize playing errors.'
-                    );
-                  },
-                );
-              }),),
-        ListTile(
-            title: const Text("Knockout (K-O)"),
-            leading: BlocBuilder<CountSettingsCubit, CountSettingsState>(
-                builder: (context, state) {
-              return Switch(
-                value: state.koEnabled,
-                onChanged: (value) {
-                  context.read<CountSettingsCubit>().toggleKo(value);
-                },
-                activeTrackColor: Colors.lightGreenAccent[700],
-                activeColor: Colors.green,
-              );
-            }),
-            trailing: IconButton(
-              icon: const Icon(Icons.info_outline),
-              color: Colors.lightBlue[400],
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return CountInfoPopupWidget(
-                        infoTitle: 'Knockout - aka K-O',
-                        easeOfUse: '7.5',
-                        systemLevel: '1',
-                        // playerAdvantage: '',
-                        systemType: 'Unbalanced',
-                        bettingCorrelation: '98%',
-                        playingEfficency: '55%',
-                        insuranceCorrelation: '78%',
-                        indexes: const [1,1,1,1,1,1,0,0,-1,-1],
-                        systemInfo: 'K-O Stands for "Knockout Blackjack" or Olaf Vancura and Ken Fuchs, who created this system and published it in their 1996 book by the same name. This unbalanced system is straightforward to learn and is just as effective as Hi-Lo without requiring conversion to True Count.  Once the Running Count reaches +2, the deck is in your favor. It has been coined "The Easiest Card Counting System Ever Devised."'
                     );
                   },
                 );

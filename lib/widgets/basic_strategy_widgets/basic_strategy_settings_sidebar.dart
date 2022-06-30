@@ -14,8 +14,8 @@ class BasicStrategySettingsSidebar extends StatefulWidget {
 
 class _BasicStrategySettingsSidebarState
     extends State<BasicStrategySettingsSidebar> {
-  final List<double> values = [1.0, 2.0, 4.0, 6.0, 8.0];
-  int selectedIndex = 0;
+  final List<double> values = [1.0, 2.0, 6.0, 8.0];
+  int selectedIndex = 3;
   @override
   Widget build(BuildContext context) {
     return (Scaffold(

@@ -13,8 +13,9 @@ class DeviationsSettingsSidebar extends StatefulWidget {
 }
 
 class _DeviationsSettingsSidebarState extends State<DeviationsSettingsSidebar> {
-  final List<double> values = [1.0, 2.0, 4.0, 6.0, 8.0];
-  int selectedIndex = 0;
+  final List<double> values = [1.0, 2.0, 6.0, 8.0];
+  int selectedIndex = 3;
+  // String dropdownValue = 'One';
   @override
   Widget build(BuildContext context) {
     return (Scaffold(
@@ -36,22 +37,83 @@ class _DeviationsSettingsSidebarState extends State<DeviationsSettingsSidebar> {
                 setState(() {
                   selectedIndex = value.toInt();
                 });
-                context.read<DeviationsSettingsCubit>().setDeckQuantity(values[selectedIndex]);
+                context
+                    .read<DeviationsSettingsCubit>()
+                    .setDeckQuantity(values[selectedIndex]);
               },
             ),
           );
         }),
+        // DropdownButton<String>(
+        //   value: dropdownValue,
+        //   icon: const Icon(Icons.arrow_downward),
+        //   elevation: 16,
+        //   style: const TextStyle(color: Colors.deepPurple),
+        //   underline: Container(
+        //     height: 2,
+        //     color: Colors.deepPurpleAccent,
+        //   ),
+        //   onChanged: (String? newValue) {
+        //     setState(() {
+        //       dropdownValue = newValue!;
+        //     });
+        //     print(newValue);
+        //   },
+        //   items: <String>['One', 'Two', 'Free', 'Four']
+        //       .map<DropdownMenuItem<String>>((String value) {
+        //     return DropdownMenuItem<String>(
+        //       value: value,
+        //       child: Text(value),
+        //     );
+        //   }).toList(),
+        // ),
+        // ListTile(
+        //   title: const Text("H17 Rules"),
+        //   leading:
+        //       BlocBuilder<DeviationsSettingsCubit, DeviationsSettingsState>(
+        //           builder: (context, state) {
+        //     return Switch(
+        //       value: state.practiceIllustrious18,
+        //       onChanged: (value) {
+        //         context
+        //             .read<DeviationsSettingsCubit>()
+        //             .toggleIllustrious18(value);
+        //       },
+        //       activeTrackColor: Colors.lightGreenAccent[700],
+        //       activeColor: Colors.green,
+        //     );
+        //   }),
+        // ),
+        // ListTile(
+        //   title: const Text("S17 Rules"),
+        //   leading:
+        //       BlocBuilder<DeviationsSettingsCubit, DeviationsSettingsState>(
+        //           builder: (context, state) {
+        //     return Switch(
+        //       value: state.practiceIllustrious18,
+        //       onChanged: (value) {
+        //         context
+        //             .read<DeviationsSettingsCubit>()
+        //             .toggleIllustrious18(value);
+        //       },
+        //       activeTrackColor: Colors.lightGreenAccent[700],
+        //       activeColor: Colors.green,
+        //     );
+        //   }),
+        // ),
+        Divider(color: Colors.blue[300], thickness: 2),
+
         ListTile(
-          title: const Text("H17 Rules"),
+          title: const Text("Hi-Lo"),
           leading:
               BlocBuilder<DeviationsSettingsCubit, DeviationsSettingsState>(
                   builder: (context, state) {
             return Switch(
-              value: state.practiceIllustrious18,
+              value: state.hiLoEnabled,
               onChanged: (value) {
                 context
                     .read<DeviationsSettingsCubit>()
-                    .toggleIllustrious18(value);
+                    .toggleHilo(value);
               },
               activeTrackColor: Colors.lightGreenAccent[700],
               activeColor: Colors.green,
@@ -59,22 +121,41 @@ class _DeviationsSettingsSidebarState extends State<DeviationsSettingsSidebar> {
           }),
         ),
         ListTile(
-          title: const Text("S17 Rules"),
+          title: const Text("Knockout (K-O)"),
           leading:
               BlocBuilder<DeviationsSettingsCubit, DeviationsSettingsState>(
                   builder: (context, state) {
             return Switch(
-              value: state.practiceIllustrious18,
+              value: state.koEnabled,
               onChanged: (value) {
                 context
                     .read<DeviationsSettingsCubit>()
-                    .toggleIllustrious18(value);
+                    .toggleKo(value);
               },
               activeTrackColor: Colors.lightGreenAccent[700],
               activeColor: Colors.green,
             );
           }),
         ),
+        ListTile(
+          title: const Text("Reko"),
+          leading:
+              BlocBuilder<DeviationsSettingsCubit, DeviationsSettingsState>(
+                  builder: (context, state) {
+            return Switch(
+              value: state.rekoEnabled,
+              onChanged: (value) {
+                context
+                    .read<DeviationsSettingsCubit>()
+                    .toggleReko(value);
+              },
+              activeTrackColor: Colors.lightGreenAccent[700],
+              activeColor: Colors.green,
+            );
+          }),
+        ),
+
+
         Divider(color: Colors.blue[300], thickness: 2),
         ListTile(
           title: const Text("Illustrious 18 Deviations"),

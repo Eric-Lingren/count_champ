@@ -15,9 +15,6 @@ class StatsDetailsPopupWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(statsData);
-    print(playerHand);
-    print(dealerHand);
 
     _getStatsText() {
       if (statsData['percentage'] == null) {
