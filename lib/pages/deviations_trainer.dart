@@ -1,3 +1,4 @@
+import 'package:count_champ/constants/deviation_charts/reko_deviation_charts/reko_deviation_charts.dart';
 import 'package:count_champ/logic/cubits/deviations_cubit/deviations_cubit.dart';
 import 'package:count_champ/widgets/deviations_widgets/flashcard_view.dart';
 import 'package:count_champ/widgets/deviations_widgets/deviations_settings_sidebar.dart';
@@ -66,13 +67,6 @@ class DeviationsTrainer extends StatelessWidget {
                           ));
                     })),
                 const Spacer(),
-                // IconButton(
-                //   icon: const FaIcon(FontAwesomeIcons.tableCellsLarge,
-                //       color: Colors.white, size: 24.0,),
-                //   onPressed: () {
-                //     Navigator.pushNamed(context, '/deviations_stats');
-                //   },
-                // ),
 
                 Container(
                   margin: const EdgeInsets.only(right: 10),
@@ -81,7 +75,9 @@ class DeviationsTrainer extends StatelessWidget {
                       showDialog(
                         context: context,
                         builder: (context) {
-                          return const HelpChartWidget();
+                          return HelpChartWidget(
+                            title: 'Reko Deviations',
+                            chartMatrix: rekoDeviationChart);
                         });
                     },
                     child: const FaIcon(FontAwesomeIcons.circleQuestion,
@@ -89,14 +85,6 @@ class DeviationsTrainer extends StatelessWidget {
                   )
                 ),
 
-
-                // IconButton(
-                //   icon: const FaIcon(FontAwesomeIcons.circleQuestion,
-                //       color: Colors.white, size: 24.0,),
-                //   onPressed: () {
-                //     Navigator.pushNamed(context, '/deviations_stats');
-                //   },
-                // ),
                 IconButton(
                   icon: const FaIcon(FontAwesomeIcons.chartLine,
                       color: Colors.white, size: 24.0),
