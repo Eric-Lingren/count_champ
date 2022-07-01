@@ -171,6 +171,19 @@ List rekoDeviationChart = [
     {'play': 'H', 'deviation': null},
     {'play': 'H', 'deviation': null},
   ],
+  [
+    {'heading': 'A8'},
+    {'play': 'H', 'deviation': null},
+    {'play': 'H', 'deviation': null},
+    {'play': 'H', 'deviation': null},
+    {'play': 'H', 'deviation': '+2'},
+    {'play': 'H', 'deviation': '+2'},
+    {'play': 'H', 'deviation': null},
+    {'play': 'H', 'deviation': null},
+    {'play': 'H', 'deviation': null},
+    {'play': 'H', 'deviation': null},
+    {'play': 'H', 'deviation': null},
+  ],
     [
     {'heading': ''}, 
     {'heading': '2'}, 
@@ -187,9 +200,6 @@ List rekoDeviationChart = [
 ];
 
 
-
-  // {'dealer': '5', 'player': '8', 'answer': '+2'},
-  // {'dealer': '6', 'player': '8', 'answer': '+2'},
 
   // {'dealer': '5', 'player': 'A8', 'answer': '+2'},
   // {'dealer': '6', 'player': 'A8', 'answer': '+2'},

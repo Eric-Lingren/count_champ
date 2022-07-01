@@ -138,43 +138,43 @@ class HelpChartWidget extends StatelessWidget {
                 ),
                 SizedBox(height: 50),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    const Text(
-                      'Hard',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        decoration: TextDecoration.underline,
-                        decorationThickness: 10,
-                      ),
-                    ),
-                    const Text(
-                      'Soft',
-                    ),
-                    Container(
-                      padding: const EdgeInsets.only(
-                        bottom: 5,
-                        right: 10,
-                        left: 10,
-                      ),
-                      decoration: const BoxDecoration(
-                          border: Border(
-                              bottom: BorderSide(
-                        color: Colors.white, // Text colour here
-                        width: 2.0, // Underline width
-                      ))),
-                      child: const Text(
-                        "Split",
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.white, // Text colour here
-                        ),
-                      ),
-                    )
-                  ],
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //   children: [
+                //     const Text(
+                //       'Hard',
+                //       style: TextStyle(
+                //         color: Colors.white,
+                //         fontSize: 18,
+                //         decoration: TextDecoration.underline,
+                //         decorationThickness: 10,
+                //       ),
+                //     ),
+                //     const Text(
+                //       'Soft',
+                //     ),
+                //     Container(
+                //       padding: const EdgeInsets.only(
+                //         bottom: 5,
+                //         right: 10,
+                //         left: 10,
+                //       ),
+                //       decoration: const BoxDecoration(
+                //           border: Border(
+                //               bottom: BorderSide(
+                //         color: Colors.white, // Text colour here
+                //         width: 2.0, // Underline width
+                //       ))),
+                //       child: const Text(
+                //         "Split",
+                //         style: TextStyle(
+                //           fontSize: 18,
+                //           color: Colors.white, // Text colour here
+                //         ),
+                //       ),
+                //     )
+                //   ],
+                // ),
                 
 
                 Expanded(

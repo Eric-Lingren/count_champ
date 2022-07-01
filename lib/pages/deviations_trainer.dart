@@ -1,3 +1,4 @@
+import 'package:count_champ/constants/deviation_charts/hilo_deviation_charts/hilo_deviation_charts.dart';
 import 'package:count_champ/constants/deviation_charts/reko_deviation_charts/reko_deviation_charts.dart';
 import 'package:count_champ/logic/cubits/deviations_cubit/deviations_cubit.dart';
 import 'package:count_champ/widgets/deviations_widgets/flashcard_view.dart';
@@ -76,8 +77,11 @@ class DeviationsTrainer extends StatelessWidget {
                         context: context,
                         builder: (context) {
                           return HelpChartWidget(
-                            title: 'Reko Deviations',
-                            chartMatrix: rekoDeviationChart);
+                            title: 'Hilo Deviations',
+                            chartMatrix: hiloDeviationChart
+                            // title: 'Reko Deviations',
+                            // chartMatrix: rekoDeviationChart,
+                            );
                         });
                     },
                     child: const FaIcon(FontAwesomeIcons.circleQuestion,
