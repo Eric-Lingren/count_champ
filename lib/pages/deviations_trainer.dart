@@ -1,5 +1,5 @@
-import 'package:count_champ/constants/deviation_charts/hilo_deviation_charts/hilo_deviation_charts.dart';
-import 'package:count_champ/constants/deviation_charts/reko_deviation_charts/reko_deviation_charts.dart';
+import 'package:count_champ/constants/deviation_charts/hilo_deviation_charts.dart';
+import 'package:count_champ/constants/deviation_charts/reko_deviation_charts.dart';
 import 'package:count_champ/logic/cubits/deviations_cubit/deviations_cubit.dart';
 import 'package:count_champ/widgets/deviations_widgets/flashcard_view.dart';
 import 'package:count_champ/widgets/deviations_widgets/deviations_settings_sidebar.dart';
@@ -68,27 +68,25 @@ class DeviationsTrainer extends StatelessWidget {
                           ));
                     })),
                 const Spacer(),
-
                 Container(
-                  margin: const EdgeInsets.only(right: 10),
-                  child: GestureDetector(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return HelpChartWidget(
-                            title: 'Hilo Deviations',
-                            chartMatrix: hiloDeviationChart
-                            // title: 'Reko Deviations',
-                            // chartMatrix: rekoDeviationChart,
-                            );
-                        });
-                    },
-                    child: const FaIcon(FontAwesomeIcons.circleQuestion,
-                      color: Colors.white, size: 24.0,)
-                  )
-                ),
-
+                    margin: const EdgeInsets.only(right: 10),
+                    child: GestureDetector(
+                        onTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return HelpChartWidget(
+                                    title: deviationsState.deviationsChartTitle,
+                                    chartMatrix:
+                                        deviationsState.deviationsChartMatrix
+                                    );
+                              });
+                        },
+                        child: const FaIcon(
+                          FontAwesomeIcons.circleQuestion,
+                          color: Colors.white,
+                          size: 24.0,
+                        ))),
                 IconButton(
                   icon: const FaIcon(FontAwesomeIcons.chartLine,
                       color: Colors.white, size: 24.0),
@@ -96,7 +94,6 @@ class DeviationsTrainer extends StatelessWidget {
                     Navigator.pushNamed(context, '/deviations_stats');
                   },
                 ),
-
               ],
             ),
           ),
@@ -152,8 +149,7 @@ class DeviationsTrainer extends StatelessWidget {
             // )),
           ),
           body: SafeArea(
-              child: 
-              Container(
+              child: Container(
             margin: const EdgeInsets.only(top: 10.0),
             child: Center(
               child: BlocBuilder<DeviationsCubit, DeviationsState>(

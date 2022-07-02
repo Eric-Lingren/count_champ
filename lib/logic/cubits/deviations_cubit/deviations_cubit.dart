@@ -1,4 +1,8 @@
 import 'package:bloc/bloc.dart';
+import 'package:count_champ/constants/deviation_charts/hilo_deviation_charts.dart';
+import 'package:count_champ/constants/deviation_charts/ko_deviations_charts/ko_8deck_deviation_charts.dart';
+import 'package:count_champ/constants/deviation_charts/ko_deviations_charts/ko_deviation_charts.dart';
+import 'package:count_champ/constants/deviation_charts/reko_deviation_charts.dart';
 import 'package:count_champ/constants/deviation_flashcards/ko_deviation_flashcards.dart';
 import 'package:count_champ/constants/deviation_flashcards/reko_deviation_flashcards.dart';
 import 'package:equatable/equatable.dart';
@@ -25,12 +29,13 @@ class DeviationsCubit extends Cubit<DeviationsState> {
     required this.deviationsSettingsCubit,
     deviationsSettingsStreamSubscription,
   }) : super(DeviationsState(
-          isPlayingDeviations: false,
-          deviationFlashcards: hiloIllustrious18DeviationFlashcards,
-          currentFlashcard: hiloIllustrious18DeviationFlashcards[0],
-          buttonAnswerOptions: const [-1, 0, 1, 2],
-          wasPlayerCorrect: true,
-        )) {
+            isPlayingDeviations: false,
+            deviationFlashcards: hiloIllustrious18DeviationFlashcards,
+            currentFlashcard: hiloIllustrious18DeviationFlashcards[0],
+            buttonAnswerOptions: const [-1, 0, 1, 2],
+            wasPlayerCorrect: true,
+            deviationsChartMatrix: hiloDeviationChart,
+            deviationsChartTitle: 'HiLo Deviations')) {
     _monitorDeviationsSettingsCubit();
   }
 
@@ -45,27 +50,39 @@ class DeviationsCubit extends Cubit<DeviationsState> {
       _hiloEnabled = deviationsSettingsState.hiLoEnabled;
       _koEnabled = deviationsSettingsState.koEnabled;
       _rekoEnabled = deviationsSettingsState.rekoEnabled;
-      _setFlashcardList();
+      _runGameSetup();
     });
   }
 
-  _setFlashcardList() {
+  _runGameSetup() {
     List tempFlashcardList = [];
-
+    var tempChartMatrix;
+    var tempDeviationsChartTitle;
     if (_hiloEnabled) {
       tempFlashcardList = _getHiLoFlashcardList();
+      tempChartMatrix = hiloDeviationChart;
+      tempDeviationsChartTitle = 'HiLo Deviations';
     } else if (_koEnabled) {
       tempFlashcardList = _getKoFlashcardList();
+      print(_deckQuantity);
+      if (_deckQuantity == 8) {
+        tempChartMatrix = ko8DeckDeviationChart;
+      }
     } else if (_rekoEnabled) {
       tempFlashcardList = _getRekoFlashcardList();
+      tempChartMatrix = rekoDeviationChart;
+      tempDeviationsChartTitle = 'Reko Deviations';
     }
 
     emit(DeviationsState(
-        isPlayingDeviations: state.isPlayingDeviations,
-        currentFlashcard: state.currentFlashcard,
-        deviationFlashcards: tempFlashcardList,
-        buttonAnswerOptions: state.buttonAnswerOptions,
-        wasPlayerCorrect: state.wasPlayerCorrect));
+      isPlayingDeviations: state.isPlayingDeviations,
+      currentFlashcard: state.currentFlashcard,
+      deviationFlashcards: tempFlashcardList,
+      buttonAnswerOptions: state.buttonAnswerOptions,
+      wasPlayerCorrect: state.wasPlayerCorrect,
+      deviationsChartMatrix: tempChartMatrix,
+      deviationsChartTitle: tempDeviationsChartTitle,
+    ));
   }
 
   _getHiLoFlashcardList() {
@@ -161,6 +178,8 @@ class DeviationsCubit extends Cubit<DeviationsState> {
       currentFlashcard: newFlashcard,
       buttonAnswerOptions: buttonAnswerOptions,
       wasPlayerCorrect: wasPlayerCorrect,
+      deviationsChartMatrix: state.deviationsChartMatrix,
+      deviationsChartTitle: state.deviationsChartTitle,
     ));
   }
 

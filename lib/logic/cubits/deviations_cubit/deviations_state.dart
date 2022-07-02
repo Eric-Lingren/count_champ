@@ -6,6 +6,8 @@ class DeviationsState extends Equatable {
   var currentFlashcard;
   List buttonAnswerOptions;
   bool wasPlayerCorrect;
+  List deviationsChartMatrix;
+  String deviationsChartTitle;
 
   DeviationsState({
     required this.isPlayingDeviations,
@@ -13,6 +15,8 @@ class DeviationsState extends Equatable {
     required this.currentFlashcard,
     required this.buttonAnswerOptions,
     required this.wasPlayerCorrect,
+    required this.deviationsChartMatrix,
+    required this.deviationsChartTitle,
   });
 
   @override
@@ -21,6 +25,8 @@ class DeviationsState extends Equatable {
         deviationFlashcards,
         currentFlashcard,
         buttonAnswerOptions,
-        wasPlayerCorrect
+        wasPlayerCorrect,
+        deviationsChartMatrix,
+        deviationsChartTitle,
       ];
 }
